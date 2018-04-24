@@ -28,4 +28,10 @@
           
        }
 
+       public function get_type_passager()
+       {
+           $query = $this->db->get("type_passager");
+           return $query->result();
+       }
+
     }

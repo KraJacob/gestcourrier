@@ -35,5 +35,8 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="<?php echo base_url()."assets/";?>https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="<?php echo css_url("style.css");?>">
+  <!-- <link rel="stylesheet" href="<?php// echo base_url()."assets/";?>https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="<?php //echo css_url("style.css");?>"> -->
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?php echo base_url()."assets/";?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Theme style -->

@@ -16,51 +16,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- insertion de la side barre -->
     <?php $this->load->view('tpl/side_barre'); ?>
   </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <!-- <h1>
-       ENREGISTREMENT D'UN NOUVEL UTILISATEUR
-        <small>utilisateur</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="<?php echo base_url()."assets/";?>#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">utilisateur</li>
-      </ol> -->
     </section>
-
     <!-- Main content -->
     <!-- <section class="content"> -->
     <div class="register-box">
-  <div class="register-logo">
-    <a href="../../index2.html"><b>Admin</b></a>
-  </div>
-
-  <div class="register-box-body col-md-12">
+    <div class="register-box-body col-md-12">
     <p class="login-box-msg"> <b> ENREGISTREMENT D'UN UTILISATEUR </b></p>
 
-    <form action="../../index.html" method="post">
+    <form action="<?php echo base_url().'index.php/Controlleruser/SaveUser' ?>" method="post">
     
       <div class="form-group has-feedback">
-          <input type="text" class="form-control" placeholder="Nom">
+          <input type="text" class="form-control" name="nom" placeholder="Nom">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Prénom">
+        <input type="text" class="form-control" name="prenom" placeholder="Prénom">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
+        <input type="email" class="form-control" name="email" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Mot de passe ">
+        <input type="password" class="form-control" name="password" placeholder="Mot de passe ">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Confirmer le mot de passe">
+        <input type="password" class="form-control" name="passwordconf" placeholder="Confirmer le mot de passe">
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>
       <div class="row">

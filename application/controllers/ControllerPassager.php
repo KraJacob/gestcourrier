@@ -29,6 +29,7 @@
 
               public function load_type_passager()
               {
+				     echo "ok";
                   $this->load->view("passager/type_passager");
               }
 
@@ -49,6 +50,43 @@
                 return redirect('type_passager');
                }
 				
+              }
+
+        public function list_type_passager()
+         {        
+        	// les Variables de datatable
+               //
+			   $draw = intval($this->input->post("draw"));
+			   //
+			   $start = intval($this->input->post("start"));
+			   $length = intval($this->input->post("length"));
+		     $type_passager = $this->PassagerModel->get_type_passager();
+         $data = array();
+			 if(count($type_passager)>0)
+			 {
+			 foreach( $type_passager as $r){	
+
+									 if($r->statut =="Actif")
+									 {
+				              $tab = array();
+				              $tab[] = $r->id_type_passager;
+                   		$tab[] = '<td></td>';
+										  $tab[] =$r->lib_type;
+											$tab[] =$r->user_id;
+											$data[] = $tab;
+									 }
+								}
+
+								}	
+			
+								$output = array(
+									"draw" => $draw,
+										"recordsTotal" => count($type_passager),
+										"recordsFiltered" => count($type_passager),
+										"data" => $data
+									);
+								
+								echo json_encode($output);
               }
               
             }

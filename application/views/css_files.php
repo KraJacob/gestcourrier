@@ -4,6 +4,7 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="" name="description"/>
 <meta content="" name="author"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="<?php echo plugins_url('font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css"/>
@@ -23,7 +24,20 @@
 <link href="<?php echo plugins_url('jqvmap/jqvmap/jqvmap.css'); ?>" rel="stylesheet" type="text/css"/>
 <link href="<?php echo plugins_url('morris/morris.css'); ?>"  rel="stylesheet" type="text/css"/>
 <link href="<?php echo plugins_url('amcharts/style.css'); ?>"  rel="stylesheet" type="text/css"/>
+<!-- Tell the browser to be responsive to screen width -->
 
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 <!-- BEGIN PAGE STYLES -->
 <link href="<?php echo css_url('tasks'); ?>" rel="stylesheet" type="text/css"/>
