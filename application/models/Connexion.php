@@ -10,7 +10,7 @@ class Connexion extends CI_Model {
     function validCredentials($useremail,$password){
      //$this->load->library('encrypt');
 
-     $q = "SELECT user.user_id,nom,prenom,email,statut  FROM user WHERE email = ? AND password = ?  AND statut = 'Actif' ";
+     $q = "SELECT user.user_id,nom,prenom,email,`user`.`statut`,`user`.`id_gare`,`gare`.`id_gare`,lib_gare,`gare`.`ville`  FROM user,gare WHERE `user`.`id_gare`=`gare`.`id_gare` AND email = ? AND password = ?  AND `user`.`statut` = 'Actif' ";
 
      $data = array($useremail,$password);
     

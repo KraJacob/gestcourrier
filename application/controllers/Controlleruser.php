@@ -7,6 +7,7 @@
 			function __construct() {
 					parent::__construct();
 					$this->load->model('UserModel');
+					$this->load->model('PersonnelModel');
 					$this->load->library('session');
 				} 
 		
@@ -34,8 +35,6 @@
 			//Chargement de la fenêtre d'ajout des utilisateurs
 			public function createUser()
 			{
-				 
-				//$priv = $this->Privilege_Model->getpriv();
 				$this->load->view('users/CreateUser');
 				  
 			}
@@ -135,9 +134,10 @@
 		
 			public function affichageUser(){
 			
-			   // $entreprise_id = $this->session->userdata("entreprise_id");
-				//$priv = $this->Privilege_Model->getpriv();
-				$this->load->view('users/listUser');
+				$data = array(); 
+				$gare = $this->PersonnelModel->get_gare();
+				$data["gare"] = $gare;
+				$this->load->view('users/listUser',$data);
 			}
 		
 			// Chargement du formulaire de modification

@@ -13,3 +13,4 @@ $route['personnel'] = 'ControllerPersonnel/load_personnel';
 $route['login'] = 'Login/login';
 $route['logout'] = 'Login/logout';
 $route['dashboard'] = 'Welcome/dashboard';
+$route['voyage'] = 'Voyage/load_voyage';

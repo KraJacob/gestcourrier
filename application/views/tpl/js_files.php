@@ -39,4 +39,12 @@
 <script src ="<?php echo base_url()."assets/";?>bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
 <script src ="<?php echo base_url()."assets/";?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="<?php echo plugins_url('bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo plugins_url('bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js'); ?>"></script>
+<!-- <script type="text/javascript" src="<?php //echo plugins_url('bootstrap-datepicker/locales/bootstrap-datepicker.fr.min.js'); ?>"></script>  -->
 <!-- FastClick -->
+<script>
+   function majuscule(champ){
+    champ.value=champ.value.toUpperCase();
+   }
+</script>

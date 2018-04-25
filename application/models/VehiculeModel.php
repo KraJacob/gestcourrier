@@ -29,4 +29,11 @@
           
        }
 
+       public function list_vehicule()
+       {
+           $query = $this->db->get("vehicule");
+
+           return $query->result_array();
+       }
+
     }

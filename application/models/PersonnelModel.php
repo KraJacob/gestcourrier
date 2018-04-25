@@ -47,9 +47,30 @@
           return  $this->db->insert('gare', $data); 
        }
 
+       public function get_gare()
+       {
+           $query = $this->db->get_where("gare",array("statut"=>"Actif"));
+
+           return $query->result_array();
+       }
+
        public function get_type_personel()
        {
            $query = $this->db->get_where("type_personnel",array("statut"=>"Actif"));
+
+           return $query->result_array();
+       }
+
+       public function get_chauffeur()
+       {
+           $query = $this->db->query('SELECT * FROM personnel,type_personnel WHERE `personnel`.`statut`="Actif" AND `type_personnel`.`lib_personnel`="CHAUFFEUR" AND `personnel`.`id_type_personnel`=`type_personnel`.`id_type_personnel`');
+
+           return $query->result_array();
+       }
+
+       public function get_convoyeur()
+       {
+           $query = $this->db->query('SELECT * FROM personnel,type_personnel WHERE `personnel`.`statut`="Actif" AND `type_personnel`.`lib_personnel`="CONVOYEUR" AND `personnel`.`id_type_personnel`=`type_personnel`.`id_type_personnel`');
 
            return $query->result_array();
        }

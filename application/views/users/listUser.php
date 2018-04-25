@@ -28,13 +28,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <p class="login-box-msg"> <b> ENREGISTREMENT D'UN UTILISATEUR </b></p>
 
     <form action="<?php echo base_url().'index.php/Controlleruser/SaveUser' ?>" method="post">
-    
+      <div class="row">
+      <div class="col-md-12 frm" style="margin-bottom:1%;">
+        <div class="form-group">
+          <label class="col-md-3 col-form-label"> GARE </label>
+             <div class="col-md-9">
+               <div class="input-group col-md-12">
+                 <select class="custom-select col-md-9 mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+                 <option selected>Choisissez</option>
+                   <?php if($gare): ?>
+                   <?php foreach($gare as $g): ?>
+                   
+                   <option value=" <?php $g["id_gare"];?>"><?php echo $g["lib_gare"];?></option>
+                   <?php endforeach ?>
+                   <?php endif ?>
+                </select> 
+              </div>
+          </div>
+        </div>
+       </div> 
+       </div> 
       <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="nom" placeholder="Nom">
+          <input type="text" class="form-control" name="nom" placeholder="Nom" onChange="majuscule(this);">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="prenom" placeholder="Prénom">
+        <input type="text" class="form-control" name="prenom" placeholder="Prénom" onChange="majuscule(this);">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

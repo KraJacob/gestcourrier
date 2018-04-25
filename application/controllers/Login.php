@@ -51,6 +51,8 @@ class Login extends CI_Controller {
           $this->session->set_userdata('user_id',$data[0]['user_id']);
           $this->session->set_userdata('nom',$data[0]['nom']);
           $this->session->set_userdata('prenom',$data[0]['prenom']);
+          $this->session->set_userdata('gare',$data[0]['lib_gare']);
+          $this->session->set_userdata('ville',$data[0]['ville']);
           $this->session->set_userdata($date,$data);
           $this->session->set_userdata($heure,$data);
         
