@@ -1,0 +1,76 @@
+﻿
+CREATE TABLE `db_gestcourrier`.`user` ( `user_id` INT NOT NULL AUTO_INCREMENT , `nom` VARCHAR(25) NOT NULL , `prenom` VARCHAR(50) NOT NULL , `email` VARCHAR(500) NOT NULL , `password` VARCHAR(500) NOT NULL , PRIMARY KEY (`user_id`)) ENGINE = InnoDB;
+ALTER TABLE `user` ADD `date_create` DATETIME NOT NULL AFTER `password`;
+
+CREATE TABLE `db_gestcourrier`.`destination` ( `id_destination` INT NOT NULL AUTO_INCREMENT , `ville_depart` VARCHAR(100) NOT NULL , `ville_arrive` VARCHAR(100) NOT NULL , `tarif` INT NOT NULL , `date_create` DATETIME NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_destination`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`type_passager` ( `id_type_passager` INT NOT NULL AUTO_INCREMENT , `lib_type` VARCHAR(100) NOT NULL , `date_create` DATETIME NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_type_passager`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`vehicule` ( `immatriculation` VARCHAR(15) NOT NULL , `nbr_place` INT NOT NULL , `date_create` DATETIME NOT NULL , `user_id` INT NOT NULL ) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`passager` ( `id_passager` INT NOT NULL , `nom` VARCHAR(30) NOT NULL , `prenom` VARCHAR(100) NOT NULL , `mobile` VARCHAR(15) NOT NULL , `date_create` DATETIME NOT NULL , `user_id` INT NOT NULL ) ENGINE = InnoDB;
+
+ALTER TABLE `passager` ADD `id_destination` INT(11) NOT NULL AFTER `user_id`, ADD `id_type_passager` INT(11) NOT NULL AFTER `id_destination`, ADD `id_depart` INT(11) NOT NULL AFTER `id_type_passager`;
+
+CREATE TABLE `db_gestcourrier`.`depart` ( `id_depart` INT NOT NULL , `date_depart` DATETIME NOT NULL , `num_depart` INT NOT NULL , `user_id` INT NOT NULL ) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`type_personnel` ( `id_type_personnel` INT NOT NULL AUTO_INCREMENT , `lib_personnel` VARCHAR(100) NOT NULL , `date_create` DATETIME NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_type_personnel`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`personnel` ( `id_personnel` INT NOT NULL AUTO_INCREMENT , `nom` VARCHAR(50) NOT NULL , `prenom` VARCHAR(100) NOT NULL , `mobile` VARCHAR(25) NOT NULL , `date_create` DATETIME NOT NULL , `id_type_personnel` INT(11) NOT NULL , `user_id` INT(11) NOT NULL , PRIMARY KEY (`id_personnel`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`depense` ( `id_depense` INT NOT NULL AUTO_INCREMENT , `lib_depense` VARCHAR(100) NOT NULL , `detail` VARCHAR(500) NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_depense`)) ENGINE = InnoDB;
+ALTER TABLE `depense` ADD `montant` INT NOT NULL AFTER `detail`;
+
+
+CREATE TABLE `db_gestcourrier`.`ligne_depense` ( `id_ligne_depense` INT NOT NULL AUTO_INCREMENT , `id_depense` INT(11) NOT NULL , `id_personnel` INT(11) NOT NULL , `immatriculation` VARCHAR(15) NOT NULL , `date_depense` DATETIME NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_ligne_depense`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`gare` ( `id_gare` INT NOT NULL AUTO_INCREMENT , `lib_gare` VARCHAR(100) NOT NULL , `date_create` DATETIME NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_gare`)) ENGINE = InnoDB;
+
+CREATE TABLE `db_gestcourrier`.`type_colis` ( `id_type_colis` INT NOT NULL AUTO_INCREMENT , `lib_type_colis` VARCHAR(100) NOT NULL , `description` VARCHAR(500) NOT NULL , `date_create` DATETIME NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_type_colis`)) ENGINE = InnoDB;
+
+ALTER TABLE  `type_colis` DROP `description`;
+
+
+CREATE TABLE `db_gestcourrier`.`expediteur` ( `id_expediteur` INT NOT NULL AUTO_INCREMENT , `nom` VARCHAR(50) NOT NULL , `prenom` VARCHAR(100) NOT NULL , `mobile` VARCHAR(15) NOT NULL , `nature_piece` VARCHAR(50) NOT NULL , `num_piece` VARCHAR(50) NOT NULL , `date_expedition` DATETIME NOT NULL , `user_id` INT NOT NULL , PRIMARY KEY (`id_expediteur`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`destinataire` ( `id_destinataire` INT NOT NULL AUTO_INCREMENT , `nom` VARCHAR(50) NOT NULL , `prenom` VARCHAR(100) NOT NULL , `mobile` VARCHAR(15) NOT NULL , `user_id` INT NOT NULL , `date_create` DATETIME NOT NULL , PRIMARY KEY (`id_destinataire`)) ENGINE = InnoDB;
+
+CREATE TABLE `db_gestcourrier`.`affecter` ( `id_affecter` INT NOT NULL , `id_personnel` INT NOT NULL , `immatriculation` VARCHAR(10) NOT NULL , `date_affectation` VARCHAR(15) NOT NULL ) ENGINE = InnoDB;
+
+
+CREATE TABLE `db_gestcourrier`.`colis` ( `num_colis` VARCHAR(50) NOT NULL , `lib_colis` VARCHAR(50) NOT NULL , `etat` VARCHAR(50) NOT NULL , `date_create` DATETIME NOT NULL , `id_type_colis` INT NOT NULL , `id_gare` INT NOT NULL , `id_expediteur` INT NOT NULL , `id_destinataire` INT NOT NULL , `user_id` INT NOT NULL ) ENGINE = InnoDB;
+ALTER TABLE `colis` ADD `description` VARCHAR(500) NOT NULL AFTER `etat`;
+
+ALTER TABLE `user` ADD `statut` VARCHAR(15) NOT NULL AFTER `date_create`;
+
+ALTER TABLE `type_passager` ADD `statut` VARCHAR(12) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `type_personnel` ADD `statut` VARCHAR(15) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `gare` ADD `statut` VARCHAR(15) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `type_colis` ADD `statut` VARCHAR(15) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `vehicule` ADD `statut` VARCHAR(15) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `personnel` ADD `statut` VARCHAR(15) NOT NULL AFTER `user_id`;
+ALTER TABLE `user` ADD `id_gare` INT NOT NULL AFTER `statut`;
+ALTER TABLE `depart` ADD `date_ajout` TIMESTAMP NOT NULL AFTER `user_id`;
+ALTER TABLE `depart` CHANGE `date_ajout` `date_ajout` VARCHAR(15) NULL DEFAULT NULL;
+ALTER TABLE `depart` ADD `place_disponible` INT NOT NULL AFTER `num_depart`;
+ALTER TABLE `depart` ADD `immatriculation` VARCHAR(15) NOT NULL AFTER `user_id`;
+ALTER TABLE `passager` ADD PRIMARY KEY( `id_passager`);
+ALTER TABLE `gare` ADD `ville` VARCHAR(50) NOT NULL AFTER `lib_gare`;
+ALTER TABLE `passager` CHANGE `id_type_passager` `type_passager` VARCHAR(30) NOT NULL;
+ALTER TABLE `depart` ADD `parcours` VARCHAR(150) NOT NULL AFTER `id_depart`;
+ALTER TABLE `passager` ADD `num_siege` INT NOT NULL AFTER `mobile`;
+ALTER TABLE `depart` CHANGE `date_depart` `date_depart` VARCHAR(20) NOT NULL;
+INSERT INTO `depart` (`id_depart`, `parcours`, `date_depart`, `num_depart`, `place_disponible`, `user_id`, `immatriculation`, `date_ajout`) VALUES (NULL, 'ABIDJAN - ODIENE', '27/04/2018', '1', '26', '1', 'AZ12', '27/04/2018'), (NULL, 'ODIENE - ABIDJAN', '27/04/2018', '1', '32', '1', 'az12', '27/04/2018')

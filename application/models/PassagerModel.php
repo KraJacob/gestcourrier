@@ -33,5 +33,9 @@
            $query = $this->db->get("type_passager");
            return $query->result();
        }
+       public function get_depart()
+       {
+            
+       }
 
     }
