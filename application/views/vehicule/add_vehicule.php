@@ -23,12 +23,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       ENREGISTREMENT D'UN NOUVEL UTILISATEUR
-        <small>utilisateur</small>
+       ENREGISTREMENT D'UN NOUVEAU VEHICULE
+        <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url()."assets/";?>#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">utilisateur</li>
+        <li class="active">véhicule</li>
       </ol>
     </section>
 
@@ -58,7 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="input-group">
                             <input type="text" id="immatriculation" name ="immatriculation" class="form-control" value=''> 
                             <span class="input-group-addon">
-                            <i class="fa fa-envelope"></i>
+                            <i class="fa fa-bus"></i>
                             </span>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="input-group">
                             <input type="text" id="nbr_place" name ="nbr_place" class="form-control" value=''> 
                             <span class="input-group-addon">
-                            <i class="fa fa-envelope"></i>
+                            <i class="fa fa-users"></i>
                             </span>
                         </div>
                     </div>

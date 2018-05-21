@@ -8,10 +8,11 @@
 					parent::__construct();
 					$this->load->model('UserModel');
 					$this->load->model('PersonnelModel');
+					$this->load->model('ColisModel');
 					$this->load->library('session');
 				} 
 		
-			/*	public function _remap($method, $params = array())
+				public function _remap($method, $params = array())
 				{
 							  
 					if (method_exists($this, $method))
@@ -20,16 +21,23 @@
 					if($this->session->userdata("success")){
 						return call_user_func_array(array($this, $method), $params);
 						}else{
-							redirect("Login");
+							redirect("welcome");
 						}
 					  }
 					show_404();
 				}
-			  */
+			  
 			public function index()
 			{
 				
 				$this->load->view('dashboard');
+			}
+			//load dashboard
+			public function dashboard()
+			{   
+				$data = array();
+				$data["colis"]= $this->ColisModel->get_colis_envoye();
+				$this->load->view('dashboard',$data);	
 			}
 		
 			//Chargement de la fenêtre d'ajout des utilisateurs
@@ -92,28 +100,22 @@
 					  // echo $entreprise_id; exit();
 					   $start = intval($this->input->post("start"));
 					   $length = intval($this->input->post("length"));
-					 $user = $this->UserModel->getusers($entreprise_id);
+					 $user = $this->UserModel->getusers();
 		
 					 $data = array();
 					 if(count($user)>0)
 					 {
 					 foreach( $user as $r){	
 		
-											 if($r->statut =="Actif" && $r->user_id != $this->session->userdata("user_id"))
+											 if($r->statut =="Actif")
 											 {
-													$tab = array();
-													$tab[] = $r->user_id;
-													   $tab[] = '<td></td>';
-													$tab[] =$r->username;
-													$tab[] =$r->usersurname;
-													$tab[] =$r->useremail;
-													$tab[] = array(
-														"date_create" => $r->date_create,
-														"date_create_stamp" =>  $r->date_create_stamp
-													 );
-													$tab[] = "+" . $r->countryCode . " " . $r->Num_tel;
-													$tab[] =$r->nom_priv; 
-													$data[] = $tab;
+												$tab = array();
+												$tab[] = $r->user_id;
+												$tab[] = '<td></td>';
+												$tab[] =$r->nom;
+												$tab[] =$r->prenom;
+												$tab[] =$r->email;
+												$data[] = $tab;
 											 }
 										}
 		

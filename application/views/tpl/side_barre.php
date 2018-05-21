@@ -10,7 +10,7 @@
           <a href="<?php echo base_url()."assets/";?>#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
-      <!-- search form -->
+      <!-- search form 
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -19,32 +19,44 @@
                 </button>
               </span>
         </div>
-      </form>
+      </form>-->
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li class="header" style="display:none;">MAIN NAVIGATION</li>
+        <li class="active treeview" style="">
           <a href="<?php echo base_url()."assets/";?>#">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="<?php echo base_url()."assets/";?>index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="<?php echo base_url()."index.php/voyage";?>"><i class="fa fa-circle-o"></i> Voyage </a></li>
-          </ul>
         </li>
-         <li>
-          <a href="<?php echo base_url()."index.php/users";?>">
-            <i class="fa fa-th"></i> <span>Utilisateurs</span>
+				<li>
+          <a href="<?php echo base_url()."index.php/voyage";?>">
+            <i class="fa fa-circle-o"></i> <span>Voyage</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green"></small>
             </span>
           </a>
         </li>
-        <li>
+				<li>
+          <a href="<?php echo base_url()."index.php/colis";?>">
+            <i class="fa fa-envelope"></i> <span>Colis</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green"></small>
+            </span>
+          </a>
+        </li>
+         <li>
+          <a href="<?php echo base_url()."index.php/users";?>">
+            <i class="fa fa-users"></i> <span>Utilisateurs</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green"></small>
+            </span>
+          </a>
+        </li>
+        <li style="display:none;">
           <a href="<?php echo base_url()."index.php/type_passager";?>">
             <i class="fa fa-th"></i> <span>Type passager</span>
             <span class="pull-right-container">
@@ -62,7 +74,7 @@
         </li>
         <li>
           <a href="<?php echo base_url()."index.php/personnel";?>">
-            <i class="fa fa-th"></i> <span>Personnel</span>
+            <i class="fa fa-group"></i> <span>Personnel</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green"></small>
             </span>
@@ -76,9 +88,9 @@
             </span>
           </a>
         </li>
-        <li>
+        <li style="display:none;">
           <a href="<?php echo base_url()."index.php/type_colis";?>">
-            <i class="fa fa-th"></i> <span>Type colis</span>
+            <i class="fa fa-envelop"></i> <span>Type colis</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green"></small>
             </span>
@@ -86,7 +98,23 @@
         </li>
         <li>
           <a href="<?php echo base_url()."index.php/add_vehicule";?>">
-            <i class="fa fa-th"></i> <span>Véhicule</span>
+            <i class="fa fa-bus"></i> <span>Véhicule</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green"></small>
+            </span>
+          </a>
+        </li>
+				<li>
+          <a href="<?php echo base_url()."index.php/passager";?>">
+            <i class="fa fa-group"></i> <span>Passager</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green"></small>
+            </span>
+          </a>
+        </li>
+				<li>
+          <a href="<?php echo base_url()."index.php/depenses";?>">
+            <i class="fa fa-money"></i> <span>Depense</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green"></small>
             </span>

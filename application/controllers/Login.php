@@ -11,7 +11,7 @@ class Login extends CI_Controller {
             
         } 
 
-    /*	public function _remap($method, $params = array())
+    	/*public function _remap($method, $params = array())
         {
                       
             if (method_exists($this, $method))
@@ -20,14 +20,12 @@ class Login extends CI_Controller {
             if($this->session->userdata("success")){
                 return call_user_func_array(array($this, $method), $params);
                 }else{
-                    redirect("Login");
+                    redirect("welcome");
                 }
               }
             show_404();
-        }
-      */
-
-
+        } */
+      
       public function login()
       {
         $timeOut = 1800;
@@ -51,7 +49,8 @@ class Login extends CI_Controller {
           $this->session->set_userdata('user_id',$data[0]['user_id']);
           $this->session->set_userdata('nom',$data[0]['nom']);
           $this->session->set_userdata('prenom',$data[0]['prenom']);
-          $this->session->set_userdata('gare',$data[0]['lib_gare']);
+		  $this->session->set_userdata('gare',$data[0]['lib_gare']);
+		  $this->session->set_userdata('id_gare',$data[0]['id_gare']);
           $this->session->set_userdata('ville',$data[0]['ville']);
           $this->session->set_userdata($date,$data);
           $this->session->set_userdata($heure,$data);

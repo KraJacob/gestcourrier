@@ -10,7 +10,7 @@
 					$this->load->library('session');
 				} 
 		
-			/*	public function _remap($method, $params = array())
+				public function _remap($method, $params = array())
 				{
 							  
 					if (method_exists($this, $method))
@@ -19,14 +19,12 @@
 					if($this->session->userdata("success")){
 						return call_user_func_array(array($this, $method), $params);
 						}else{
-							redirect("Login");
+							redirect("welcome");
 						}
 					  }
 					show_404();
 				}
-              */
-
-
+              
               public function load_type_passager()
               {
 				     echo "ok";
@@ -54,40 +52,73 @@
 
         public function list_type_passager()
          {        
-        	// les Variables de datatable
-               //
-			   $draw = intval($this->input->post("draw"));
-			   //
-			   $start = intval($this->input->post("start"));
-			   $length = intval($this->input->post("length"));
-		     $type_passager = $this->PassagerModel->get_type_passager();
-         $data = array();
-			 if(count($type_passager)>0)
-			 {
-			 foreach( $type_passager as $r){	
+			$table  = 'passager`, `depart`,`destination';
 
-									 if($r->statut =="Actif")
-									 {
-				              $tab = array();
-				              $tab[] = $r->id_type_passager;
-                   		$tab[] = '<td></td>';
-										  $tab[] =$r->lib_type;
-											$tab[] =$r->user_id;
-											$data[] = $tab;
-									 }
-								}
+			$primaryKey = 'passager`.`id_passager';
 
-								}	
+			$columns = array(
+				array(
+					'db' => 'passager`.`id_passager', 
+					'field'=>'id_passager',
+					'dt' => 'DT_RowId',
+					'formatter' => function($d, $row) {
+						return 'row_'.$d;
+					}
+				),
+				array(
+					'db' => 'passager`.`id_passager',
+					'field'=>'id_passager',
+				 	'dt' => 'checkbox',
+				 	'formatter' => function($d, $row) {
+				 		return "";
+				 	}
+				 ),
+				array('db' => 'nom', 'dt' => 'nom'),		
+				array('db' => 'prenom',	'dt' => 'prenom'),
+				array('db' => 'mobile', 'dt' => 'mobile'),
+				array('db' => 'type_passager', 'dt' =>'type_passager'),
+				array(
+					'db' => 'passager`.`date_create',
+					'field' => 'date_create', 
+					'dt' => 'date_create'	
+
+				),
+				array('db' => 'num_siege', 'dt' =>'num_siege'),
+				array('db' => 'ville_arrive', 'dt' =>'ville_arrive'),
+				array('db' => 'num_depart', 'dt' =>'num_depart'),
+				
+				array(
+					'db' => 'passager`.`id_depart',
+					'field' => 'id_depart',
+					'dt' => 'id_depart'
+				),
+				array(
+					'db' => 'passager`.`id_destination',
+					'field' => 'id_destination',
+					'dt' => 'id_destination'
+				)
+				
+			);
+			$whereClause = "`passager`.`id_depart` = `depart`.`id_depart` AND `passager`.`id_destination` = `destination`.`id_destination`";
+          	require('ssp.php');
 			
-								$output = array(
-									"draw" => $draw,
-										"recordsTotal" => count($type_passager),
-										"recordsFiltered" => count($type_passager),
-										"data" => $data
-									);
-								
-								echo json_encode($output);
-              }
+			echo json_encode(
+				array(
+					"draw"            => isset ( $request['draw'] ) ?
+						intval( $request['draw'] ) :
+						0,
+					"recordsTotal"    => intval($totalData ),
+					"recordsFiltered" => intval( $totalFiltered ),
+					"data"            => $out
+				)
+			, JSON_UNESCAPED_UNICODE);
+
+			  }
+			  
+			  public function load_list_passager()
+			  {
+				  $this->load->view('passager/listPassager');
+			  }
               
             }
 

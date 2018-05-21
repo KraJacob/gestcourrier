@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
-        <small>Control panel</small>
+        K.F.T
+        <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url()."assets/";?>#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -107,7 +107,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
 
-              <h3 class="box-title">Liste Colis</h3>
+              <h3 class="box-title">Liste des colis envoyés</h3>
 
               <div class="box-tools pull-right">
                 <!-- <ul class="pagination pagination-sm inline">
@@ -122,7 +122,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-header -->
             <div class="box-body">
               <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+							<?php if($colis): ?>
               <ul class="todo-list">
+							<?php foreach($colis as $col): ?>
                 <li>
                   <!-- drag handle -->
                   <span class="handle">
@@ -132,17 +134,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <!-- checkbox -->
                   <input type="checkbox" value="">
                   <!-- todo text -->
-                  <span class="text">Design a nice theme</span>
+                  <span class="text"><?=$col['ref_colis']; ?></span>
                   <!-- Emphasis label -->
-                  <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+                  <small class="label label-success"><i class="fa fa-clock-o"></i> <?=$col['date_create']; ?></small>
                   <!-- General tools such as edit or delete-->
                   <div class="tools">
                     <!-- <i class="fa fa-edit"></i> -->
                     <i class="fa  btn btn-success fa-check"></i>
                   </div>
                 </li>
-                
+                <?php endforeach ?>
               </ul>
+							<?php endif ?>
             </div>
             <!-- /.box-body -->
             <!-- <div class="box-footer clearfix no-border">

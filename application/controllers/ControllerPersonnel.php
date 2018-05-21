@@ -10,7 +10,7 @@
 					
 				} 
 		
-			/*	public function _remap($method, $params = array())
+				public function _remap($method, $params = array())
 				{
 							  
 					if (method_exists($this, $method))
@@ -19,14 +19,12 @@
 					if($this->session->userdata("success")){
 						return call_user_func_array(array($this, $method), $params);
 						}else{
-							redirect("Login");
+							redirect("welcome");
 						}
 					  }
 					show_404();
 				}
-              */
-
-
+              
               public function load_type_personnel()
               {
                   $this->load->view("personnel/type_personnel");
@@ -70,10 +68,10 @@
                if($this->PersonnelModel->add_personnel($data))
                {
                 $this->session->set_flashdata("success","success");
-                return redirect('type_personnel');
+                return redirect('personnel');
                }else{
                 $this->session->set_flashdata("echec","echec");
-                return redirect('type_personnel');
+                return redirect('personnel');
                }
 				
               }
@@ -100,7 +98,49 @@
                 return redirect('gare');
                }
 				
-              }
+			  }
+			  
+			  //Lister les personnel
+			public function listPersonnel(){
+				// les Variables de datatable
+				   //
+				   $draw = intval($this->input->post("draw"));
+				   //
+				   $entreprise_id = $this->session->userdata("entreprise_id");
+				  // echo $entreprise_id; exit();
+				   $start = intval($this->input->post("start"));
+				   $length = intval($this->input->post("length"));
+				 $personnel = $this->PersonnelModel->get_personnel();
+	            //  print_r($personnel); exit();
+				 $data = array();
+				 if(count($personnel)>0)
+				 {
+				 foreach( $personnel as $r){	
+	
+										 if($r->statut =="Actif")
+										 {
+											$tab = array();
+											$tab[] = $r->id_personnel;
+											$tab[] = '<td></td>';
+											$tab[] =$r->nom;
+											$tab[] =$r->prenom;
+											$tab[] =$r->mobile;
+											$data[] = $tab;
+										 }
+									}
+	
+									}	
+				
+									$output = array(
+										"draw" => $draw,
+											"recordsTotal" => count($personnel),
+											"recordsFiltered" => count($personnel),
+											"data" => $data
+										);
+									
+									echo json_encode($output);			
+								
+		}
               
             }
 

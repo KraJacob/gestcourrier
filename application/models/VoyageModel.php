@@ -173,4 +173,30 @@
            
        }
 
+       public function get_ville_arrive_by_id($id)
+       {
+         $query = $this->db->query("SELECT ville_arrive from destination where id_destination =$id");
+         $result = $query->row();
+         return $result->ville_arrive;
+			 }
+
+			 public function check_depart_en_cours($date,$heure,$parcours)
+			 {
+				 $query = $this->db->query("SELECT * FROM depart WHERE depart.date_depart='$date' AND depart.heure_depart='$heure' AND depart.parcours='$parcours'");
+				 if($query->num_rows() > 0)
+				 {
+					$result = $query->row();
+					return $result->id_depart;
+				 }else{
+					 return false;
+				 }
+			 }
+			 
+			public function update_depart($id,$data)
+			{
+				return $this->db->where('id_depart', $id)
+            ->Update('depart',$data);
+			}
+
+
     }

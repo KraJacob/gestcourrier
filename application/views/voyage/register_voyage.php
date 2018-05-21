@@ -38,11 +38,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
+	  <form action ="<?php echo base_url().'index.php/Voyage/add_voyage' ?>" method="post" role="form">
       <div class="row">
        <div class="col-md-12"></div>
       <div class="box box-primary col-md-4">
-            <div class="box-header with-border">
+            <div class="box-header with-border" style="float:right;">
               <h3 class="box-title"></h3>
+			  <button type="submit" class="btn btn-success">Valider</button> 
+                <button type="reset" class="btn btn-default">Annuler</button>
+               <!-- <a href="<?php //echo base_url()."index.php/ticket";  ?>" class="btn btn-warning fa fa-print">Ticket</a> -->
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -58,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <strong>Note: </strong> <?php echo "Enregistrement effectué"; ?>
                </div>
                 <?php endif ?>
-            <form action ="<?php echo base_url().'index.php/Voyage/add_voyage' ?>" method="post" role="form">
+            
               <div class="box-body ">
                   <div class="row">
                     <div class="col-md-12">
@@ -140,6 +144,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="input-group">
                                         <input type="text" id="siege" required name ="num_siege" class="form-control"> 
                                     </div>
+                                    <div id="tooltip" style="display:none;position: absolute;cursor: pointer;left: 100px;top: 25px;border: solid 1px #eee; background-color:#ffffdd; padding: 10px; z-index: 1000;border-radus:5;">
+                                        siège déjà occupé, veuillez choisir un autre.
+                                    </div>
                                 </div>
                               </div>
                           </div>
@@ -177,7 +184,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <label class="col-md-6 col-form-label">Place disponible </label>
                                     <div class="col-md-5">
                                         <div class="input-group">
-                                            <input class="form-control" name="place_disponible" size="20" type="text" value="1" id="place_dispo" readonly>
+                                            <input class="form-control" name="place_disponible" size="20" type="text" value="" id="place_dispo" readonly>
                                         </div>
                                     </div>
                                 </div> 
@@ -191,7 +198,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <label class="col-md-3 col-form-label">Date</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <input id="date_depart" name="date_depart" size="21" type="text" value="<?php echo  date("j/m/Y")?>" readonly class="form_datetime">
+                                        <input id="date_depart" name="date_depart" size="21" type="text" value="<?php echo  date("d/m/Y")?>" readonly class="form_datetime">
                                     </div>
                                 </div>
                               </div>
@@ -308,12 +315,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
               <!-- /.box-body -->
 
-              <div class="box-footer">
-                <a href="<?php echo base_url()."index.php/Voyage/pdf";  ?>" class="btn btn-primary"> Test </a>
+             <!-- <div class="box-footer">
+                
                 <button type="submit" class="btn btn-success">Valider</button> 
                 <button type="reset" class="btn btn-default">Annuler</button>
-              </div>
-            </form>
+                <a href="<?php// echo base_url()."index.php/Voyage/pdf";  ?>" class="btn btn-warning fa fa-print"> TEST</a>
+              </div> -->
+            
             
           </div>
           
@@ -326,6 +334,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </section>
     <!-- /.content -->
+	</form>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -343,6 +352,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('tpl/js_files'); ?>
 <script type="text/javascript">
   $(document).ready(function(e){
+	       var imat = $("#imat").val()
+            // console.log(imat)
+             
+               if( imat=="Choisissze"){
+                        $("#place_dispo").val("0")
+                     }else{
+                      
+                        var url = '<?php echo base_url("index.php/Voyage/place_disponible/"); ?>'
+				 $.ajax({
+				 	method: "GET",
+				 	url:url,
+				 	dataType: "json",
+				 	data: {imat : imat},
+				 	success: function(data){
+				 	
+				 	}
+												
+				 }).done(function(data){
+                    $("#place_dispo").val(data)
+                    console.log(data)
+                })
+                     }
    // $('.form_datetime').datepicker("setDate", new Date());
  //  $(".form_datetime").data("DateTimePicker").date(moment(dateVar));
     //$(".form_datetime").datepicker({
@@ -448,10 +479,10 @@ $("#destination").on("change", function(e){
      
   })
 
-  $("#siege").on("change", function(e){
+  $("#siege").on("blur", function(e){
     var num_siege = $(this).val()
     var num_depart  = $("input[name=num_depart]").val();
-    console.log()
+    //console.log()
     var url = '<?php echo base_url("index.php/Voyage/check_num_siege/"); ?>'
     $.ajax({
         method: "GET",
@@ -467,10 +498,21 @@ $("#destination").on("change", function(e){
                                     
     }).done(function(data){
         if(data){
-            alert("Cet siège est déjà occupé")
+            //evt.preventDefault();
+            $("#siege").css("border", "1px solid red");
+            $("#siege").val("");
+            $("#siege").focus();
+            //$('#siege').attr('data-tooltip', 'w00t');
+            $("#tooltip").show();
         }
                 
     })
+
+    $("#tooltip").click(function() {
+        $(this).hide();
+        $("#siege").val("");
+        $("#siege").css("border", "1px solid");
+    });
         
     })
     

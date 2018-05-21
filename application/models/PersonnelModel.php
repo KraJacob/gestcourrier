@@ -92,6 +92,16 @@
             $this->db->insert('activites', $data_activite);
            */
           return  $this->db->insert('personnel', $data); 
-       }
+	   }
+	   
+	    //récupération des users 
+		public function get_personnel()
+		{
+			$query= $this->db->query("select * from `personnel`");
+		  //  $query = $this->db->get_where('user',array(''=>"");
+		   // if($query->num_rows() >0){
+				return $query->result();
+		  //  }
+		}
 
     }

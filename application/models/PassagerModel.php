@@ -36,6 +36,10 @@
        public function get_depart()
        {
             
+	   }
+	   public function get_passager()
+       {
+		$query = $this->db->query("SELECT * FROM passager,user,gare WHERE passager.id_user=user.id_user AND user.");  
        }
 
     }

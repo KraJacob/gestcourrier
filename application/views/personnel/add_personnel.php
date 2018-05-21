@@ -40,6 +40,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="box box-primary col-md-4">
             <div class="box-header with-border">
               <h3 class="box-title"></h3>
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_user">
+               Nouveau
+      </button>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -49,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <strong>Note: </strong> <?php echo "Cet utilisateur existe déjà"; ?>
                </div>
                 <?php endif ?>
-            <form action ="<?php echo base_url().'index.php/ControllerPersonnel/add_personnel' ?>" method="post" role="form">
+           <!-- <form action ="<?php echo base_url().'index.php/ControllerPersonnel/add_personnel' ?>" method="post" role="form">
               <div class="box-body ">
 
               <div class="col-md-8 frm">
@@ -109,17 +112,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
              </div>
           
-              </div>
+              </div> -->
               <!-- /.box-body -->
 
-              <div class="box-footer">
+            <!--  <div class="box-footer">
                 <button type="submit" class="btn btn-success">Valider</button> 
                 <button type="reset" class="btn btn-default">Annuler</button>
               </div>
-            </form>
-            
-          </div>
-          
+            </form>  -->
+
+					<div class="table-container">
+
+					<table class="display responsive no-wrap table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer center_tab" id="personnel" width="100%">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>&nbsp;&nbsp;</th>
+									<th>Nom</th>
+									<th>Prénom</th>
+									<th>Mobile</th>	             
+								</tr>
+							</thead>						
+					</table>							
+					</div>            
+          </div>          
       </div>
       <!-- /.row -->
       <!-- Main row -->
@@ -131,6 +147,92 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+	<!-- Modal detail utilisateur   -->
+	<div class="modal fade"  id="modal_user" style="display: none;">
+          <div class="modal-dialog" style="width:700px;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">×</font></font></span></button>
+                <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Enregistrement d'un personnel</font></font></h4>
+              </div>
+              <div class="modal-body">
+                   
+							<form action ="<?php echo base_url().'index.php/ControllerPersonnel/add_personnel' ?>" method="post" role="form">
+              <div class="box-body ">
+
+              <div class="col-md-12 frm">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Type personnel</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <select id="type_personnel" name ="id_type_personnel" class="form-control">
+                              <?php foreach($type_personnel as $per) : ?>  
+                              <option value="<?php echo $per['id_type_personnel']; ?>">  <?php echo $per['lib_personnel']; ?> </option>
+                              <?php endforeach ?>
+                        </select>
+                            <span class="input-group-addon">
+                            <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+                <div class="col-md-12 frm">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Nom</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" id="nom" name ="nom" class="form-control" value=''> 
+                            <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-12 frm">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Prénom</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" id="prenom" name ="prenom" class="form-control" value=''> 
+                            <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="col-md-12 frm">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Mobile</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="number" id="premobilenom" name ="mobile" class="form-control" value=''> 
+                            <span class="input-group-addon">
+                            <i class="fa fa-telephone"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+             </div>
+          
+              </div> 
+              <!-- /.box-body -->
+
+          <div class="box-footer">
+                <button type="submit" class="btn btn-success">Valider</button> 
+                <button type="reset" class="btn btn-default">Annuler</button>
+              </div>
+            </form> 
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+				</div>
+	<!--  Fin du modal -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
@@ -144,5 +246,98 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <!-- js files -->
 <?php $this->load->view('tpl/js_files'); ?>
+<script type="text/javascript">
+   $(document).ready(function(e){
+		let ajaxLink = "<?php echo base_url(). "index.php/ControllerPersonnel/listPersonnel" ?>";        
+				let userlist = $("#personnel").DataTable({				
+				buttons: [
+					{
+								 extend: "print",
+								 text: "imprimer",
+								 className: "btn btn-change mt-ladda-btn ladda-button btn-secondary",
+								 title: "Liste des utilisateurs",
+								 exportOptions: {
+											 columns: ':visible'
+									 }
+						 }, 
+						  {
+								 extend: "pdf",
+								 className: "btn btn-good mt-ladda-btn ladda-button btn-danger ",
+								 title: "Liste des utilisateurs",
+								 exportOptions: {
+											 columns: ':visible'
+									 }
+						 }, 
+						 {
+								 extend: "excel",
+								 className: "btn btn-snap mt-ladda-btn ladda-button btn-success ",
+								 title: "Liste des utilisateurs",
+								 exportOptions: {
+											 columns: ':visible'
+									 }
+						 }],
+							"select": true,
+				 
+							"select": {
+										"style":'multi'
+									 },
+						"columnDefs": [ 
+												 {
+														 "orderable": false,
+														 "className": 'select-checkbox',
+														 "targets":1
+												 },
+												 {
+								 "targets": [0],
+								"visible": false
+									 
+							 }
+								 ],
+								 "lengthMenu": [[10, 15, 20, -1], [10, 15, 20, "All"]],
+								 "order": [ 0, 'desc' ],
+								 "columns": [
+						 { data: 0 },
+						 { data: 1 },
+						 { data: 2 },
+						 { data: 3 },
+						 { data: 4 }
+				 ],
+			 
+								 //   "language": {
+				 //     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+				// },
+					"language": {
+				 "sProcessing":     "Traitement en cours...",
+				 "sSearch":         "Rechercher&nbsp;:",
+					 "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+				 "sInfo":           "",
+				 "sInfoEmpty":      "",
+				 "sInfoFiltered":   "",
+				 "sInfoPostFix":    "",
+				 "sLoadingRecords": "Chargement en cours...",
+					 "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+				 "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+				 "oPaginate": {
+					 "sFirst":      "Premier",
+					 "sPrevious":   "Pr&eacute;c&eacute;dent",
+					 "sNext":       "Suivant",
+					 "sLast":       "Dernier"
+				 },
+				 "oAria": {
+					 "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+					 "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+				 }
+				 },
+				 "ajax": {
+				 url : ajaxLink,
+					 "type": "POST"
+					 } ,
+
+				"dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+
+		 }); 
+	 })
+		
+</script>
 </body>
 </html>
