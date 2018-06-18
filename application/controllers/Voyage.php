@@ -41,11 +41,11 @@
 				$parcours;
 				$ville_depart = $this->session->userdata("ville");
 				if($ville_depart=="ABIDJAN"){
-					$parcours = "ABIDJAN - ODIENE";
+					$parcours = "ABIDJAN - ODIENNE";
 				}else{
-					$parcours = "ODIENE - ABIDJAN";
+					$parcours = "ODIENNE - ABIDJAN";
 				}
-				//echo $parcours; echo $date;
+				//echo "parcours ".$parcours." date ". $date;exit();
 				$num_depart = $this->VoyageModel->get_num_depart_en_cours($parcours,$date);
 				//print_r($num_depart);exit();
 				$chauffeur_depart = $this->VoyageModel->check_chauffeur_for_depart($num_depart,$date);
@@ -93,6 +93,7 @@
                   return redirect('voyage');
 				}else{
 				$user_id = $this->session->userdata("user_id");
+				$id_gare = $this->session->userdata("id_gare");
 				$type_passager = $this->input->post("type_passager");
 				$nom = $this->input->post("nom");
 				$prenom = $this->input->post("prenom");
@@ -122,6 +123,8 @@
 				$data_depart["place_disponible"] = $place_dispo;
 				$data_depart["immatriculation"] = $immatriculation;
 				$data_depart["user_id"] = $user_id;
+				$data_depart["id_gare"] = $id_gare;
+				$data_depart["etat"] = "chargement en cours";
 				$data_depart["date_ajout"] = Date("d/m/Y");
 				$id_depart;
 				//variable pour testes l'ajout ou la midification 
@@ -147,16 +150,18 @@
 					$data_passager["num_siege"] = $num_siege;
 					$data_passager["date_create"] = date("d/m/Y");
 					$data_passager["id_destination"] = $destination;
+					$data_passager["tarif"] = $tarif;
 					$data_passager["type_passager"] = $type_passager;
 					$data_passager["id_depart"] = $id_depart;
+					$data_passager['user_id'] = $user_id;
 					$this->VoyageModel->add_passager($data_passager);
 					$data_affectation["immatriculation"] = $immatriculation;
 					$data_affectation["id_personnel"] = $chauffeur;
 					$data_affectation["date_affectation"] = date("d/m/Y");
+					$data_affectation['user_id'] = $user_id;
 					$this->VoyageModel->add_affectation($data_affectation);
 					$data_affectation["id_personnel"] = $convoyeur;
 					$this->VoyageModel->add_affectation($data_affectation);
-					$data_passager["tarif"] = $tarif;
 					$data_passager["heure_depart"] = $heure_depart;
 					$data_passager["destination"] = $this->VoyageModel->get_ville_arrive_by_id($destination);
 					$this->load->view("voyage/fiche_voyage",$data_passager);
@@ -169,19 +174,13 @@
 
 			public function check_num_siege()
 			{
-				$parcours;
-				$ville_depart = $this->session->userdata("ville");
-				if($ville_depart=="ABIDJAN"){
-					$parcours = "ABIDJAN - ODIENE";
-				}else{
-					$parcours = "ODIENE - ABIDJAN";
-				}
-				$num_siege = $this->input->get("num_siege");
-				$num_depart = $this->input->get("num_depart");
 				
+				$id_gare = $this->session->userdata("id_gare");
+				$num_siege = $this->input->get("num_siege");
+				$num_depart = $this->input->get("num_depart");				
 				$date = date("d/m/Y");
-				//echo"siege ".$num_siege." depart ".$num_depart."parcours".$parcours."date".$date;exit();
-				if($this->VoyageModel->check_num_siege($num_depart,$num_siege,$date,$parcours))
+				// echo"siege ".$num_siege." depart ".$num_depart."parcours".$parcours."date".$date;exit();
+				if($this->VoyageModel->check_num_siege($num_depart,$num_siege,$date,$id_gare))
 				{
 					echo json_encode(1);
 				}else{
@@ -201,6 +200,149 @@
 				$this->load->view('voyage/pdfreport');
 			}
 
+			//Validation du depart
+		public function valider_depart()
+		{
 			
+				$num_depart = $this->input->post('num_depart');
+				$parcours = $this->input->post('parcours');
+				$date_depart = $this->input->post('date');
+				 if($num_depart)
+					if($this->VoyageModel->valider_depart($num_depart,$parcours,$date_depart)){
+					$data["error"] = "";
+					echo json_encode($data);
+					}else{
+					$data["error"] = "An error occured";
+					echo json_encode($data);
+	
+					}
+			}
+
+			public function load_reservation()
+			{   
+				$data = array();
+				$data["destination"] = $this->VoyageModel->get_destination();
+				$this->load->view("voyage/reservation",$data);
+			}
+
+			public function check_num_siege_reservation()
+			{
+				$num_depart = $this->input->get("num_depart");
+				$date_depart = $this->input->get("date_depart");
+				$num_siege = $this->input->get("num_siege");
+				$id_gare = $this->session->userdata("id_gare");
+				$result = 0;
+
+				if($this->VoyageModel->check_num_siege_reservation($date_depart,$num_depart,$num_siege,$id_gare))
+				{
+					$result = 1;
+
+					echo json_encode($result);
+				}else{
+
+					echo json_encode($result);
+				}
+
+			}
+			
+			public function add_reservation()
+			{
+				$update = $this->input->post("update");             
+				$data = $this->input->post(); 
+				$data['date_reservation'] = date("d/m/Y");
+				$data['id_gare'] = $this->session->userdata("id_gare");
+				$data['user_id'] = $this->session->userdata("user_id");
+				$data['etat'] = "reservation en cours";
+				//var_dump()
+				unset($data['ville_depart']);
+				unset($data['reservation_length']);
+				unset($data['update']);
+				if(!$update){
+					if($this->VoyageModel->reservation($data))
+					{
+						$this->session->set_flashdata("confirme",1);
+						redirect("reservation");
+					}else{
+						$this->session->set_flashdata("confirme", 0);
+						redirect("reservation");	
+					}
+				}
+				else
+				{
+					if($this->VoyageModel->updata_reservation($update,$data))
+					{
+						$this->session->set_flashdata("confirme", 1);
+						redirect("reservation");
+					}else{
+						$this->session->set_flashdata("confirme",0);
+						redirect("reservation");	
+					}
+				}
+				
+			}	
+			
+				//Lister des réservation
+	public function list_reservation(){
+		// les Variables de datatable
+		   //
+		   $draw = intval($this->input->post("draw"));
+		    $start = intval($this->input->post("start"));
+		   $length = intval($this->input->post("length"));
+		 $reservation = $this->VoyageModel->getreservation();
+
+		 $data = array();
+		 if(count($reservation)>0)
+		 {
+		 foreach( $reservation as $r){	
+			 if($r->statut_reservation=="Actif"){
+				 $tab = array();
+				$tab[] = $r->id_reservation;
+				$tab[] = $r->nom." ".$r->prenom;
+				$tab[] =$r->mobile;
+				$tab[] =$r->date_reservation;
+				$tab[] =$r->date_depart;
+				$tab[] =$r->ville_arrive; 
+				$tab[] = $r->tarif;
+				$data[] = $tab;
+			 }
+				
+				}
+
+			}	
+
+			$output = array(
+				"draw" => $draw,
+					"recordsTotal" => count($reservation),
+					"recordsFiltered" => count($reservation),
+					"data" => $data
+				);
+			
+			echo json_encode($output);					
+						
+	   }
+	   
+	   
+	   public function get_reservation_update(){
+		$id = $this->input->post("id");
+		$reservation = $this->VoyageModel->get_reservation_by_id($id);
+		echo json_encode($reservation);
+	  }
+
+	  public function delete()
+			  {
+				$reservation = $this->input->post('selected');
+				if($reservation!=""){
+					if($this->VoyageModel->delete($reservation)){
+				$data["error"] = "";
+				echo json_encode($data);
+	  
+			  }else{
+				$data["error"] = "An error occured";
+				echo json_encode($data);
+	  
+			  }
+				}	  
+			  
+			  }
 
 }

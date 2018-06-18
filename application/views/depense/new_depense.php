@@ -18,6 +18,7 @@
          </aside>
          <!-- Content Wrapper. Contains page content -->
          <div class="content-wrapper">
+		 <div class="box box-primary col-md-4" >
             <!-- Content Header (Page header) -->
             <section class="content-header">
                <div style="float:right;margin-bottom:5px;">
@@ -124,6 +125,7 @@
          </section> 
          <!-- /.content -->
       </div>
+	  </div>
       <!-- /.content-wrapper -->
       <!-- Modal detail utilisateur   -->
       <div class="modal fade"  id="modal_user" style="display: none;">
@@ -135,7 +137,7 @@
                   <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bon de depense</font></font></h4>
                </div>
                <div class="modal-body">
-                  <form action ="<?php echo base_url().'index.php/add_colis' ?>" method="post" role="form">
+                  <form action ="<?php echo base_url().'index.php/add_depense' ?>" method="post" role="form">
                      <!-- Small boxes (Stat box) -->
                      <div class="row">
                         <div class="col-md-12"></div>
@@ -164,60 +166,62 @@
                            <div class="box-body ">
                               <div class="row">
                                  <div class="col-md-12">
+								 <div class="row" style="margin-bottom:2%;">
+								 <div class="col-md-4"></div>
+								  <div class="form-group">
+								  <label class="col-md-2" >Espèce 
+								    <input type="radio" name="type_payement" value="espece">
+								 </label>
+								 <label class="col-md-2">Chèque 
+								    <input type="radio" name="type_payement" value="cheque">
+								 </label>
+								  </div>
+								  <div class="col-md-4"></div>
+								  </div>
                                     <div class="row" style="margin-bottom:2%;">
-                                       <div class="col-md-4">
+                                       <div class="col-md-5">
                                           <div class="col-md-12 frm" style="margin-bottom:1%;">
                                              <div class="form-group">
                                                 <label class="col-md-5 col-form-label">Date </label>
                                                 <div class="col-md-7">
                                                    <div class="input-group">
-                                                      <input id="date_ajout" name="date_ajout" size="21" type="text" class="form_datetime" readonly>
+                                                      <input id="date_ajout" required name="date" size="21" type="text" class="form_datetime forms" readonly>
                                                    </div>
                                                 </div>
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4">
+                                       <div class="col-md-7">
                                           <div class="col-md-12 frm" style="margin-bottom:1%;">
                                              <div class="form-group">
                                                 <label class="col-md-3 col-form-label">Bénéficiaire</label>
                                                 <div class="col-md-9">
                                                    <div class="input-group">
-                                                      <input id="ref" name="ref" size="21" type="text" >
+                                                      <input id="ref" name="nom_beneficiaire" class="forms" size="40%" type="text" required>
                                                    </div>
                                                 </div>
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4">
+                                       <div class="col-md-5">
                                           <div class="col-md-12 frm" style="margin-bottom:1%;">
                                              <div class="form-group">
-                                                <label class="col-md-3 col-form-label">Bénéficiaire</label>
+                                                <label class="col-md-5 col-form-label">Montant</label>
+                                                <div class="col-md-7">
+                                                   <div class="input-group">
+                                                      <input id="ref" class="forms" name="montant" type="text" required>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                        <div class="col-md-7">
+                                          <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                             <div class="form-group">
+                                                <label class="col-md-3 col-form-label">Motif</label>
                                                 <div class="col-md-9">
                                                    <div class="input-group">
-                                                      <input id="ref" name="ref" size="21" type="text" >
-                                                   </div>
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-md-4">
-                                       </div>
-                                       <div class="col-md-4">
-                                       </div>
-                                       <div class="col-md-4">
-                                       </div>
-                                    </div>
-                                    <div class="row" style="margin-top:5%;">
-                                       <div class="col-md-4">
-                                          <div class="col-md-12 frm" style="margin-bottom:1%;">
-                                             <div class="form-group">
-                                                <label class="col-md-4 col-form-label">Motif</label>
-                                                <div class="col-md-8">
-                                                   <div class="input-group">
-                                                      <textarea name="remarque" style="width:250px; height: 68px;" required></textarea> 
+                                                      <textarea name="motif" style="width:314px; height: 68px;" required></textarea> 
                                                    </div>
                                                 </div>
                                              </div>
@@ -241,6 +245,7 @@
          </div>
          <!-- /.modal-dialog -->
       </div>
+	  </div>
       <!--  Fin du modal Colis-->
        <footer class="main-footer">
          <div class="pull-right hidden-xs">
@@ -264,21 +269,21 @@
          			            extend: "print",
          			            text: "imprimer",
          			            className: "btn btn-good mt-ladda-btn ladda-button btn-secondary",
-         			            title: "Liste des passager",
+         			            title: "Fiche des depenses",
          			            exportOptions: {
          		                    columns: ':visible'
          		                }
          			        }, {
          			            extend: "pdf",
          			            className: "btn btn-good mt-ladda-btn ladda-button btn-danger ",
-         			            title: "Liste des passager",
+         			            title: "Fiche des depenses",
          			            exportOptions: {
          		                    columns: ':visible'
          		                }
          			        }, {
          			            extend: "excel",
          			            className: "btn btn-snap mt-ladda-btn ladda-button btn-success ",
-         			            title: "Liste des passager",
+         			            title: "Fiche des depenses",
          			            exportOptions: {
          		                    columns: ':visible'
          		                }
@@ -308,10 +313,15 @@
          		                
          					},*/
          				    {
-         				    	"targets": [1],
+         				    	"targets": [0,1],
          		                "visible": false
          		                
          				    },
+							 {
+					    	"targets": [1,2],
+			                "searchable": true
+			                
+					    },
          				    {
          				    	"targets": "_all",
          				    	"createdCell": function(td, cellData, rowData, col) {
@@ -457,7 +467,7 @@
          				
          			// })
          
-         		    $(".date-picker").datepicker({
+         		    $("#date_ajout,.date-picker").datepicker({
 					format: 'dd/mm/yyyy',
 					setDate: new Date(),
 					useCurrent: false,

@@ -30,7 +30,8 @@ $obj_pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 $obj_pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 $obj_pdf->SetFont('helvetica', '', 9);
 $obj_pdf->setFontSubsetting(false);
-$obj_pdf->AddPage();
+$image1 = base_url()."assets/dist/img/logo.png";
+$obj_pdf->AddPage('P','A7');
 
 // set color for background
 $obj_pdf->SetFillColor(255, 255, 255);
@@ -45,7 +46,7 @@ $obj_pdf->setCellPaddings(1, 1, 1, 1);
 $obj_pdf->setCellMargins(0,0,0,0);
 //
 $txt = '
-      <b style="font-size:30px;font-family:Algerian;">K.F.T</b> <img src=\'base_url()."assets/dist/imgs_pdf/v1.png"\'><br>
+      <b style="font-size:30px;font-family:Algerian;">K.F.T</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$obj_pdf->Image($image1,45,0, 20).'<br>
        <span style="font-size:6px;font-family:Tahoma;">Abidjan TEL: 05 27 90 07 / 08 81 27 30 <br>
        &nbsp;Odiéné TEL: 45 26 55 45 / 05 23 50 84 <br>
 	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -55,75 +56,28 @@ $txt = '
 	   <span style="text-align:center">	   
 	   <b> '.$parcours.' </b>
 	  </span>
-	   <br><br>
-		
+	   <br><br>		
 			<b>
 			TARIF :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$tarif.'    <br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$tarif.' <br><br>
 			&nbsp;&nbsp;N° SIEGE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;'.$num_siege.'   <br><br>
 			&nbsp;&nbsp;HEURE DE DEPART :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$heure_depart.'   <br><br>
-		   </b>
-	  
-	   <p style="background-color:ccc;">Aucun remboussement après depart du car.</p>
-    
+		   </b>	  
+	   <p style="background-color:ccc;">Aucun remboussement après depart du car.</p>    
 ';
-/*'
-	 
-  */
+
+//$obj_pdf->Image($image1,95,15,20);
+/* */
 // Vertical alignment
-$obj_pdf->MultiCell(70, 70, ''.$txt, 1, 'J', 1, 0, '', '', true, 0, true, true, 40, 'T');
-$obj_pdf->MultiCell(70, 70, ''.$txt, 1, 'J', 1, 0, '', '', true, 0, true, true, 40, 'M');
-$obj_pdf->MultiCell(70, 70, ''.$txt, 1, 'J', 1, 1, '', '', true, 0, true, true, 40, 'B');
-
-
-
-/*
-
-ob_start();
-    echo'
-     <div class="row">
-	<div class="" style="border:1px;width:30%;">	 
-      <p> <b style="font-size:40px;font-family:Algerian;">K.F.T</b> <br>
-       Abidjan TEL: 05 27 90 07 / 08 81 27 30 <br>
-       Odiéné TEL: 45 26 55 45 / 05 23 50 84 <br>
-       <b style="margin-left:10px;"></b>06 29 76 85 <br>
-	   </p>
-	   <p style="margin-left:10px;">
-	   <center>
-	   <b>
-	   '.$parcours.' <br>
-		TARIF :    <br>
-		N° SIEGE:   <br><br>
-		HEURE DE DEPART :   <br><br>
-	   </b>
-	   </center>  
-	   </p>
-	   <p>Aucun remboussement après depart du car.</p>
-    </div>
-    <div class="col-md-4" style="border:1px;width:30%;">
-        
-    </div>
-    <div class="col-md-4" style="border:1px;width:30%;">
-        
-    </div>
-   
-   </div>
-        
-    ';
-    $content = ob_get_contents();
-ob_end_clean();
-$obj_pdf->writeHTML($content, true, false, true, false, '');
-$obj_pdf->Output('output.pdf', 'I');
-
-*/
+$obj_pdf->MultiCell(80,60, ''.$txt, 1, 'J', 1, 0, '', '', true, 0, true, true, 40, 'T');
 // move pointer to last page
 $obj_pdf->lastPage();
 
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$obj_pdf->Output('example_005.pdf', 'I');
+$obj_pdf->Output('ticket.pdf', 'I');
 ?>

@@ -32,11 +32,13 @@
 
               public function add()
               {
-                $data = $this->input->post();
+				$data = $this->input->post();
+				$user_id = $this->session->userdata("user_id");
                 $statut = "Actif";
                 $date_create = date("Y-m-d H:i:s");
                 $data['statut'] = $statut;
 				$data["date_create"] = $date_create;
+				$data['user_id'] = $user_id;
                 unset($data['sumbmit']);
                if($this->PersonnelModel->add_type_personnel($data))
                {
@@ -59,11 +61,13 @@
 
               public function add_personnel()
               {
+				$user_id = $this->session->userdata("user_id");
                 $data = $this->input->post();
                 $statut = "Actif";
                 $date_create = date("Y-m-d H:i:s");
                 $data['statut'] = $statut;
 				$data["date_create"] = $date_create;
+				$data['user_id'] = $user_id;
                 unset($data['sumbmit']);
                if($this->PersonnelModel->add_personnel($data))
                {
@@ -83,11 +87,13 @@
 
               public function add_gare()
               {
+				$user_id = $this->session->userdata("user_id");
                 $data = $this->input->post();
                 $statut = "Actif";
                 $date_create = date("Y-m-d H:i:s");
                 $data['statut'] = $statut;
 				$data["date_create"] = $date_create;
+				$data['user_id'] = $user_id;
                 unset($data['sumbmit']);
                if($this->PersonnelModel->add_gare($data))
                {

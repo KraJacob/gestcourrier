@@ -10,17 +10,28 @@ class Connexion extends CI_Model {
     function validCredentials($useremail,$password){
      //$this->load->library('encrypt');
 
-     $q = "SELECT user.user_id,nom,prenom,email,`user`.`statut`,`user`.`id_gare`,`gare`.`id_gare`,lib_gare,`gare`.`ville`  FROM user,gare WHERE `user`.`id_gare`=`gare`.`id_gare` AND email = ? AND password = ?  AND `user`.`statut` = 'Actif' ";
+     $q = "SELECT user.user_id,nom,prenom,email,user.droit,`user`.`statut`,`user`.`id_gare`,`gare`.`id_gare`,lib_gare,`gare`.`ville`  FROM user,gare WHERE `user`.`id_gare`=`gare`.`id_gare` AND email = ? AND password = ?  AND `user`.`statut` = 'Actif' ";
 
      $data = array($useremail,$password);
     
-     $q = $this->db->query($q,$data);
+	 $q = $this->db->query($q,$data);
+	 
+	 $q2 = "SELECT user.user_id,nom,prenom,email,user.droit,`user`.`statut`,`user`.`id_gare` FROM user,gare WHERE `user`.`id_gare`=0 AND email = ? AND password = ?  AND `user`.`statut` = 'Actif' ";
+         
+	 $q2 = $this->db->query($q2,$data);
 
      if($q->num_rows() > 0) {
-          $r = $q->result_array();
+		  $r = $q->result_array();
+		  $r['type_user']="normal";
           return $r;         
-     }
-        return;
+     }elseif($q2->num_rows() > 0){
+		$r = $q2->result_array();
+		$r['type_user']="superviseur";
+		return $r; 
+	 }else{
+		 return false;
+	 }
+        
   
 }
       public function historique($data)

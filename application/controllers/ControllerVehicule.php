@@ -33,10 +33,12 @@ class ControllerVehicule extends CI_Controller {
 
       public function add_vehicule()
       {
+		$user_id = $this->session->userdata("user_id");
         $data = $this->input->post();
         $statut = "Actif";
         $date_create = date("Y-m-d H:i:s");
-        $data['statut'] = $statut;
+		$data['statut'] = $statut;
+		$data['user_id'] = $user_id;
         $data["date_create"] = $date_create;
         unset($data['sumbmit']);
        if($this->VehiculeModel->add_vehicule($data))

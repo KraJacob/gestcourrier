@@ -7,7 +7,9 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/datatables.net-bs/Select/css/select.bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/Ionicons/css/ionicons.min.css">
@@ -26,20 +28,23 @@
   <link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-	<link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/datatables/datatables.min.css"> 
-<!--	<link rel="stylesheet" href="<?php //echo plugins_url('datatables/datatables.min.css'); ?>"> -->
-	 <link href="<?php echo plugins_url('bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'); ?>" rel="stylesheet" type="text/css"/>
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src ="<?php echo base_url();?>https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src ="<?php echo base_url();?>https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- Google Font -->
-  <!-- <link rel="stylesheet" href=""https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="> -->
-  <!-- DataTables -->
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+	
   <!-- Theme style -->
+	<style>
+	  .forms{
+			border-radius:4px;
+			width: 195px;
+			height: 32px;
+		}
+		.div-scrol{
+			height: auto;
+			max-height: 295px;
+      overflow-y: scroll;
+		}
+		.box-height{
+			height: 580px;
+		}
+		.margin-bottom{
+			margin-bottom:6%;
+		}
+	</style>

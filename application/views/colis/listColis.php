@@ -18,6 +18,7 @@
          </aside>
          <!-- Content Wrapper. Contains page content -->
          <div class="content-wrapper">
+		 <div class="box box-primary col-md-4" >
             <!-- Content Header (Page header) -->
             <section class="content-header">
                <div style="float:right;margin-bottom:5px;">
@@ -52,7 +53,7 @@
                                  </td>
                                  <td rowspan="1" colspan="1">
                                     <div class="input-group date date-picker margin-bottom-5 col-md-8" data-date-format="dd/mm/yyyy">
-                                       <input type="text" class="form-control input-sm" data-column="2" readonly="" name="colis_from" placeholder="de">
+                                       <input type="text" class="form-control input-sm" data-column="3" readonly="" name="colis_from" placeholder="de">
                                        <span class="input-group-btn">
                                        <button class="btn btn-sm default" type="button">
                                        <i class="fa fa-calendar"></i>
@@ -60,7 +61,7 @@
                                        </span>
                                     </div>
                                     <div class="input-group date date-picker col-md-8" data-date-format="dd/mm/yyyy">
-                                       <input id="colis_to" type="text" class="form-control input-from input-sm" data-column="2" readonly="" name="colis_to" placeholder="à">
+                                       <input id="colis_to" type="text" class="form-control input-from input-sm" data-column="3" readonly="" name="colis_to" placeholder="à">
                                        <span class="input-group-btn">
                                        <button class="btn btn-sm default" type="button">
                                        <i class="fa fa-calendar"></i>
@@ -107,9 +108,13 @@
                               <i class="fa fa-plus"></i>
                               <span class="hidden-xs"> Nouveau </span>
                               </a>
-                              <a href="#" id="voir-article" style="display: none;" class="btn btn btn-default">
+                              <a href="Javascript:;" id="voir-article" style="display: none;" class="btn btn btn-default">
                               <i class="fa fa-eye"></i>
                               <span class="hidden-xs"> Voir </span>
+                              </a>
+							  <a href="Javascript:;" id="btn_update" style="display: none;" class="btn btn btn-info">
+                              <i class="fa fa-update"></i>
+                              <span class="hidden-xs"> Modifier </span>
                               </a>
                               <a href="javascript:;" style="display:none;" id="list-delete-colis" class="btn btn btn-danger" data-toggle="confirmation" data-original-title="Etes vous sûre ?" title="">
                               <i class="fa fa-trash"></i>
@@ -141,6 +146,7 @@
                </div>
          </div>
          </section> 
+		 </div>
          <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
@@ -151,7 +157,7 @@
                <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">×</font></font></span></button>
-                  <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Contenu du colis</font></font></h4>
+                  <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Enregistrement d'un colis</font></font></h4>
                </div>
                <div class="modal-body">
                   <form action ="<?php echo base_url().'index.php/add_colis' ?>" method="post" role="form">
@@ -164,11 +170,7 @@
                               <div class="box-footer"  style="float:right;">
                                  <button type="submit" class="btn btn-success">Valider</button> 
                                  <button type="reset" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                 <a href="<?php echo base_url()."index.php/Voyage/pdf";  ?>" class="btn btn-warning fa fa-print"> TEST</a>
-                                 <!--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                    Lancer le modal par défaut
-                                    </font></font></button> -->
-                              </div>
+                            </div>
                            </div>
                            <!-- /.box-header -->
                            <!-- form start -->
@@ -194,7 +196,7 @@
                                                 <label class="col-md-5 col-form-label">Enregistré le </label>
                                                 <div class="col-md-7">
                                                    <div class="input-group">
-                                                      <input id="date_ajout" name="date_ajout" size="21" type="text" class="form_datetime" readonly>
+                                                      <input id="date_ajout" name="date_ajout" size="21" type="text" class="forms" readonly>
                                                    </div>
                                                 </div>
                                              </div>
@@ -206,7 +208,8 @@
                                                 <label class="col-md-3 col-form-label">Référence</label>
                                                 <div class="col-md-9">
                                                    <div class="input-group">
-                                                      <input id="ref" name="ref" size="21" type="text" >
+                                                      <input id="ref" class="forms" name="ref" size="21" type="text" >
+													  <input id="id_colis" type="hidden" name="id_colis" value="">
                                                    </div>
                                                 </div>
                                              </div>
@@ -218,7 +221,7 @@
                                                 <label class="col-md-3 col-form-label">Type</label>
                                                 <div class="col-md-9">
                                                    <div class="input-group">
-                                                      <select name="type_colis" class="custom-select col-md-12 mb-2 mr-sm-2 mb-sm-0" id="type_colis">
+                                                      <select name="type_colis" class="forms" id="type_colis">
                                                          <option selected>Choisissez</option>
                                                          <?php if($type_colis): ?>
                                                          <?php foreach($type_colis as $dat): ?>
@@ -247,7 +250,7 @@
                                                 <label class="col-md-4 col-form-label">¨Contenu</label>
                                                 <div class="col-md-8">
                                                    <div class="input-group">
-                                                      <textarea name="remarque" style="width:250px; height: 68px;" required></textarea> 
+                                                      <textarea name="remarque" id="contenu_colis" style="width:250px; height: 68px;" required></textarea> 
                                                    </div>
                                                 </div>
                                              </div>
@@ -259,13 +262,13 @@
                                                 <label class="col-md-6 col-form-label">Lieu de reception</label>
                                                 <div class="col-md-6">
                                                    <div class="input-group">
-                                                      <select name="lieu_reception" class="custom-select col-md-12 mb-2 mr-sm-2 mb-sm-0" id="lieu_reception">
+                                                      <select name="lieu_reception" class="forms" id="lieu_reception">
                                                          <option selected>Choisissez</option>
-                                                         <?php //if($destination): ?>
-                                                         <?php// foreach($destination as $dest): ?>
-                                                         <option value="<?php //echo $dest["id_destination"];?>" ><?php //echo $dest["ville_arrive"];?></option>
-                                                         <?php //endforeach ?>
-                                                         <?php //endif ?>
+                                                         <?php if($gare): ?>
+                                                         <?php foreach($gare as $dest): ?>
+                                                         <option value="<?php echo $dest["id_gare"];?>" ><?php echo $dest["lib_gare"];?></option>
+                                                         <?php endforeach ?>
+                                                         <?php endif ?>
                                                       </select>
                                                    </div>
                                                 </div>
@@ -276,7 +279,7 @@
                                                 <label class="col-md-6 col-form-label">Mot de passe</label>
                                                 <div class="col-md-6">
                                                    <div class="input-group">
-                                                      <input type="text" id="pass" name ="pass" required class="form-control" value=''> 
+                                                      <input type="text" id="pass" name ="pass" required class="forms" value=''> 
                                                    </div>
                                                 </div>
                                              </div>
@@ -288,7 +291,7 @@
                                                 <label class="col-md-3 col-form-label">Valeur</label>
                                                 <div class="col-md-9">
                                                    <div class="input-group">
-                                                      <input type="text" id="valeur_colis" name ="valeur" required class="form-control"  onChange="majuscule(this);"> 
+                                                      <input type="text" id="valeur_colis" name ="valeur" required class="forms"  onChange="majuscule(this);"> 
                                                    </div>
                                                 </div>
                                              </div>
@@ -298,7 +301,7 @@
                                                 <label class="col-md-3 col-form-label">Montant</label>
                                                 <div class="col-md-9">
                                                    <div class="input-group">
-                                                      <input type="text" id="montant_colis" name ="montant" required class="form-control"  onChange="majuscule(this);"> 
+                                                      <input type="text" id="montant_colis" name ="montant" required class="forms"  onChange="majuscule(this);"> 
                                                    </div>
                                                 </div>
                                              </div>
@@ -314,7 +317,8 @@
                                                    <label class="col-md-3 col-form-label">Nom</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input class="form-control" name="nom" type="text" required value="" id="nom" onChange="majuscule(this);">
+                                                         <input class="forms" name="nom_exp" type="text" required value="" id="nom_exp" onChange="majuscule(this);">
+														 <input id="id_expediteur" type="hidden" name="id_expediteur" value="">
                                                       </div>
                                                    </div>
                                                 </div>
@@ -324,7 +328,7 @@
                                                    <label class="col-md-3 col-form-label">Prénom</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input type="text" id="type" name ="prenom" required class="form-control" value='' onChange="majuscule(this);"> 
+                                                         <input type="text" id="prenom_exp" name ="prenom" required class="forms" value='' onChange="majuscule(this);"> 
                                                       </div>
                                                    </div>
                                                 </div>
@@ -334,7 +338,7 @@
                                                    <label class="col-md-3 col-form-label">Mobile</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input type="text" id="mobile" name ="mobile" required class="form-control" value=''> 
+                                                         <input type="text" id="mobile_exp" name ="mobile" required class="forms" value=''> 
                                                       </div>
                                                    </div>
                                                 </div>
@@ -344,7 +348,7 @@
                                                    <label class="col-md-3 col-form-label">Nature pièce</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <select name="nat_piece" class="custom-select col-md-12 mb-2 mr-sm-2 mb-sm-0" id="nat_piece">
+                                                         <select name="nat_piece" class="forms" id="nat_piece">
                                                             <option selected>Choisissez</option>
                                                             <option value="CNI" >CNI</option>
                                                             <option value="ATTESTATION" >ATTESTATION</option>
@@ -361,7 +365,7 @@
                                                    <label class="col-md-3 col-form-label">Autre</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input type="text"  name ="nat_pieces" class="form-control" value=''> 
+                                                         <input type="text"  name ="nat_pieces" class="forms" value=''> 
                                                       </div>
                                                    </div>
                                                 </div>
@@ -371,7 +375,7 @@
                                                    <label class="col-md-3 col-form-label">N° pièce</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input type="text" id="num_piece" name ="num_piece" required class="form-control" value=''> 
+                                                         <input type="text" id="num_piece" name ="num_piece" required class="forms" value=''> 
                                                       </div>
                                                    </div>
                                                 </div>
@@ -386,7 +390,8 @@
                                                    <label class="col-md-3 col-form-label">Nom</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input class="form-control" name="nom_dest" type="text" required value="" id="nom_dest" onChange="majuscule(this);">
+                                                         <input class="forms" name="nom_dest" type="text" required value="" id="nom_dest" onChange="majuscule(this);">
+														 <input id="id_destinataire" type="hidden" name="id_destinataire" value="">
                                                       </div>
                                                    </div>
                                                 </div>
@@ -396,7 +401,7 @@
                                                    <label class="col-md-3 col-form-label">Prénom</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input type="text" id="prenom_dest" name ="prenom_dest" required class="form-control" value='' onChange="majuscule(this);"> 
+                                                         <input type="text" id="prenom_dest" name ="prenom_dest" required class="forms" value='' onChange="majuscule(this);"> 
                                                       </div>
                                                    </div>
                                                 </div>
@@ -406,7 +411,7 @@
                                                    <label class="col-md-3 col-form-label">Mobile</label>
                                                    <div class="col-md-9">
                                                       <div class="input-group">
-                                                         <input type="text" id="dest_mobile" name ="mobile_dest" required class="form-control" value=''> 
+                                                         <input type="text" id="dest_mobile" name ="mobile_dest" required class="forms" value=''> 
                                                       </div>
                                                    </div>
                                                 </div>
@@ -462,7 +467,7 @@
                               <label class="col-md-3 col-form-label">Valeur</label>
                               <div class="col-md-9">
                                  <div class="input-group">
-                                    <input type="text" id="valeur" name ="valeur" required class="form-control" value=''> 
+                                    <input type="text" id="valeur" name ="valeur" required class="forms" value=''> 
                                  </div>
                               </div>
                            </div>
@@ -474,7 +479,7 @@
                               <label class="col-md-3 col-form-label">Montant</label>
                               <div class="col-md-9">
                                  <div class="input-group">
-                                    <input type="text" id="montant" name ="montant" required class="form-control" value=''> 
+                                    <input type="text" id="montant" name ="montant" required class="forms" value=''> 
                                  </div>
                               </div>
                            </div>
@@ -530,6 +535,21 @@
          <!-- /.modal-dialog -->
       </div>
       <!-- Fin modal msg -->
+	  <!-- modal message suppression-->
+	 <div class="modal fade" id="msg_delete" style="display: none;">
+         <div class="modal-dialog" style="width:200px;">
+            <div class="modal-content">
+               <div class="modal-body">
+                  <p>Voulez-vous supprimer ?</p>
+			   </div>
+			   <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Non</font></font></button>
+                  <button id="valider_delete" type="button" class="btn btn-success fa fa-check"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Oui</font></font></button>
+               </div>
+			</div>
+		 </div>
+      </div>
+	  <!-- Fin modal message suppression -->
       <footer class="main-footer">
          <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0
@@ -666,8 +686,10 @@
          					numberRows = listColis.rows({selected: true}).count();
          					if(numberRows === 1) {
          						$("#voir-article").fadeIn(200);
+								 $("#btn_update").fadeIn(200);
          					}else{
          						$("#voir-article").fadeOut(200);
+								 $("#btn_update").fadeOut(200);
          					}
          					
          				} )
@@ -678,72 +700,59 @@
          					}
          					if(numberRows !== 1) {
          						$("#voir-article").fadeOut(200);
+								 $("#btn_update").fadeOut(200);
+								 
          					}else{
          						$("#voir-article").fadeIn(200);
+								 $("#btn_update").fadeIn(200);
          					}
          				
          				} );
-         
-         			// $('#list-delete-colis').confirmation({
-         			// 	btnOkLabel: '<i class="icon-ok-sign icon-white"></i> OUI',
-         			// 	btnCancelLabel: '<i class="icon-remove-sign"></i> NON',
-         			// 	onConfirm: function(){
-         			// 		let i = 0;
-         			// 		let selectedIds = [];
-         			// 		listColis.rows({selected : true}).data().each(function(row){
-         			// 			selectedIds[i] = row["DT_RowId"].slice(4);
-         			// 			i++;
-         			// 		});
+
+					//affichage du message de suppression
+					$("#list-delete-colis").on("click",function(){
+						$("#msg_delete").modal("show")
+					})
+                    // function de suppression
+         			$('#valider_delete').on("click", function(){
+         					let i = 0;
+         					let selectedIds = [];
+         					listColis.rows({selected : true}).data().each(function(row){
+         						selectedIds[i] = row["DT_RowId"].slice(4);
+         						i++;
+         					});
          					
-         				
-         			// 		listColis.rows({selected : true}).deselect();
+         				//console.log(selectedIds)
+         					listColis.rows({selected : true}).deselect();
          
-         			// 		$.ajax({
-         			// 			dataType: "json",
-         			// 			url: "delete_article_DT",
-         			// 			type: 'POST',
-         			// 			data: {
-         			// 				selected : selectedIds
-         			// 			}
-         			// 			})
+         					$.ajax({
+         						dataType: "json",
+         						url: "delete_colis",
+         						type: 'POST',
+         						data: {
+         							selected : selectedIds
+         						}
+         						})
          
-         			// 			.done(function(data){
-         			// 				if(data["error"] === ""){
-         			// 					listColis.draw();
+         						.done(function(data){
+									$("#msg_delete").modal("hide")
+									location.reload(true);
+         							
+         						})
+         						.fail(function( jqXHR, textStatus, errorThrown){
          
-         
-         			// 				}else{
-         			// 					alert("Vous avez effectué un mouvement sur cet article, impossible de le supprimer.");
-         			// 				// console.log(data["error"]);
-         			// 				}
-         			// 			})
-         			// 			.fail(function( jqXHR, textStatus, errorThrown){
-         
-         			// 				if(textStatus == "parsererror"){
-         			// 					bootbox.alert({ 
-         			// 					title: "Session Terminée",
-         			// 					message: "Votre session s'est interrompu. Veuillez-vous reconnecter.", 
-         			// 					callback: function(){ 
-         			// 						window.location.href = "<?php echo base_url() . "index.php/Login"; ?>"
-         
-         			// 					}
-         			// 					})
-         			// 				}else{
-         			// 					$(".error-connexion").fadeIn(200);
-         			// 					$(".error-connexion").fadeOut(4000);
-         			// 					$('html, body').animate({ scrollTop: 0 }, 'fast');
-         			// 				}
          						
          							
-         			// 			}); //ajax deleting colis
+         						}); //ajax deleting colis
          
          
-         			// 	}
-         			// }); //delete colis
+         				
+         			}); //delete colis
          
          			$("#voir-article").on("click", function(e){
          				let id_art = listColis.row({selected : true}).data().DT_RowId.slice(4);
-         				window.location.href = '<?php echo base_url() . "index.php/voir/"; ?>' + id_art;
+						 //console.log(id_art)
+         				 window.location.href = '<?php echo base_url() . "index.php/voir/"; ?>' + id_art;
          				
          			})
          
@@ -770,6 +779,19 @@
 					// //    }
 					   
 					//  })
+
+					let searchEtats = "<?php echo $etat; ?>";
+
+
+					if(searchEtats){
+                        //console.log(searchEtats)
+						listColis.columns(5).search(searchEtats);
+						listColis.draw();
+					
+					}
+
+
+					//}
                      $('.search-input-text').on( 'keyup click', function () {   // for text boxes
          			let i =$(this).attr('data-column');  // getting column index
          			let v =$(this).val();  // getting search input value
@@ -804,15 +826,17 @@
 					})
 						let valeur_colis =0
 						let montant_colis=0
+						let contenu_colis ="";
 					$("#add_contenu").on("click", function(){
 						if($.isNumeric($("#valeur").val()) && $.isNumeric( $("#montant").val())){
-							let contenu = $("#contenu").val()
+							contenu = $("#contenu").val()
 							valeur = parseInt($("#valeur").val())
 							montant = parseInt($("#montant").val())
-						//console.log(montant)
+						console.log(montant)
 						$('#tab_contenu tr:last').after('<tr class="delete"> <td><center>'+contenu+'<c/enter></td><td><center>'+valeur+'</center></td><td><center>'+montant+'</center></td><td><button id="btn_delete" class="btn btn-xs fa fa-trash-o" onclick="deleteRow(this)"></button></td></tr>');
 						valeur_colis = valeur_colis + valeur
 						montant_colis = montant_colis + montant
+						contenu_colis = contenu_colis+" "+contenu
 						$("#contenu").focus()
 						$("#contenu").val("")
 						$("#valeur").val("")
@@ -832,6 +856,7 @@
 						if($.isNumeric(valeur_colis) && $.isNumeric(montant_colis)){
 						$("#valeur_colis").val(valeur_colis)
 						$("#montant_colis").val(montant_colis)
+						$("#contenu_colis").val(contenu)
 						$("#modal_colis").modal('hide');
 						}else{
 							setTimeout(function() {$('#message_erreur').modal('hide');}, 3000);
@@ -841,7 +866,7 @@
 					
 					$("#nat_piece").on("change",function(){
 						let type = $(this).find(":selected").text();
-						console.log(type)
+						// console.log(type)
 						if(type=="AUTRE")
 						{
 							$("#nature_piece").fadeIn();
@@ -849,6 +874,55 @@
 							$("#nature_piece").fadeOut();
 						}
 					})
+
+					// Action sur le bouton de modification
+
+		$("#btn_update").on("click",function(){
+			let idColis = listColis.row({selected:true}).data().DT_RowId.slice(4);
+				console.log(idColis)
+			let url ='<?php echo base_url()."index.php/ControllerColis/get_colis_update";?>';
+
+			$.ajax({
+				dataType:"json",
+				url:url,
+				type:"POST",
+				data:{id:idColis}
+			}).done(function(data){
+				console.log(data[0]["id_colis"]) 
+				$("#modal_user").modal("show")
+				$("#id_colis").val(data[0]["id_colis"])
+				$("#id_expediteur").val(data[0]["id_expediteur"])
+				$("#id_destinataire").val(data[0]["id_destinataire"])
+				$("#date_ajout").val(data[0]["date_create"])
+				$("#contenu_colis").val(data[0]["description"])
+				$("#num_depart").val(data[0]["id_expediteur"])
+				$("#type_colis").val(data[0]["id_type_colis"])
+				$("#lieu_reception").val(data[0]["lieu_reception"])
+				$("#montant_colis").val(data[0]["montant"])
+				$("#pass").val(data[0]["passe"])
+				$("#ref").val(data[0]["ref_colis"])
+				$("#valeur_colis").val(data[0]["valeur"])
+				$("#nat_piece").val(data[0]["nature_piece_expediteur"])
+				$("#num_piece").val(data[0]["num_piece_expediteur"])
+				$("#dest_mobile").val(data[0]["mobile_destinataire"])
+				$("#nom_dest").val(data[0]["nom_destinataire"])
+				$("#prenom_dest").val(data[0]["prenom_destinataire"])
+				$("#mobile_exp").val(data[0]["mobile_expediteur"])
+				$("#nom_exp").val(data[0]["nom_expediteur"]	)	
+				$("#prenom_exp").val(data[0]["prenom_expediteur"])
+				let id_gare = data[0]["id_gare"]
+				$("#gare option[value="+id_gare+"]").prop('selected', true);
+				if(data[0]["type_passager"]=="normal"){
+					$("#normal").attr('checked', 'checked');
+				}else{
+					$("#privilegie").attr('checked', 'checked');
+				}
+				
+			}).fail(function(){
+				console.log("failed")
+			})
+		})
+         // 
 
 				$("#btn_delete").on("click", function(e){
 					console.log("ok")
@@ -868,12 +942,16 @@
 					   let	i  = $("input[name='colis_from']").attr('data-column');
 					   let v1 = $("input[name='colis_from']").val();
 					   let v2 = $("input[name='colis_to']").val();
+					   console.log(v1+" "+v2+" "+i)
 					   listColis.columns(i).search(v1 + "-" + v2).draw();
 	                });
       
          })
 		
-		
+		 function deleteRow(btn) {
+			var row = btn.parentNode.parentNode;
+			row.parentNode.removeChild(row);
+			}	
       </script>
    </body>
 </html>

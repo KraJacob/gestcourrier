@@ -37,10 +37,11 @@ class Login extends CI_Controller {
         $validCredentials = $this->Connexion->validCredentials($useremail,$password);
                   
       $data = $validCredentials;
-      //print_r($data); exit();
+      //print_r($data['type_user']); exit();
        if($data)
        {
-         
+		 if($data['type_user']=="normal")
+		 {
           $id = $data[0]['user_id'];                            
           $this->session->set_userdata("success", TRUE); 
           $this->session->set_userdata('session_time',$now);
@@ -48,16 +49,32 @@ class Login extends CI_Controller {
           $this->session->set_userdata('useremail',$useremail);
           $this->session->set_userdata('user_id',$data[0]['user_id']);
           $this->session->set_userdata('nom',$data[0]['nom']);
-          $this->session->set_userdata('prenom',$data[0]['prenom']);
+		  $this->session->set_userdata('prenom',$data[0]['prenom']);
+		  $this->session->set_userdata('droit',$data[0]['droit']);
 		  $this->session->set_userdata('gare',$data[0]['lib_gare']);
 		  $this->session->set_userdata('id_gare',$data[0]['id_gare']);
           $this->session->set_userdata('ville',$data[0]['ville']);
           $this->session->set_userdata($date,$data);
           $this->session->set_userdata($heure,$data);
+          redirect('dashboard');
+		 }else{
+		  $id = $data[0]['user_id'];                            
+          $this->session->set_userdata("success", TRUE); 
+          $this->session->set_userdata('session_time',$now);
+          $this->session->set_userdata('timeOut',$timeOut);
+          $this->session->set_userdata('useremail',$useremail);
+          $this->session->set_userdata('user_id',$data[0]['user_id']);
+          $this->session->set_userdata('nom',$data[0]['nom']);
+		  $this->session->set_userdata('prenom',$data[0]['prenom']);
+		  $this->session->set_userdata('droit',$data[0]['droit']);
+		  $this->session->set_userdata($date,$data);
+          $this->session->set_userdata($heure,$data);
         
          // $data["erreur"]="";
          // echo json_encode($data);
-          redirect('dashboard');
+          redirect('dashboard2'); 
+		 }
+          
   
     }else{
        // $data["erreur"]="erreur";

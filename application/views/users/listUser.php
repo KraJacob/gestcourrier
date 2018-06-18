@@ -17,7 +17,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php $this->load->view('tpl/side_barre'); ?>
   </aside>
   <!-- Content Wrapper. Contains page content -->
+	
   <div class="content-wrapper">
+	<div class="box box-primary col-md-4" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
 		<div style="float:right;margin-bottom:5px;">
@@ -54,6 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- </section> -->
     <!-- /.content -->
   </div>
+	</div>
   <!-- /.content-wrapper -->
 
 	<!-- Modal detail utilisateur   -->
@@ -74,11 +77,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<label class="col-md-3 col-form-label"> GARE </label>
 												<div class="col-md-9">
 													<div class="input-group col-md-12">
-														<select class="custom-select col-md-9 mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+														<select class="forms" id="inlineFormCustomSelect">
 														<option selected>Choisissez</option>
 														<?php if($gare): ?>
-															<?php foreach($gare as $g): ?>
-															
+															<?php foreach($gare as $g): ?>															
 															<option value=" <?php $g["id_gare"];?>"><?php echo $g["lib_gare"];?></option>
 															<?php endforeach ?>
 															<?php endif ?>
@@ -88,25 +90,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</div>
 									</div> 
 									</div> 
-									<div class="form-group has-feedback">
-											<input type="text" class="form-control" name="nom" placeholder="Nom" required onChange="majuscule(this);">
-										<span class="glyphicon glyphicon-user form-control-feedback"></span>
+									<div class="form-group" style="margin-bottom:6%;">
+									<label class="col-md-3 col-form-label"> Nom </label>
+									<div class="col-md-9">
+											<input type="text" class="forms" name="nom" placeholder="Nom" required onChange="majuscule(this);">
+									</div>
+									</div>
+									<div class="form-group has-feedback"  style="margin-bottom:12%;">
+									<label class="col-md-3 col-form-label"> Prénom </label>
+									<div class="col-md-9">
+										<input type="text" class="forms" name="prenom" placeholder="Prénom" required onChange="majuscule(this);">
+									</div>
+									</div>
+									<div class="form-group " style="margin-bottom:18%;">
+									<label class="col-md-3 col-form-label"> Email </label>
+									<div class="col-md-9">
+										<input type="email" class="forms" name="email" required placeholder="Email">
+									</div>
+									</div>
+									<div class="form-group has-feedback" style="margin-bottom:24%;">
+									<label class="col-md-3 col-form-label"> Role </label>
+									<div class="col-md-9">
+										<select name="droit" id="droit" class="forms">
+										  <option value="caissier">Caissier</option>
+											<option value="superviseur">Superiseur</option>
+										</select>
+									</div>
+									</div>
+									<div class="form-group has-feedback" style="margin-bottom:30%;">
+									<label class="col-md-3 col-form-label"> Mot de passe </label>
+									<div class="col-md-9">
+										<input type="password" class="forms" name="password" required placeholder="Mot de passe ">
+									</div>
 									</div>
 									<div class="form-group has-feedback">
-										<input type="text" class="form-control" name="prenom" placeholder="Prénom" required onChange="majuscule(this);">
-										<span class="glyphicon glyphicon-user form-control-feedback"></span>
+									<label class="col-md-3 col-form-label"> Confirmation </label>
+									<div class="col-md-9">
+										<input type="password" class="forms" name="passwordconf" required placeholder="Confirmer le mot de passe">
 									</div>
-									<div class="form-group has-feedback">
-										<input type="email" class="form-control" name="email" required placeholder="Email">
-										<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-									</div>
-									<div class="form-group has-feedback">
-										<input type="password" class="form-control" name="password" required placeholder="Mot de passe ">
-										<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-									</div>
-									<div class="form-group has-feedback">
-										<input type="password" class="form-control" name="passwordconf" required placeholder="Confirmer le mot de passe">
-										<span class="glyphicon glyphicon-log-in form-control-feedback"></span>
 									</div>
 									<div class="row">
 										<div class="col-xs-4">

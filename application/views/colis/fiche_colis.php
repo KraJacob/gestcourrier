@@ -19,7 +19,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- insertion de la side barre -->
-    <?php $this->load->view('tpl/side_barre'); ?>
+	<?php $this->load->view('tpl/side_barre'); 
+	$data= Array();
+	$data["date"]=$date_expedition;
+	$data["nom"]=$nom_expediteur;
+	$data["prenom"]=$prenom_expediteur;
+	$data["ref_colis"]=$ref_colis;
+	$data["nom_dest"]=$nom_dest;
+	$data["prenom_dest"]=$prenom_dest;
+	$data["contenu"]=$description;
+	$this->session->set_userdata("param",$data)
+	?>
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
@@ -47,7 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <h3 class="box-title"></h3>
 							<div class="box-footer"  style="float:right;">
                 
-                 <a href="<?php echo base_url()."index.php/print_recu";  ?>" class="btn btn-warning fa fa-print"> REÇU</a>
+                 <a href="<?php echo base_url()."index.php/print_recu";  ?> " target="_blank"  class="btn btn-warning fa fa-print"> REÇU</a>
 				 <a class="btn btn-primary fa fa-edit"> Modifier</a>
 				 <a href="<?php echo base_url()."index.php/colis";  ?>" class="btn btn-default fa fa-mail-reply"> RETOUR</a>
               </div>
@@ -126,7 +136,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	<label class="col-md-3 col-form-label">Nom</label>
 																			<div class="col-md-9">
 																					<div class="input-group">
-																							<input class="form-control" name="nom" value="<?=$nom; ?>" type="text" required id="nom" onChange="majuscule(this);">
+																							<input class="form-control" name="nom" value="<?=$nom_expediteur; ?>" type="text" required id="nom" onChange="majuscule(this);">
 																					</div>
 																			</div>
 																	</div>
@@ -137,7 +147,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	<label class="col-md-3 col-form-label">Prénom</label>
 																	<div class="col-md-9">
 																			<div class="input-group">
-																					<input type="text" id="type" value="<?=$prenom; ?>" name ="prenom" required class="form-control" onChange="majuscule(this);"> 
+																					<input type="text" id="type" value="<?=$nom_expediteur; ?>" name ="prenom" required class="form-control" onChange="majuscule(this);"> 
 																			</div>
 																	</div>
 																</div>
@@ -147,7 +157,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	<label class="col-md-3 col-form-label">Mobile</label>
 																	<div class="col-md-9">
 																			<div class="input-group">
-																					<input type="text" value="<?=$mobile; ?>" id="mobile" name ="mobile" required class="form-control"> 
+																					<input type="text" value="<?=$mobile_expediteur; ?>" id="mobile" name ="mobile" required class="form-control"> 
 																			</div>
 																	</div>
 																</div>
@@ -158,7 +168,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	<div class="col-md-9">
 																			<div class="input-group">
 																			<select name="nat_piece" class="custom-select col-md-12 mb-2 mr-sm-2 mb-sm-0" id="nat_piece">
-                                    <option selected><?=$nature_piece; ?></option>
+                                    <option selected><?=$nature_piece_expediteur; ?></option>
                                         <?php //if($destination): ?>
                                         <?php// foreach($destination as $dest): ?>
                                         
@@ -175,7 +185,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	<label class="col-md-3 col-form-label">N° pièce</label>
 																	<div class="col-md-9">
 																			<div class="input-group">
-																					<input type="text" value="<?=$num_piece; ?>" id="num_piece" name ="num_piece" required class="form-control"> 
+																					<input type="text" value="<?=$num_piece_expediteur; ?>" id="num_piece" name ="num_piece" required class="form-control"> 
 																			</div>
 																	</div>
 																</div>

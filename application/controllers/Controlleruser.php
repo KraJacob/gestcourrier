@@ -9,6 +9,9 @@
 					$this->load->model('UserModel');
 					$this->load->model('PersonnelModel');
 					$this->load->model('ColisModel');
+					$this->load->model('VoyageModel');
+					$this->load->model('DepenseModel');
+					$this->load->model('PassagerModel');
 					$this->load->library('session');
 				} 
 		
@@ -36,8 +39,85 @@
 			public function dashboard()
 			{   
 				$data = array();
-				$data["colis"]= $this->ColisModel->get_colis_envoye();
+				$data["reservation"] = $this->VoyageModel->getreservation();
+				$data["colis_envoye"]= $this->ColisModel->get_colis_envoye();	
+				$data["colis_recu"]= $this->ColisModel->get_colis_recu();
+				$data["passager"]= $this->PassagerModel->count_passager();			
 				$this->load->view('dashboard',$data);	
+			}
+			//load dashboard2
+			public function dashboard2()
+			{   
+				$date_en_cours = date("d/m/Y");
+				$data = array();
+				$val_colis = 0;
+				$val_depart = 0;
+				$val_depense = 0;
+				$val_en_caisse = 0;
+
+				if($this->VoyageModel->get_valeur_depart_jour($date_en_cours))
+				{
+					$val_depart =$this->VoyageModel->get_valeur_depart_jour($date_en_cours);
+				}
+				if($this->ColisModel->get_valeur_colis_envoye_jour($date_en_cours))
+				{
+					$val_colis =$this->ColisModel->get_valeur_colis_envoye_jour($date_en_cours);
+				}
+				
+				if($this->DepenseModel->get_depense_jour($date_en_cours))
+				{
+					$val_depense = $this->DepenseModel->get_depense_jour($date_en_cours);
+				}
+				
+				$val_en_caisse = ($val_colis + $val_depart) - $val_depense;
+
+				$data["valeur_depart"] = $val_depart;
+				$data["valeur_colis_envoye"]= $val_colis;
+				$data["depense"]= $val_depense;
+				$data["caisse"] = $val_en_caisse;	
+				//var_dump($data); exit();		
+				$this->load->view('dashboard2',$data);	
+			}
+
+			public function stat_dashboard2()
+			{
+				$date_debut = $this->input->get("date_debut");
+				$date_fin = $this->input->get("date_fin");
+				$data = array();
+				$val_colis = 0;
+				$val_depart = 0;
+				$val_depense = 0;
+				$val_en_caisse = 0;
+
+				if($date_debut AND $date_fin){
+				
+				if($this->VoyageModel->get_valeur_depart_between($date_debut,$date_fin))
+				{
+					$val_depart =$this->VoyageModel->get_valeur_depart_between($date_debut,$date_fin);
+				}
+				if($this->ColisModel->get_valeur_colis_envoye_between($date_debut,$date_fin))
+				{
+					$val_colis =$this->ColisModel->get_valeur_colis_envoye_between($date_debut,$date_fin);
+				}
+				
+				if($this->DepenseModel->get_depense_between($date_debut,$date_fin))
+				{
+					$val_depense = $this->DepenseModel->get_depense_between($date_debut,$date_fin);
+				}
+				
+				$val_en_caisse = ($val_colis + $val_depart) - $val_depense;
+
+				$data["valeur_depart"] = $val_depart;
+				$data["valeur_colis_envoye"]= $val_colis;
+				$data["depense"]= $val_depense;
+				$data["caisse"] = $val_en_caisse;
+
+                echo json_encode($data);
+				}else{
+					$data["debut"]= $date_debut;
+				   $data["fin"] = $date_fin;
+					echo json_encode($data);
+				}
 			}
 		
 			//Chargement de la fenêtre d'ajout des utilisateurs
@@ -107,28 +187,28 @@
 					 {
 					 foreach( $user as $r){	
 		
-											 if($r->statut =="Actif")
-											 {
-												$tab = array();
-												$tab[] = $r->user_id;
-												$tab[] = '<td></td>';
-												$tab[] =$r->nom;
-												$tab[] =$r->prenom;
-												$tab[] =$r->email;
-												$data[] = $tab;
-											 }
-										}
-		
-										}	
-					
-										$output = array(
-											"draw" => $draw,
-												"recordsTotal" => count($user),
-												"recordsFiltered" => count($user),
-												"data" => $data
-											);
-										
-										echo json_encode($output);
+						if($r->statut =="Actif")
+						{
+						$tab = array();
+						$tab[] = $r->user_id;
+						$tab[] = '<td></td>';
+						$tab[] =$r->nom;
+						$tab[] =$r->prenom;
+						$tab[] =$r->email;
+						$data[] = $tab;
+						}
+				}
+
+				}	
+
+				$output = array(
+					"draw" => $draw,
+						"recordsTotal" => count($user),
+						"recordsFiltered" => count($user),
+						"data" => $data
+					);
+				
+				echo json_encode($output);
 									
 										
 									

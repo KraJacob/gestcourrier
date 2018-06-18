@@ -9,6 +9,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $this->load->view('tpl/css_files');
  $data;
  $data="$destination,$tarif,$num_siege,$heure_depart";
+ $id_reservation = 0;
+
+ if($this->input->get("idreservation")!=null){ $id_reservation = $this->input->get("idreservation");}
  
 ?>
  <style>
@@ -48,9 +51,9 @@ $this->load->view('tpl/css_files');
       <div class="box box-primary col-md-12">
             <div class="box-header with-border" style="float:right;">
               <h3 class="box-title"></h3>
-              <a href="<?php echo base_url().'index.php/voyage';?>" class="btn btn-default fa fa-mail-reply"> Retour</a>
+			  <a href="<?php echo $id_reservation ?  base_url().'index.php/dashboard' :  base_url().'index.php/voyage';?>" class="btn btn-default fa fa-mail-reply"> Retour</a>
               <a class="btn btn-primary fa fa-edit"> Modifier</a>
-              <a href='<?php echo base_url()."index.php/Voyage/pdf?param=$data";  ?>' class="btn btn-warning fa fa-print"> Imprimer ticket</a>
+              <a href='<?php echo base_url()."index.php/Voyage/pdf?param=$data";  ?>' target="_blank" class="btn btn-warning fa fa-print"> Imprimer ticket</a>
       </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -157,160 +160,7 @@ $this->load->view('tpl/css_files');
                      </div>
                       
                 </fieldset>
-             <!--   <fieldset>
-                    <legend>Informations sur le départ</legend>
-                       <div class="row" style="margin-bottom:2%;">
-                       <div class="col-md-2"></div>
-                           <div class="col-md-4">
-                             <div class="form-group">
-                                <label class="col-md-4 col-form-label">Départ N° </label>
-                                    <div class="col-md-5">
-                                        <div class="input-group">
-                                            <input class="form-control" name="num_depart" size="20" value="1" type="text" id="num_depart" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                             </div>
-                             <div class="col-md-4">
-                                <div class="form-group">
-                                <label class="col-md-6 col-form-label">Place disponible </label>
-                                    <div class="col-md-5">
-                                        <div class="input-group">
-                                            <input class="form-control" name="place_disponible" size="20" type="text" value="1" id="place_dispo" readonly>
-                                        </div>
-                                    </div>
-                                </div> 
-                            </div>
-                            <div class="col-md-2"></div>
-                         </div>
-                     <div class="row" style="margin-bottom:3%;">
-                        <div class="col-md-6">                      
-                            <div class="col-md-12 frm" style="margin-bottom:1%;">
-                              <div class="form-group">
-                                <label class="col-md-3 col-form-label">Date</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input id="date_depart" name="date_depart" size="21" type="text" value="<?php //echo  date("j/m/Y")?>" readonly class="form_datetime">
-                                    </div>
-                                </div>
-                              </div>
-                          </div>
-                          <div class="col-md-12 frm" style="margin-bottom:1%;">
-                              <div class="form-group">
-                                <label class="col-md-3 col-form-label">Heure</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input id="heure_depart" required name="heure_depart" size="21" type="time" value="<?php //if($chauffeur_depart){echo $chauffeur_depart[0]["heure_depart"];}?>">  
-                                    </div>
-                                </div>
-                              </div>
-                          </div>
-                          
-                          <div class="col-md-12 frm" style="margin-bottom:1%;">
-                              <div class="form-group">
-                                <label class="col-md-3 col-form-label">Véhicule</label>
-                                <div class="col-md-9">
-                                    <div class="input-group col-md-10">
-                                    <select name="immatriculation" class="custom-select col-md-9 mb-2 mr-sm-2 mb-sm-0" id="imat">
-                                    <?php //if($chauffeur_depart):?>
-                                    <option value="<?php //echo $chauffeur_depart[0]["immatriculation"];?>"><?php //echo $chauffeur_depart[0]["immatriculation"];?></option>
-                                    <?php// else: ?>
-                                       <option selected>Choisissez</option>
-                                        <?php //if($vehicule): ?>
-                                        <?php //foreach($vehicule as $veh): ?>
-                                        
-                                        <option value="<?php //echo $veh["immatriculation"];?>" data-nbrePlace="<?php //$veh["nbr_place"];?>"><?php //echo $veh["immatriculation"];?></option>
-                                        <?php //endforeach ?>
-                                        <?php //endif ?>
-                                        <?php //endif ?>
-                                    </select> 
-                                    </div>
-                                </div>
-                              </div>
-                          </div>
-                       
-                     </div>
-                     <div class="col-md-6">                      
-                            <div class="col-md-12 frm" style="margin-bottom:1%;">
-                                <div class="form-group">
-                                <label class="col-md-3 col-form-label"> Chauffeur</label>
-                                    <div class="col-md-9">
-                                    <div class="input-group col-md-10">
-                                    <select name="chauffeur" class="custom-select col-md-9 mb-2 mr-sm-2 mb-sm-0" id="select_vehicule">
-                                     
-                                    <?php if($chauffeur_depart):?>
-                                    <option value="<?php echo $chauffeur_depart[0]["id_personnel"];?>"><?php echo $chauffeur_depart[0]["nom"]." ".$chauffeur_depart[0]["prenom"];?></option>
-                                    <?php else: ?>
-                                    <option selected>Choisissez</option>
-                                    <?php if($vehicule): ?>
-                                        <?php foreach($chauffeur as $chauf): ?>                                        
-                                        <option value="<?php echo $chauf["id_personnel"];?>"><?php echo $chauf["nom"]." ".$chauf["prenom"];?></option>
-                                        <?php endforeach ?>
-                                        <?php endif ?>
-                                        <?php endif ?>
-                                    </select> 
-                                    </div>
-                                    </div>
-                                </div>
-                           </div>  
-                  
-                            <div class="col-md-12 frm" style="margin-bottom:1%;">
-                              <div class="form-group">
-                                <label class="col-md-3 col-form-label">Convoyeur</label>
-                                <div class="col-md-9">
-                                <div class="input-group col-md-10">
-                                    <select name="convoyeur" class="custom-select col-md-9 mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-                                    <?php if($convoyeur_depart):?>
-                                    <option value="<?php echo $convoyeur_depart[0]["id_personnel"];?>"><?php echo $convoyeur_depart[0]["nom"]." ".$convoyeur_depart[0]["prenom"];?></option>
-                                    <?php else: ?>
-                                    <option selected>Choisissez</option>
-                                    <?php if($convoyeur): ?>
-                                        <?php foreach($convoyeur as $conv): ?>
-                                          <option value="<?php echo $conv["id_personnel"];?>"><?php echo $conv["nom"]." ".$conv["prenom"];?></option>
-                                        <?php endforeach ?>
-                                        <?php endif ?>
-                                        <?php endif ?>
-                                    </select> 
-                                    </div>
-                                </div>
-                              </div>
-                          </div>
-                      </div>
-                     </div>
-                     <?php 
-                     $ville = $this->session->userdata("ville");
-                     $parcours;
-                     if($ville == "ABIDJAN"){
-                         $parcours = "ABIDJAN - ODIENE";
-                     }else{
-                        $parcours = "ODIENE - ABIDJAN"; 
-                     }
-                     
-                     ?>
-                      <div class="row">
-                         <div class="col-md-2"></div>
-                          <div class="col-md-7 frm" style="margin-bottom:1%;">
-                              <div class="form-group">
-                                <label class="col-md-3 col-form-label">Parcours</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <input name="parcours" type="text" id="type" class="form-control" value='<?php echo $parcours; ?>' readonly> 
-                                    </div>
-                                </div>
-                              </div>
-                          </div>
-                      </div>
-                     </div>
-                </fieldset>
-                    </div>
-                 </div>  
-              </div> -->
-              <!-- /.box-body -->
-              <!-- <div class="box-footer">
-                <a href="<?php echo base_url()."index.php/Voyage/pdf";  ?>" class="btn btn-primary"> Test </a>
-                <button type="submit" class="btn btn-success">Valider</button> 
-                <button type="reset" class="btn btn-default">Annuler</button>
-              </div> -->
+
             </form>
             
           </div>

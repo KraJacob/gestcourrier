@@ -1,7 +1,4 @@
 <?php 
-	
-
-
 	 $request = $_POST;
 	 $ci =& get_instance(); 
 	// chargement de la class "database" pour l'utilisation des paramètres de config dans le tableau $db
@@ -124,13 +121,13 @@
 
 	//print_r($columns);
 
-	/*$limit = '';
+	$limit = '';
 	if ( isset($request['start']) && $request['length'] != -1 ) {
 		$limit = " LIMIT ".intval($request['start']).", ".intval($request['length']);
 	}
 
 
-	$sql.= $order . $limit; */
+	$sql.= $order . $limit; 
 	$query=mysqli_query($conn, $sql) or die("An error has line 83 occurred Error:" . mysqli_error($conn)."/n query:" . $sql);
 	$data = array();
 

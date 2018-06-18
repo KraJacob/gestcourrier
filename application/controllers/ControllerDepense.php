@@ -29,7 +29,18 @@
 			   {
 				   $this->load->view('depense/new_depense');
 			   }
-
+				 
+			   public function add_depense()
+			   {
+				  $user_id = $this->session->userdata("user_id");
+				   $data = $this->input->post();
+                    $data['user_id'] = $user_id;
+				   if($this->DepenseModel->add_depense($data)){
+					   redirect("depenses");
+				   }else{
+					redirect("depenses");
+				   }
+			   }
 
 
 				public function list_depense_json()
