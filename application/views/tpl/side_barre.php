@@ -7,14 +7,13 @@
         </div>
         <div class="pull-left info">
           <p><?php echo ($this->session->userdata("nom")) ? $this->session->userdata("nom")." ".$this->session->userdata("prenom") : " "; ?></p>
-          <a href="<?php echo base_url()."assets/";?>#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="<?php echo base_url()."index.php/dashboard";?>"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header" style="display:none;">MAIN NAVIGATION</li>
-				<?php if($this->session->userdata("droit")=="caissier"): ?>
-        <li class="active treeview" style="">
+       	<?php if($this->session->userdata("droit")=="caissier"): ?>
+        <li class="">
           <a href="<?php echo base_url()."index.php/dashboard";?>">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -24,7 +23,7 @@
 				</li>
 				<?php endif ?>
 				<?php if($this->session->userdata("droit")=="superviseur"): ?>
-				<li class="active treeview" style="">
+				<li class="active" style="">
           <a href="<?php echo base_url()."index.php/dashboard2";?>">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -63,7 +62,7 @@
           </a>
         </li>
 				<?php endif ?>
-				<?php if($this->session->userdata("droit")=="caissier"): ?>
+				<?php if($this->session->userdata("droit")=="superviseur"): ?>
          <li>
           <a href="<?php echo base_url()."index.php/users";?>">
             <i class="fa fa-users"></i> <span>Utilisateurs</span>
@@ -73,7 +72,7 @@
           </a>
         </li>
 				<?php endif ?>
-				<?php if($this->session->userdata("droit")=="caissier"): ?>
+				<?php if($this->session->userdata("droit")=="superviseur"): ?>
         <li style="display:none;">
           <a href="<?php echo base_url()."index.php/type_passager";?>">
             <i class="fa fa-th"></i> <span>Type passager</span>
@@ -83,7 +82,7 @@
           </a>
         </li>
 				<?php endif ?>
-				<?php if($this->session->userdata("droit")=="caissier"): ?>
+				<?php if($this->session->userdata("droit")=="superviseur"): ?>
         <li>
           <a href="<?php echo base_url()."index.php/type_personnel";?>">
             <i class="fa fa-th"></i> <span>Type personnel</span>
@@ -93,7 +92,7 @@
           </a>
         </li>
 				<?php endif ?>
-				<?php if($this->session->userdata("droit")=="caissier"): ?>
+				<?php if($this->session->userdata("droit")=="superviseur"): ?>
         <li>
           <a href="<?php echo base_url()."index.php/personnel";?>">
             <i class="fa fa-group"></i> <span>Personnel</span>
@@ -111,7 +110,7 @@
           </a>
         </li>
 				<?php endif ?>
-				<?php if($this->session->userdata("droit")=="caissier"): ?>
+				<?php if($this->session->userdata("droit")=="superviseur"): ?>
         <li style="display:none;">
           <a href="<?php echo base_url()."index.php/type_colis";?>">
             <i class="fa fa-envelop"></i> <span>Type colis</span>
@@ -121,7 +120,7 @@
           </a>
         </li>
 				<?php endif ?>
-				<?php if($this->session->userdata("droit")=="caissier"): ?>
+				<?php if($this->session->userdata("droit")=="superviseur"): ?>
 				<li>
           <a href="<?php echo base_url()."index.php/add_vehicule";?>">
             <i class="fa fa-bus"></i> <span>Véhicule</span>

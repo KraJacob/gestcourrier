@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">×</font></font></span></button>
-                <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Contenu du colis</font></font></h4>
+                <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Enregistrement d'un utilisateur</font></font></h4>
               </div>
               <div class="modal-body">
                    

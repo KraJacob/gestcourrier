@@ -32,4 +32,5 @@ $toute['valider_colis/(:any)'] = 'ControllerColis/valider_colis/$1';
 $route['voir/(:any)'] = 'ControllerColis/get_detail_colis/$1';
 $route['retraitcolis'] = 'ControllerColis/retrait_colis';
 $route['delete_colis'] = 'ControllerColis/delateColis';
+$route['delete_personnel'] = 'ControllerPersonnel/delete';
 $route['delete_reservation'] = 'Voyage/delete';

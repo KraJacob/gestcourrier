@@ -33,30 +33,42 @@
 				$this->load->view('dashboard');
 			}
 		
-			//Chargement de la fenêtre d'ajout des utilisateurs
+			//Chargement de la fenêtre d'un passager
 			public function load_voyage()
 			{
 				$data = array();
 				$date = date("d/m/Y");
-				$parcours;
-				$ville_depart = $this->session->userdata("ville");
-				if($ville_depart=="ABIDJAN"){
-					$parcours = "ABIDJAN - ODIENNE";
-				}else{
-					$parcours = "ODIENNE - ABIDJAN";
-				}
+				 $num_depart_en_cour=0;
+				$id_gare = $this->session->userdata("id_gare");
 				//echo "parcours ".$parcours." date ". $date;exit();
-				$num_depart = $this->VoyageModel->get_num_depart_en_cours($parcours,$date);
-				//print_r($num_depart);exit();
-				$chauffeur_depart = $this->VoyageModel->check_chauffeur_for_depart($num_depart,$date);
-				//print_r($chauffeur_depart);exit();
-				$convoyeur_depart = $this->VoyageModel->check_convoyeur_for_depart($num_depart,$date);
+				
+				$depart = $this->VoyageModel->get_num_depart_en_cours($id_gare,$date);
+				//var_dump($depart); exit();
+				if($depart){
+					$num_depart = $depart[0]['num_depart'];
+				$place_disponible = $depart[0]['place_disponible'];
+				$etat = $depart[0]['etat'];
+               // echo $etat;exit();
+				if($etat=="fin chargement"){
+					$num_depart_en_cour = $num_depart + 1;
+				}elseif($etat=="chargement en cours" && $place_disponible == 0){
+                    $num_depart_en_cour = $num_depart + 1;   
+				}else{
+					$num_depart_en_cour = $num_depart;
+					//var_dump($depart);exit();
+				    $chauffeur_depart = $this->VoyageModel->check_chauffeur_for_depart($num_depart,$date);
+				    //print_r($chauffeur_depart);exit();
+					$convoyeur_depart = $this->VoyageModel->check_convoyeur_for_depart($num_depart,$date);
+					$data["chauffeur_depart"] = $chauffeur_depart;
+					$data["convoyeur_depart"] = $convoyeur_depart;
+					$data["num_depart"] = $num_depart_en_cour;
+				}
+				}
+								
 				$vehicule = $this->VehiculeModel->list_vehicule();
                 $chauffeur = $this->PersonnelModel->get_chauffeur();
 				$convoyeur = $this->PersonnelModel->get_convoyeur();
 				$destination = $this->VoyageModel->get_destination();
-				$data["chauffeur_depart"] = $chauffeur_depart;
-				$data["convoyeur_depart"] = $convoyeur_depart;
 				$data["vehicule"] = $vehicule;
 				$data["chauffeur"] = $chauffeur;
 				$data["convoyeur"] = $convoyeur;
@@ -205,10 +217,10 @@
 		{
 			
 				$num_depart = $this->input->post('num_depart');
-				$parcours = $this->input->post('parcours');
+				$id_depart = $this->session->userdata('id_gare');
 				$date_depart = $this->input->post('date');
 				 if($num_depart)
-					if($this->VoyageModel->valider_depart($num_depart,$parcours,$date_depart)){
+					if($this->VoyageModel->valider_depart($num_depart,$id_depart,$date_depart)){
 					$data["error"] = "";
 					echo json_encode($data);
 					}else{

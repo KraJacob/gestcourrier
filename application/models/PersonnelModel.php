@@ -104,4 +104,24 @@
 		  //  }
 		}
 
+		public function get_personnel_by_id($id){
+			$query = $this->db->get_where('personnel',array('id_personnel'=>$id));
+			return $query->result_array();
+		}
+
+		public function update_personnel($id_personnel,$data)
+			{
+				return $this->db->where("id_personnel",$id_personnel)
+								->update("personnel",$data);
+												
+			}
+
+			public function delete($ids)
+			{
+				   
+			   $this->db->set('statut', 'supprimé');
+			   $this->db->or_where_in('id_personnel', $ids);
+			   return $this->db->update('personnel');
+		   
+			}
     }

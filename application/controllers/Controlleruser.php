@@ -39,7 +39,10 @@
 			public function dashboard()
 			{   
 				$data = array();
+				$date = date('d/m/Y');
+				$this->VoyageModel->annulation_auto_reservation($date);
 				$data["reservation"] = $this->VoyageModel->getreservation();
+				$data["nbre_reservation"] = $this->VoyageModel->get_nbr_reservation_du_jour();
 				$data["colis_envoye"]= $this->ColisModel->get_colis_envoye();	
 				$data["colis_recu"]= $this->ColisModel->get_colis_recu();
 				$data["passager"]= $this->PassagerModel->count_passager();			

@@ -1,13 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-// $nbre_colis_envoye;
-// $nbre_colis_recu;
-// if($colis_recu){
-// 	$nbre_colis_recu = count($colis_recu);
-// }
-// if($colis_envoye){
-// 	$nbre_colis_envoye = count($colis_envoye);
-// }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?php echo base_url()."assets/";?>#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo base_url()."index.php/dashboard2";?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
       </ol>
     </section>

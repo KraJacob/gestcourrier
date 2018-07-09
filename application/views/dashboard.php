@@ -48,7 +48,7 @@ if($colis_envoye){
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><?=$nbre_colis_envoye ?></h3>
+              <h3><?php if(isset($nbre_colis_envoye)){echo $nbre_colis_envoye;}else{echo 0;}?></h3>
 
               <p>Colis envoyé(s)</p>
             </div>
@@ -63,7 +63,7 @@ if($colis_envoye){
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><?=$nbre_colis_recu ?></h3>
+              <h3><?php if(isset($nbre_colis_recu)){echo $nbre_colis_recu;}else{echo 0;} ?></h3>
 
               <p>Colis reçu(s)</p>
             </div>
@@ -78,14 +78,14 @@ if($colis_envoye){
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?=$passager ?></h3>
+              <h3><?php if(isset($passager)){echo $passager;} ?></h3>
 
               <p>Passager(s)</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="<?php echo base_url()."assets/";?>#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url()."index.php/passager";?>" class="small-box-footer">Plus d'info<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -93,14 +93,14 @@ if($colis_envoye){
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3><?php if(isset($nbre_reservation)){echo $nbre_reservation;} ?></h3>
 
-              <p>Unique Visitors</p>
+              <p>Reservation de la journée</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="<?php echo base_url()."assets/";?>#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url()."index.php/reservation";?>" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

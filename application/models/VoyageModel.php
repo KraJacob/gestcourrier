@@ -66,7 +66,9 @@
 
        
        public function check_num_siege($num_depart,$num_siege,$date,$id_gare){
-        $query = $this->db->query("SELECT `depart`.`id_depart`,num_depart,`depart`.`date_ajout`, id_passager,num_siege,`passager`.`id_depart` FROM depart,passager WHERE `depart`.`id_gare`='$id_gare' AND `depart`.`id_depart` =`passager`.`id_depart`  AND `depart`.`date_ajout`='$date' AND num_depart ='$num_depart' AND num_siege='$num_siege'");
+        $query = $this->db->query("SELECT `depart`.`id_depart`,num_depart,`depart`.`date_ajout`, id_passager,num_siege,`passager`.`id_depart` FROM depart,
+        passager WHERE `depart`.`id_gare`='$id_gare' AND `depart`.`id_depart` =`passager`.`id_depart`  AND `depart`.`date_ajout`='$date'
+         AND num_depart ='$num_depart' AND num_siege='$num_siege'");
 		 
 				$result = $query->row();
 				
@@ -167,16 +169,9 @@
          return $query->result_array();
        }
 
-       public function get_num_depart_en_cours($parcours,$date){
-        $query = $this->db->query("SELECT `depart`.`num_depart` FROM depart WHERE parcours='$parcours' AND depart.date_ajout='$date'
-				 AND depart.place_disponible > 0");
-        $result = $query->row();
-        if($result){
-          return $result->num_depart;
-        }else{
-          return null;
-        }
-           
+       public function get_num_depart_en_cours($id_gare,$date){
+        $query = $this->db->query("SELECT * FROM depart WHERE id_gare='$id_gare' AND depart.date_ajout='$date' ORDER BY id_depart DESC LIMIT 1 ");
+        return $query->result_array(); 
        }
 
        public function get_ville_arrive_by_id($id)
@@ -204,11 +199,11 @@
             ->Update('depart',$data);
 			}
 
-			public function valider_depart($num_depart,$parcours,$date)
+			public function valider_depart($num_depart,$id_gare,$date)
 			{
 				$data["etat"] = "fin chargement";
 				return $this->db->where('num_depart', $num_depart)
-					 ->where('parcours',$parcours)
+					 ->where('id_gare',$id_gare)
 					 ->where('date_depart',$date)
            ->Update('depart',$data);
 			}
@@ -236,7 +231,7 @@
 			public function getreservation()
 			{
 				$ville = $this->session->userdata("ville");
-				$query = $this->db->query("SELECT * FROM reservation,destination WHERE reservation.id_destination = destination.id_destination AND reservation.etat='reservation en cours' ORDER BY id_reservation DESC");
+				$query = $this->db->query("SELECT * FROM reservation,destination WHERE reservation.id_destination = destination.id_destination AND reservation.etat='reservation en cours' AND reservation.statut_reservation = 'Actif' ORDER BY id_reservation DESC");
 				return $query->result();
 			}
 
@@ -279,10 +274,26 @@
 			}
 
 			public function delete($ids)
-			{
-				 
+			{				 
 			 $this->db->set('statut_reservation', 'supprimé');
 			 $this->db->or_where_in('id_reservation', $ids);
+			 return $this->db->update('reservation');
+		 
+			}
+
+			public function get_nbr_reservation_du_jour()
+			{
+				$date = date('d/m/Y'); 
+			$query = $this->db->query("SELECT count(*) as total from reservation where reservation.date_depart = '$date' ");
+			$result = $query->row();
+			return $result->total; 
+			}
+
+			public function annulation_auto_reservation($date)
+			{				 
+			 $this->db->set('statut_reservation', 'annulée');
+			 $this->db->where('date_depart <',$date);
+			 $this->db->where('statut_reservation ','Actif');
 			 return $this->db->update('reservation');
 		 
 			}

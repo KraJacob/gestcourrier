@@ -23,11 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       ENREGISTREMENT D'UNE GARE'
-        <small>gare</small>
+       ENREGISTREMENT D'UNE GARE
+        <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?php echo base_url()."assets/";?>#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo base_url()."index.php/dashboard2";?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">gare</li>
       </ol>
     </section>
