@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="box box-primary col-md-4">
                         <div class="box-header with-border" style="float:right;">
                             <h3 class="box-title"></h3>
+                            <a href="javascript:;" style="display:none;" id="btn_print" class="btn btn-warning">Ticket</a>
                             <a href="javascript:;" style="display:none;" id="btn_update" class="btn btn-primary">Modifier</a>
                             <a href="javascript:;" style="display:none;" id="btn_delete" class="btn btn-danger">Supprimer</a>
                             <button type="submit" class="btn btn-success">Valider</button>
@@ -448,9 +449,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $("#btn_delete").fadeIn(200);
                 numberRows = listreservation.rows({selected: true}).count();
                 if (numberRows === 1) {
-                    $("#btn_update").fadeIn(200);
+                    $("#btn_update,#btn_print").fadeIn(200);
                 } else {
-                    $("#btn_update").fadeOut(200);
+                    $("#btn_update,#btn_print").fadeOut(200);
                 }
 
             })
@@ -460,9 +461,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $("#btn_delete").fadeOut(200);
                 }
                 if (numberRows !== 1) {
-                    $("#btn_update").fadeOut(200);
+                    $("#btn_update,#btn_print").fadeOut(200);
                 } else {
-                    $("#btn_update").fadeIn(200);
+                    $("#btn_update,#btn_print").fadeIn(200);
                 }
 
             });
@@ -499,6 +500,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }).fail(function () {
                 console.log("failed")
             })
+        })
+
+        $("#btn_print").on("click", function(e){
+            let id_reservation = listreservation.row({selected: true}).data()[0];
+            let url = "<?=base_url().('index.php/ControllerPassager/valider_reservation?idreservation='); ?>"+id_reservation
+            $(location).attr("href",url)
+
         })
 
         //affichage du message de suppression
