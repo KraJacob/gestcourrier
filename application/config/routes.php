@@ -34,3 +34,5 @@ $route['retraitcolis'] = 'ControllerColis/retrait_colis';
 $route['delete_colis'] = 'ControllerColis/delateColis';
 $route['delete_personnel'] = 'ControllerPersonnel/delete';
 $route['delete_reservation'] = 'Voyage/delete';
+$route['bagage'] = 'BagageController/loadBagage';
+$route['add_bagage'] = 'BagageController/saveBagage';
