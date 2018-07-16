@@ -7,7 +7,7 @@
  $destination = $param[0];
  $tarif = $param[1];
  $num_siege = $param[2];
- $heure_depart = $param[3];
+ $heure_depart = "";//$param[3];
  //var_dump($param);exit();
  if($ville=="ABIDJAN")
  {
