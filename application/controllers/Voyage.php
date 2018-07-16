@@ -103,86 +103,81 @@
 				if($this->input->post()==null)
 				{
                   return redirect('voyage');
-				}else{
-				$user_id = $this->session->userdata("user_id");
-				$id_gare = $this->session->userdata("id_gare");
-				$type_passager = $this->input->post("type_passager");
-				$nom = $this->input->post("nom");
-				$prenom = $this->input->post("prenom");
-				$mobile = $this->input->post("mobile");
-				$ville_depart = $this->input->post("ville_depart");
-				$destination = $this->input->post("ville_arrive");
-				$num_siege = $this->input->post("num_siege");
-				$tarif = $this->input->post("tarif");
-				$place_dispo = $this->input->post("place_disponible");
-				$date_depart = $this->input->post("date_depart");
-				$heure_depart = $this->input->post("heure_depart");
-				$immatriculation = $this->input->post("immatriculation");
-				$chauffeur = $this->input->post("chauffeur");
-				$convoyeur = $this->input->post("convoyeur");
-				$parcours = $this->input->post("parcours");
-				$num_depart = $this->input->post("num_depart");
-				//$ville_dest = $this->VoyageModel->get_ville($destination);
-				//echo $date_depart; exit();
-				$data_depart = array();
-				$data_passager = array();
-				$data_affectation = array();
+				}else {
+                    $user_id = $this->session->userdata("user_id");
+                    $id_gare = $this->session->userdata("id_gare");
+                    $type_passager = $this->input->post("type_passager");
+                    $nom = $this->input->post("nom");
+                    $prenom = $this->input->post("prenom");
+                    $mobile = $this->input->post("mobile");
+                    $ville_depart = $this->input->post("ville_depart");
+                    $destination = $this->input->post("ville_arrive");
+                    $num_siege = $this->input->post("num_siege");
+                    $tarif = $this->input->post("tarif");
+                    $data_passager = array();
 
-				$data_depart["parcours"] = $parcours;
-				$data_depart["date_depart"] = $date_depart;
-				$data_depart["heure_depart"] = $heure_depart;
-				$data_depart["num_depart"] = $num_depart;
-				$data_depart["place_disponible"] = $place_dispo;
-				$data_depart["immatriculation"] = $immatriculation;
-				$data_depart["user_id"] = $user_id;
-				$data_depart["id_gare"] = $id_gare;
-				$data_depart["etat"] = "chargement en cours";
-				$data_depart["date_ajout"] = Date("d/m/Y");
-				$id_depart;
-				//variable pour testes l'ajout ou la midification 
-				$param = false;
-				//
-				$id_depart = $this->VoyageModel->check_depart_en_cours($date_depart,$heure_depart,$parcours);
-                 if($id_depart){
-					 $data = array();
-					 $data["place_disponible"] = $place_dispo;
-					$this->VoyageModel->update_depart($id_depart,$data);
-					$param = true;
-				 }
-				 else{
-					$this->VoyageModel->add_depart($data_depart);
-					$param = true;
-				 }
-				if($param)
-				{
-					$id_depart = $this->VoyageModel->get_last_id_depart();
-					$data_passager["nom"] = $nom;
-					$data_passager["prenom"] = $prenom;
-					$data_passager["mobile"] = $mobile;
-					$data_passager["num_siege"] = $num_siege;
-					$data_passager["date_create"] = date("d/m/Y");
-					$data_passager["id_destination"] = $destination;
-					$data_passager["tarif"] = $tarif;
-					$data_passager["type_passager"] = $type_passager;
-					$data_passager["id_depart"] = $id_depart;
-					$data_passager['user_id'] = $user_id;
-					$this->VoyageModel->add_passager($data_passager);
-					$data_affectation["immatriculation"] = $immatriculation;
-					$data_affectation["id_personnel"] = $chauffeur;
-					$data_affectation["date_affectation"] = date("d/m/Y");
-					$data_affectation['user_id'] = $user_id;
-					$this->VoyageModel->add_affectation($data_affectation);
-					$data_affectation["id_personnel"] = $convoyeur;
-					$this->VoyageModel->add_affectation($data_affectation);
-					$data_passager["heure_depart"] = $heure_depart;
-					$data_passager["destination"] = $this->VoyageModel->get_ville_arrive_by_id($destination);
-					$this->load->view("voyage/fiche_voyage",$data_passager);
-				}
-    			
-
-				}
+                    $id_depart = $this->VoyageModel->get_last_id_depart();
+                    $data_passager["nom"] = $nom;
+                    $data_passager["prenom"] = $prenom;
+                    $data_passager["mobile"] = $mobile;
+                    $data_passager["num_siege"] = $num_siege;
+                    $data_passager["date_create"] = date("d/m/Y");
+                    $data_passager["date_depart"] = date("d/m/Y");
+                    $data_passager["id_destination"] = $destination;
+                    $data_passager["tarif"] = $tarif;
+                    $data_passager["type_passager"] = $type_passager;
+                    $data_passager["id_depart"] = $id_depart;
+                    $data_passager['user_id'] = $user_id;
+                    $data_passager['id_gare'] = $id_gare;
+                    $this->VoyageModel->add_passager($data_passager);
+                    $data_passager["destination"] = $this->VoyageModel->get_ville_arrive_by_id($destination);
+                    $this->load->view("voyage/fiche_voyage", $data_passager);
+                }
 				
 			}
+
+			public function add_depart()
+            {
+                $date = date("d/m/Y");
+
+                $data_affectation = array();
+                $data_depart = array();
+                $chauffeur = $this->input->post("chauffeur");
+                $convoyeur = $this->input->post("convoyeur");
+                $num_depart = $this->input->post("num_depart");
+                $user_id = $this->session->userdata("user_id");
+                $id_gare = $this->session->userdata("id_gare");
+                $immatriculation = $this->input->post("immatriculation");
+                $heure_depart = $this->input->post("heure_depart");
+                $place_dispo = $this->input->post("place_disponible");
+                $date_depart = $this->input->post("date_depart");
+                $parcours = $this->input->post("parcours");
+                $data_depart["parcours"] = $parcours;
+                $data_depart["date_depart"] = $date_depart;
+                $data_depart["heure_depart"] = $heure_depart;
+                $data_depart["num_depart"] = $num_depart;
+                $data_depart["date_depart"] = $date;
+                $data_depart["place_disponible"] = $place_dispo;
+                $data_depart["immatriculation"] = $immatriculation;
+                $data_depart["user_id"] = $user_id;
+                $data_depart["id_gare"] = $id_gare;
+                $data_depart["etat"] = "chargement en cours";
+                $data_depart["date_ajout"] = Date("d/m/Y");
+
+                echo $this->VoyageModel->add_depart($data_depart);
+
+                $id_depart = $this->VoyageModel->check_depart_en_cours($date_depart,$heure_depart,$parcours);
+                $id_depart;
+
+                //Affectation du personnel au véhicule
+                $data_affectation["immatriculation"] = $immatriculation;
+                $data_affectation["id_personnel"] = $chauffeur;
+                $data_affectation["date_affectation"] = date("d/m/Y");
+                $data_affectation['user_id'] = $user_id;
+                $this->VoyageModel->add_affectation($data_affectation);
+                $data_affectation["id_personnel"] = $convoyeur;
+                $this->VoyageModel->add_affectation($data_affectation);
+            }
 
 			public function check_num_siege()
 			{

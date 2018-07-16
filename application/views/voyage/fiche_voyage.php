@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $this->load->view('tpl/css_files');
  $data;
- $data="$destination,$tarif,$num_siege,$heure_depart";
+ $data="$destination,$tarif,$num_siege";
  $id_reservation = 0;
 
  if($this->input->get("idreservation")!=null){ $id_reservation = $this->input->get("idreservation");}
@@ -52,8 +52,8 @@ $this->load->view('tpl/css_files');
             <div class="box-header with-border" style="float:right;">
               <h3 class="box-title"></h3>
 			  <a href="<?php echo $id_reservation ?  base_url().'index.php/dashboard' :  base_url().'index.php/voyage';?>" class="btn btn-default fa fa-mail-reply"> Retour</a>
-              <a class="btn btn-primary fa fa-edit"> Modifier</a>
-              <a href='<?php echo base_url()."index.php/Voyage/pdf?param=$data";  ?>' target="_blank" class="btn btn-warning fa fa-print"> Imprimer ticket</a>
+              <a class="btn btn-primary fa fa-edit" id="btn_update"> Modifier</a>
+              <a href='<?php echo base_url()."index.php/Voyage/pdf?param=$data";  ?>' target="_blank" id="btn_print" class="btn btn-warning fa fa-print"> Imprimer ticket</a>
       </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -192,6 +192,10 @@ $this->load->view('tpl/css_files');
 <script type="text/javascript">
  $(document).ready(function(e){
     $("input").css("border", "0px");
+
+    $("#btn_print").on('click', function(e){
+        $("#btn_update").attr('disable',true)
+    })
  })
 </script>            
 </body>

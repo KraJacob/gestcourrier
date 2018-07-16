@@ -97,8 +97,73 @@
 
             $this->db->insert('activites', $data_activite);
            */
-            return  $this->db->insert('depart', $data);
-          
+
+           $id_gare = $this->session->userdata("id_gare");
+
+           $date = date("d/m/Y");
+
+           /**
+            * Vérifier si le depart n'a pas encore été enregistré dans la base de données
+            */
+
+           $query = $this->db
+               ->where('id_gare',$id_gare)
+               ->where('date_depart',$date)
+                ->get("depart");
+            if ($query){
+                $result['result'] = "exist";
+                return json_encode($result);
+            }else{
+                /**
+                 * Début de la transaction
+                 */
+                $this->db->trans_begin();
+
+                /**
+                 * Insertion du depart
+                 */
+                $this->db->insert('depart', $data);
+
+                /**
+                 * récupération de l'id du dernier depart
+                 */
+                // $this->db->get_where('mytable', array('id' => $id), $limit, $offset);
+                $query = $this->db
+                    ->where('id_gare',$id_gare)
+                    ->where('date_depart',$date)
+                    ->order_by('id_depart DESC')
+                    ->limit(1)
+                    ->get("depart");
+                $row = $query->row();
+                $id_depart = $row->id_depart;
+
+                /**
+                 * Attribution du depart aux passagers du jour
+                 */
+
+                $data = array('id_depart' => $id_depart);
+
+                $this->db->where('date_depart', $date);
+                $this->db->update('passager', $data);
+
+                if ($this->db->trans_status() === FALSE)
+                {
+                    $this->db->trans_rollback();
+                    $result['result'] = "failed";
+                    return json_encode($result);
+
+                }
+                else
+                {
+                    $this->db->trans_commit();
+                    $result['result'] = "success";
+                    return json_encode($result);
+
+                }
+
+            }
+
+
        }
 
        public function get_last_id_depart()
@@ -134,15 +199,13 @@
           /* $date = date("d/m/Y");
             $date = explode("/",$date);
             $date = time($date);
-            $data_activite = array( 
-        
+            $data_activite = array(
               'user_id' => $this->session->userdata("user_id"),
               'date_activite' => date("d/m/Y H:i"),
               'type_activite' => "ajout",
               'date_activite_stamp' => $date,
-              'desc_activite' => "ajouté l'utilisateur " .  $data["username"] 
+              'desc_activite' => "ajouté l'utilisateur " . $data["username"]
             );
-
             $this->db->insert('activites', $data_activite);
            */
           return  $this->db->insert('affecter', $data);  
@@ -230,8 +293,8 @@
 
 			public function getreservation()
 			{
-				$ville = $this->session->userdata("ville");
-				$query = $this->db->query("SELECT * FROM reservation,destination WHERE reservation.id_destination = destination.id_destination AND reservation.etat='reservation en cours' AND reservation.statut_reservation = 'Actif' ORDER BY id_reservation DESC");
+                $id_gare = $this->session->userdata("id_gare");
+				$query = $this->db->query("SELECT * FROM reservation,destination WHERE reservation.id_destination = destination.id_destination AND reservation.id_gare =$id_gare AND reservation.etat='reservation en cours' AND reservation.statut_reservation = 'Actif' ORDER BY id_reservation DESC");
 				return $query->result();
 			}
 
