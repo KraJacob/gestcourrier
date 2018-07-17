@@ -30,7 +30,7 @@
               
               public function load_type_passager()
               {
-				     echo "ok";
+
                   $this->load->view("passager/type_passager");
               }
 
@@ -102,7 +102,7 @@
 				)
 				
 			);
-			$whereClause = "`passager`.`id_depart` = `depart`.`id_depart` AND `passager`.`id_destination` = `destination`.`id_destination`";
+			$whereClause = "`passager`.`id_depart` = `depart`.`id_depart` AND `passager`.`id_destination` = `destination`.`id_destination` AND passager.statut = 'Actif'";
           	require('ssp.php');
 			
 			echo json_encode(
