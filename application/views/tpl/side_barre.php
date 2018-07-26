@@ -44,6 +44,16 @@
         <?php endif ?>
         <?php if ($this->session->userdata("droit") == "caissier"): ?>
             <li>
+                <a href="<?php echo base_url() . "index.php/depart"; ?>">
+                    <i class="fa fa-circle-o"></i> <span>Départ</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green"></small>
+            </span>
+                </a>
+            </li>
+        <?php endif ?>
+        <?php if ($this->session->userdata("droit") == "caissier"): ?>
+            <li>
                 <a href="<?php echo base_url() . "index.php/voyage"; ?>">
                     <i class="fa fa-circle-o"></i> <span>Voyage</span>
                     <span class="pull-right-container">

@@ -70,11 +70,14 @@ class Voyage extends CI_Controller
         $chauffeur = $this->PersonnelModel->get_chauffeur();
         $convoyeur = $this->PersonnelModel->get_convoyeur();
         $destination = $this->VoyageModel->get_destination();
+        $departs = $this->VoyageModel->getDeparts();
         $data["vehicule"] = $vehicule;
         $data["chauffeur"] = $chauffeur;
         $data["convoyeur"] = $convoyeur;
         $data["destination"] = $destination;
-        //print_r($data);exit();
+        $data["departs"] = $departs;
+        $id_gare = $this->session->userdata('id_gare');
+
         $this->load->view('voyage/register_voyage', $data);
 
     }
@@ -110,7 +113,7 @@ class Voyage extends CI_Controller
             $nom = $this->input->post("nom");
             $prenom = $this->input->post("prenom");
             $mobile = $this->input->post("mobile");
-            $ville_depart = $this->input->post("ville_depart");
+            $depart = $this->input->post("depart");
             $destination = $this->input->post("ville_arrive");
             $num_siege = $this->input->post("num_siege");
             $tarif = $this->input->post("tarif");
@@ -118,6 +121,7 @@ class Voyage extends CI_Controller
 
             $id_depart = $this->VoyageModel->get_last_id_depart();
             $data_passager["nom"] = $nom;
+            $data_passager["id_depart"] = $depart;
             $data_passager["prenom"] = $prenom;
             $data_passager["mobile"] = $mobile;
             $data_passager["num_siege"] = $num_siege;
@@ -129,9 +133,15 @@ class Voyage extends CI_Controller
             $data_passager["id_depart"] = $id_depart;
             $data_passager['user_id'] = $user_id;
             $data_passager['id_gare'] = $id_gare;
-            $this->VoyageModel->add_passager($data_passager);
-            $data_passager["destination"] = $this->VoyageModel->get_ville_arrive_by_id($destination);
-            $this->load->view("voyage/fiche_voyage", $data_passager);
+            $date = date('d/m/Y');
+
+            if($this->VoyageModel->add_passager($data_passager))
+            {
+                $data_passager["destination"] = $this->VoyageModel->get_ville_arrive_by_id($destination);
+                $infodepart = $this->VoyageModel->get_depart_by_num_depart($depart,$date);
+
+                $this->load->view("voyage/fiche_voyage", $data_passager);
+            }
         }
 
     }
@@ -365,6 +375,26 @@ class Voyage extends CI_Controller
         }else{
             echo json_encode('0');
         }
+    }
+
+    public function loadDepart()
+    {
+        $this->load->view('voyage/departForm');
+    }
+
+    public  function save_depart()
+    {
+        $data = $this->input->post();
+        $id_gare = $this->session->userdata('id_gare');
+
+        $data['id_gare'] = $id_gare;
+        $data['user_id'] = $this->session->userdata('user_id');
+
+        if ($this->VoyageModel->savedepart($data)){
+
+          return redirect('voyage');
+        }
+
     }
 
 }

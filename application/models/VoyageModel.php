@@ -380,7 +380,34 @@ class VoyageModel extends CI_model
         return $resultat->tarif;
     }
 
+/**
+ * save depart
+ */
 
+public function savedepart($data)
+{
+   return $this->db->insert('depart',$data);
+}
 
+/**
+ * select all voyage of the day
+ */
+
+public function getDeparts()
+{
+    $date = date("d/m/Y");
+    $id_gare = $this->session->userdata('id_gare');
+    $query = $this->db->get_where('depart',array('date_depart'=>$date, 'id_gare'=>$id_gare));
+    return $query->result_array();
+}
+ /**
+  * select depart for printing ticket
+  */
+ public function get_depart_by_num_depart($depart,$date)
+ {
+     $id_gare = $this->session->userdata('id_gare');
+     $query = $this->db->get_where('depart',array('date_depart'=>$date,'id_depart'=> $depart, 'id_gare'=>$id_gare));
+     return $query->result_array();
+ }
 
 }
