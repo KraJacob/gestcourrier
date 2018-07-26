@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $this->load->view('tpl/css_files');
  $data;
- $data="$destination,$tarif,$num_siege";
+ $data="$destination,$tarif,$num_siege,$date_depart,$heure_depart,$num_depart";
  $id_reservation = 0;
 
  if($this->input->get("idreservation")!=null){ $id_reservation = $this->input->get("idreservation");}

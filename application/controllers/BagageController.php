@@ -94,9 +94,11 @@ class BagageController extends CI_Controller
       $data["date"] = date("d/m/Y");
 
       if ($this->BagageModel->save($data)){
-          echo 'inserted';
+          $this->session->set_flashdata('succes', 'succes');
+         return redirect('bagage');
       }else{
-          echo 'failed';
+          $this->session->set_flashdata('error', 'error');
+          return redirect('bagage');
       }
     }
 

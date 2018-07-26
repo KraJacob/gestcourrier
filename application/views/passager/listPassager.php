@@ -138,9 +138,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <i class="fa fa-plus"></i>
                                     <span class="hidden-xs"> Nouveau </span>
                                 </a>
-                                <a href="#" id="voir-article" style="display: none;" class="btn btn btn-default">
-                                    <i class="fa fa-eye"></i>
-                                    <span class="hidden-xs"> Voir </span>
+                                <a href="#" id="btn_annuler_ticket" style="display: none;" class="btn btn btn-warning">
+                                    <i class=""></i>
+                                    <span class="hidden-xs"> Annuler Ticket </span>
                                 </a>
 
                                 <a href="javascript:;" style="display:none;" id="list-delete-article"
@@ -183,7 +183,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <!-- /.content-wrapper -->
 
-
+<!-- Fin modal msg -->
+<!-- modal message -->
+<div class="modal fade" id="msg_annulation" style="display: none;">
+    <div class="modal-dialog" style="width:200px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Voulez-vous annuler le ticket de ce passager ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Non</font></font></button>
+                <button id="btn_valider_annulation" type="button" class="btn btn-success fa fa-check"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Oui</font></font></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- Fin modal msg -->
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.4.0
@@ -272,10 +289,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             },
 
-            /* "drawCallback": function( settings ) {
-                 $("#list-delete-article").fadeOut(200);
-                 $("#voir-article").fadeOut(200);
-             }, */
+
             "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
             "columns": [
                 {"data": "checkbox"},
@@ -286,9 +300,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 //{"data": "date_ajout_art_norm"},
                 {"data": "type_passager"},
                 {"data": "date_create"},
-                //{"data": "date_ajout_art"},
-                //{"data": "id_depart"},
-                //{"data": "id_destination"},
                 {"data": "num_siege"},
                 {"data": "ville_arrive"},
                 {"data": "num_depart"}
@@ -320,6 +331,77 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
         }); // end of passager Datatables
+
+
+        /**
+         *
+         * Affichage du bouton d'annulation
+         */
+
+        let numberRows = 0;
+        listPassager
+            .on( 'select', function ( e, dt, type, indexes ) {
+                $("#btn_annuler_ticket").fadeIn(200);
+
+            } )
+            .on( 'deselect', function ( e, dt, type, indexes ) {
+                numberRows = listPassager.rows({selected: true}).count();
+                if(numberRows == 0) {
+                    $("#btn_annuler_ticket").fadeOut(200);
+                }
+
+            } );
+
+        /**
+         *
+         * show modal annulation
+         */
+        $("#btn_annuler_ticket").on('click', function (e) {
+
+            $("#msg_annulation").modal("show")
+
+        })
+
+        /**
+         * Function d'annulation du ticket
+         * @type {boolean}
+         */
+        //
+        $('#btn_valider_annulation').on("click", function(){
+            let i = 0;
+           /* let selectedIds = [];
+            listColis.rows({selected : true}).data().each(function(row){
+                selectedIds[i] = row["DT_RowId"].slice(4);
+                i++;
+            }); */
+
+           let selectedIds = listPassager.row({selected : true}).data().DT_RowId.slice(4);
+
+            //console.log(selectedIds)
+            listPassager.rows({selected : true}).deselect();
+
+            $.ajax({
+                dataType: "json",
+                url: "annuler_ticket",
+                type: 'POST',
+                data: {
+                    id_passager : selectedIds
+                }
+            })
+
+                .done(function(data){
+                    $("#msg_annulation").modal("hide")
+                    location.reload(true);
+
+                })
+                .fail(function( jqXHR, textStatus, errorThrown){
+
+
+
+                });
+        });
+
+
 
         let test = false;
 

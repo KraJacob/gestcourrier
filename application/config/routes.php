@@ -36,3 +36,5 @@ $route['delete_personnel'] = 'ControllerPersonnel/delete';
 $route['delete_reservation'] = 'Voyage/delete';
 $route['bagage'] = 'BagageController/loadBagage';
 $route['add_bagage'] = 'BagageController/saveBagage';
+$route['annuler_ticket'] = 'Voyage/annulerTicket';
+$route['depart'] = 'Voyage/loadDepart';

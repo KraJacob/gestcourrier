@@ -72,6 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="box box-primary col-md-4">
                     <form onSubmit="return valid_form()"
                           action="<?php echo base_url() . 'index.php/Voyage/add_voyage' ?>" method="post" role="form">
+
                         <div class="box-header with-border">
                             <div class="col-md-4"></div>
                             <div class="box-title col-md-4">
@@ -120,16 +121,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 }
                                                 if (!$type_passager) {
                                                     echo "checked";
-                                                } ?> <?php if (isset($type_passager)) {
-                                                    echo $type_passager ? "disabled" : "";
-                                                } ?> type="radio">Normal
+                                                } ?>
+                                                       type="radio">Normal
                                             </div>
                                             <div class="col-md-2">
                                                 <input name="type_passager" id="privilegie"
                                                        value="privilegie" <?php if (isset($type_passager)) {
                                                     echo $type_passager == "privilege" ? "checked" : "";
-                                                } ?> <?php if (isset($type_passager)) {
-                                                    echo $type_passager ? "disabled" : "";
                                                 } ?> type="radio"> Privilegié
                                             </div>
                                             <div class="col-md-2">
@@ -177,6 +175,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <input type="text" id="type"
                                                                        name="mobile" <?php echo $mobile ? "readonly" : ""; ?>
                                                                        required class="forms" value="<?= $mobile; ?>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-form-label">N° Depart</label>
+                                                        <div class="col-md-9">
+                                                            <div class="input-group col-md-10">
+                                                                <select name="depart" class="forms" style=""
+
+                                                                        id="imat">
+                                                                    <?php if ($departs): ?>
+                                                                        <?php foreach ($departs as $depart): ?>
+                                                                            <option value="<?php echo $depart["id_depart"]; ?>">
+                                                                            <?php echo $depart["num_depart"]; ?></option>
+                                                                        <?php endforeach ?>
+                                                                    <?php endif ?>
+
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -248,148 +266,150 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </div>
                     </form>
-                        <!-- /.box-body -->
+                    <!-- /.box-body -->
                 </div>
-                </div>
-             <div class="row">
+            </div>
+            <div class="row">
                 <div id="info_depart" style="display: none;">
                     <form onSubmit="return valid_form()"
                           action="<?php echo base_url() . 'index.php/Voyage/add_depart' ?>" method="post" role="form">
-                    <fieldset>
-                        <legend>
-                            Informations sur le départ
-                            <div class="" style="float:right;margin-right:5%;">
-                                <button type="submit" class="btn btn-success" id="valid_depart" style="">Valider</button>
-                            </div>
-                        </legend>
+                        <fieldset>
+                            <legend>
+                                Informations sur le départ
+                                <div class="" style="float:right;margin-right:5%;">
+                                    <button type="submit" class="btn btn-success" id="valid_depart" style="">Valider
+                                    </button>
+                                </div>
+                            </legend>
 
-                        <div class="row" style="margin-bottom:2%;">
-                            <div class="col-md-2"></div>
-                            <!--                           <div class="col-md-4">-->
-                            <!--                             <div class="form-group">-->
-                            <!--                                <label class="col-md-4 col-form-label">Départ N° </label>-->
-                            <!--                                    <div class="col-md-5">-->
-                            <!--                                        <div class="input-group">-->
-                            <!--                                            <input class="forms" style="border:0" name="num_depart" size="20" value="-->
-                            <?php //if(isset($num_depart)){ echo $num_depart;}else{echo 1;}?><!--" type="text" id="num_depart" readonly>-->
-                            <!--                                        </div>-->
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                             </div>-->
-                            <!--                             <div class="col-md-4">-->
-                            <!--                                <div class="form-group">-->
-                            <!--                                <label class="col-md-6 col-form-label">Place disponible </label>-->
-                            <!--                                    <div class="col-md-5">-->
-                            <!--                                        <div class="input-group">-->
-                            <!--                                            <input class="forms" style="border:0" name="place_disponible" size="20" type="text" value="" id="place_dispo" readonly>-->
-                            <!--                                        </div>-->
-                            <!--                                    </div>-->
-                            <!--                                </div> -->
-                            <!--                            </div>-->
-                            <div class="col-md-2"></div>
-                        </div>
-                        <div class="row" style="margin-bottom:3%;">
-                            <div class="col-md-6">
-                                <!--                            <div class="col-md-12 frm" style="margin-bottom:1%;">-->
-                                <!--                              <div class="form-group">-->
-                                <!--                                <label class="col-md-3 col-form-label">Date</label>-->
-                                <!--                                <div class="col-md-9">-->
-                                <!--                                    <div class="input-group">-->
-                                <!--                                        <input id="date_depart" name="date_depart" size="21" type="text" value="-->
-                                <?php //echo  date("d/m/Y")?><!--" readonly class="forms">-->
+                            <div class="row" style="margin-bottom:2%;">
+                                <div class="col-md-2"></div>
+                                <!--                           <div class="col-md-4">-->
+                                <!--                             <div class="form-group">-->
+                                <!--                                <label class="col-md-4 col-form-label">Départ N° </label>-->
+                                <!--                                    <div class="col-md-5">-->
+                                <!--                                        <div class="input-group">-->
+                                <!--                                            <input class="forms" style="border:0" name="num_depart" size="20" value="-->
+                                <?php //if(isset($num_depart)){ echo $num_depart;}else{echo 1;}?><!--" type="text" id="num_depart" readonly>-->
+                                <!--                                        </div>-->
                                 <!--                                    </div>-->
                                 <!--                                </div>-->
-                                <!--                              </div>-->
-                                <!--                          </div>-->
-                                <div class="col-md-12 frm" style="margin-bottom:1%;">
-                                    <div class="form-group">
-                                        <label class="col-md-3 col-form-label">Heure</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <input id="heure_depart" class="forms" required name="heure_depart"
-                                                       size="21" type="time"
-                                                       value="<?php if (isset($chauffeur_depart) && $chauffeur_depart) {
-                                                           echo $chauffeur_depart[0]["heure_depart"];
-                                                       } ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 frm" style="margin-bottom:1%;">
-                                    <div class="form-group">
-                                        <label class="col-md-3 col-form-label">Véhicule</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group col-md-10">
-                                                <select name="immatriculation" class="forms" style="" id="imat">
-                                                    <?php if (isset($chauffeur_depart) && $chauffeur_depart): ?>
-                                                        <option value="<?php echo $chauffeur_depart[0]["immatriculation"]; ?>"><?php echo $chauffeur_depart[0]["immatriculation"]; ?></option>
-                                                    <?php else: ?>
-                                                        <option selected>Choisissez</option>
-                                                        <?php if ($vehicule): ?>
-                                                            <?php foreach ($vehicule as $veh): ?>
-
-                                                                <option value="<?php echo $veh["immatriculation"]; ?>"
-                                                                        data-nbrePlace="<?php $veh["nbr_place"]; ?>"><?php echo $veh["immatriculation"]; ?></option>
-                                                            <?php endforeach ?>
-                                                        <?php endif ?>
-                                                    <?php endif ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <!--                             </div>-->
+                                <!--                             <div class="col-md-4">-->
+                                <!--                                <div class="form-group">-->
+                                <!--                                <label class="col-md-6 col-form-label">Place disponible </label>-->
+                                <!--                                    <div class="col-md-5">-->
+                                <!--                                        <div class="input-group">-->
+                                <!--                                            <input class="forms" style="border:0" name="place_disponible" size="20" type="text" value="" id="place_dispo" readonly>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div> -->
+                                <!--                            </div>-->
+                                <div class="col-md-2"></div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-12 frm" style="margin-bottom:1%;">
-                                    <div class="form-group">
-                                        <label class="col-md-3 col-form-label"> Chauffeur</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group col-md-10">
-                                                <select name="chauffeur" class="forms" style="" id="select_vehicule">
-
-                                                    <?php if (isset($chauffeur_depart) && $chauffeur_depart): ?>
-                                                        <option value="<?php echo $chauffeur_depart[0]["id_personnel"]; ?>"><?php echo $chauffeur_depart[0]["nom"] . " " . $chauffeur_depart[0]["prenom"]; ?></option>
-                                                    <?php else: ?>
-                                                        <option selected>Choisissez</option>
-                                                        <?php if ($vehicule): ?>
-                                                            <?php foreach ($chauffeur as $chauf): ?>
-                                                                <option value="<?php echo $chauf["id_personnel"]; ?>"><?php echo $chauf["nom"] . " " . $chauf["prenom"]; ?></option>
-                                                            <?php endforeach ?>
-                                                        <?php endif ?>
-                                                    <?php endif ?>
-                                                </select>
+                            <div class="row" style="margin-bottom:3%;">
+                                <div class="col-md-6">
+                                    <!--                            <div class="col-md-12 frm" style="margin-bottom:1%;">-->
+                                    <!--                              <div class="form-group">-->
+                                    <!--                                <label class="col-md-3 col-form-label">Date</label>-->
+                                    <!--                                <div class="col-md-9">-->
+                                    <!--                                    <div class="input-group">-->
+                                    <!--                                        <input id="date_depart" name="date_depart" size="21" type="text" value="-->
+                                    <?php //echo  date("d/m/Y")?><!--" readonly class="forms">-->
+                                    <!--                                    </div>-->
+                                    <!--                                </div>-->
+                                    <!--                              </div>-->
+                                    <!--                          </div>-->
+                                    <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                        <div class="form-group">
+                                            <label class="col-md-3 col-form-label">Heure</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input id="heure_depart" class="forms" required name="heure_depart"
+                                                           size="21" type="time"
+                                                           value="<?php if (isset($chauffeur_depart) && $chauffeur_depart) {
+                                                               echo $chauffeur_depart[0]["heure_depart"];
+                                                           } ?>">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-12 frm" style="margin-bottom:1%;">
-                                    <div class="form-group">
-                                        <label class="col-md-3 col-form-label">Convoyeur</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group col-md-10">
-                                                <select name="convoyeur" class="forms" style="form"
-                                                        id="inlineFormCustomSelect">
-                                                    <?php if (isset($convoyeur_depart) && $convoyeur_depart): ?>
-                                                        <option value="<?php echo $convoyeur_depart[0]["id_personnel"]; ?>"><?php echo $convoyeur_depart[0]["nom"] . " " . $convoyeur_depart[0]["prenom"]; ?></option>
-                                                    <?php else: ?>
-                                                        <option selected>Choisissez</option>
-                                                        <?php if ($convoyeur): ?>
-                                                            <?php foreach ($convoyeur as $conv): ?>
-                                                                <option value="<?php echo $conv["id_personnel"]; ?>"><?php echo $conv["nom"] . " " . $conv["prenom"]; ?></option>
-                                                            <?php endforeach ?>
+                                    <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                        <div class="form-group">
+                                            <label class="col-md-3 col-form-label">Véhicule</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group col-md-10">
+                                                    <select name="immatriculation" class="forms" style="" id="imat">
+                                                        <?php if (isset($chauffeur_depart) && $chauffeur_depart): ?>
+                                                            <option value="<?php echo $chauffeur_depart[0]["immatriculation"]; ?>"><?php echo $chauffeur_depart[0]["immatriculation"]; ?></option>
+                                                        <?php else: ?>
+                                                            <option selected>Choisissez</option>
+                                                            <?php if ($vehicule): ?>
+                                                                <?php foreach ($vehicule as $veh): ?>
+
+                                                                    <option value="<?php echo $veh["immatriculation"]; ?>"
+                                                                            data-nbrePlace="<?php $veh["nbr_place"]; ?>"><?php echo $veh["immatriculation"]; ?></option>
+                                                                <?php endforeach ?>
+                                                            <?php endif ?>
                                                         <?php endif ?>
-                                                    <?php endif ?>
-                                                </select>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                        <div class="form-group">
+                                            <label class="col-md-3 col-form-label"> Chauffeur</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group col-md-10">
+                                                    <select name="chauffeur" class="forms" style=""
+                                                            id="select_vehicule">
+
+                                                        <?php if (isset($chauffeur_depart) && $chauffeur_depart): ?>
+                                                            <option value="<?php echo $chauffeur_depart[0]["id_personnel"]; ?>"><?php echo $chauffeur_depart[0]["nom"] . " " . $chauffeur_depart[0]["prenom"]; ?></option>
+                                                        <?php else: ?>
+                                                            <option selected>Choisissez</option>
+                                                            <?php if ($vehicule): ?>
+                                                                <?php foreach ($chauffeur as $chauf): ?>
+                                                                    <option value="<?php echo $chauf["id_personnel"]; ?>"><?php echo $chauf["nom"] . " " . $chauf["prenom"]; ?></option>
+                                                                <?php endforeach ?>
+                                                            <?php endif ?>
+                                                        <?php endif ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                        <div class="form-group">
+                                            <label class="col-md-3 col-form-label">Convoyeur</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group col-md-10">
+                                                    <select name="convoyeur" class="forms" style="form"
+                                                            id="inlineFormCustomSelect">
+                                                        <?php if (isset($convoyeur_depart) && $convoyeur_depart): ?>
+                                                            <option value="<?php echo $convoyeur_depart[0]["id_personnel"]; ?>"><?php echo $convoyeur_depart[0]["nom"] . " " . $convoyeur_depart[0]["prenom"]; ?></option>
+                                                        <?php else: ?>
+                                                            <option selected>Choisissez</option>
+                                                            <?php if ($convoyeur): ?>
+                                                                <?php foreach ($convoyeur as $conv): ?>
+                                                                    <option value="<?php echo $conv["id_personnel"]; ?>"><?php echo $conv["nom"] . " " . $conv["prenom"]; ?></option>
+                                                                <?php endforeach ?>
+                                                            <?php endif ?>
+                                                        <?php endif ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
                     </form>
                 </div>
             </div>
@@ -489,9 +509,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         //     })
 
         $("#destination").on("change", function (e) {
+            // alert('oki')
             var id = $(this).val()
             //console.log(id)
             var destination = $(`option[value=${id}]`).data("destination");
+            // console.log("destination"+destination)
             var ville_depart = $("input[name=ville_depart]").val();
             var type_passager = $("input[name=type_passager]:checked").val();
             var url = '<?php echo base_url("index.php/Voyage/get_tarif/"); ?>'
@@ -521,10 +543,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             let ville_depart = $("input[name=ville_depart]").val();
             let tarif = $("input[name=tarif]").val().split(" ");
             let type_passager = $("input[name=type_passager]:checked").val();
-            //	console.log(tarif);
+            console.log(ville_depart);
             if (type_passager == "normal") {
                 //console.log(destination)
-                if ((tarif) && (ville_depart == "ODIENE" || ville_depart == "ABIDJAN") && (destination == "ODIENNE" || destination == "ABIDJAN")) {
+                if ((tarif) && (ville_depart == "ODIENNE" || ville_depart == "ABIDJAN") && (destination == "ODIENNE" || destination == "ABIDJAN")) {
                     // res = tarif.split(" ")
                     //  console.log(tarif)
                     tarif = parseInt(tarif) + 1000
@@ -619,7 +641,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     })
     $("#fin_chargement").on("click", function () {
         $("#info_depart").fadeIn();
-       // console.log("ok")
+        // console.log("ok")
     })
 
     $("#valider-depart").on("click", function () {

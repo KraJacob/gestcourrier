@@ -750,7 +750,7 @@
          			}); //delete colis
          
          			$("#voir-article").on("click", function(e){
-         				let id_art = listColis.row({selected : true}).data().DT_RowId.slice(4);
+         				let id_art = listColis.row({selected: true}).data().DT_RowId.slice(4);
 						 //console.log(id_art)
          				 window.location.href = '<?php echo base_url() . "index.php/voir/"; ?>' + id_art;
          				
