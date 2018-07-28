@@ -1,13 +1,14 @@
 <?php
  //$this->load->view('tpl/css_files'); 
  $ville = $this->session->userdata("ville");
- $parcours;
- $param = $this->input->get("param");
- $param = explode(',',$param);
- $destination = $param[0];
- $tarif = $param[1];
- $num_siege = $param[2];
- $heure_depart = "";//$param[3];
+$data = $this->session->userdata('data_passager');
+ $tarif = $data['tarif'];
+ $destination = $data['destination'];
+ $num_siege = $data['num_siege'];
+ $heure_depart = $data['heure_depart'];
+ $num_depart = $data['num_depart'];
+ $date_depart = $data['date_depart'];
+
  //var_dump($param);exit();
  if($ville=="ABIDJAN")
  {
@@ -61,6 +62,8 @@ $txt = '
 			TARIF :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$tarif.' <br><br>
+			
+			
 			&nbsp;&nbsp;N° SIEGE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;'.$num_siege.'   <br><br>
@@ -74,7 +77,7 @@ $txt = '
 // Vertical alignment
 $obj_pdf->MultiCell(80,60, ''.$txt, 1, 'J', 1, 0, '', '', true, 0, true, true, 40, 'T');
 // move pointer to last page
-$obj_pdf->lastPage();
+//$obj_pdf->lastPage();
 
 // ---------------------------------------------------------
 

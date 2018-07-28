@@ -410,4 +410,20 @@ public function getDeparts()
      return $query->result_array();
  }
 
+ public function get_last_depart($id_gare)
+ {
+     $query = $this->db->query("SELECT id_depart as id FROM depart where id_gare ='$id_gare' ORDER BY id_depart DESC limit 1");
+
+     $result = $query->row();
+
+     return $result->id;
+ }
+
+ public function get_depart_encours($id_depart)
+ {
+     $query = $this->db->get_where('depart',array('id_depart'=>$id_depart));
+
+     return $query->result_array();
+ }
+
 }
