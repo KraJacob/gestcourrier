@@ -184,9 +184,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <label class="col-md-3 col-form-label">N° Depart</label>
                                                         <div class="col-md-9">
                                                             <div class="input-group col-md-10">
-                                                                <select name="depart" class="forms" style=""
-
-                                                                        id="imat">
+                                                                <select name="depart" class="forms" style="" id="depart">
+                                                                    <option value="add_depart">Ajouter départ</option>
                                                                     <?php if ($departs): ?>
                                                                         <?php foreach ($departs as $depart): ?>
                                                                             <option value="<?php echo $depart["id_depart"]; ?>">
@@ -444,6 +443,89 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- /.modal-dialog -->
     </div>
     <!-- Fin modal msg -->
+    <!-- modal depart -->
+    <div class="modal fade depart" id="modal_depart" style="display: none;">
+        <div class="modal-dialog" style="width:auto;">
+            <div class="modal-content">
+                      <form class="col-md-9 col-md-offset-2 " style="margin-top:5%;" method="post" role="" id="form_depart">
+
+                            <div class="col-md-6 col-md-offset-3 ">
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">ENREGISTREMENT D'UN DEPART</h3>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <div class="panel-content">
+
+                                            <div class="col-md-12 m-t-10 " id="">
+                                                <div class="form-group">
+                                                    <label>N° Départ</label>
+                                                    <div class="option-group">
+                                                        <input required class="form-control  form-white" type="number" id="num_depart"
+                                                               name="num_depart"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 m-t-10 " id="">
+                                                <div class="form-group">
+                                                    <label>Date</label>
+                                                    <div class="option-group">
+                                                        <input required class="form-control  form-white" type="text" id="depart_date"
+                                                               name="date_depart"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 m-t-10 " id="heure_depart">
+                                                <div class="form-group">
+                                                    <label>Heure</label>
+                                                    <div class="option-group">
+                                                        <input required class="form-control  form-white" type="time"
+                                                               id="heure_depart" name="heure_depart"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="panel-footer" >
+                                        <button type="reset" data-dismiss="modal" class="btn btn-default">Annuler</button>
+                                        <button type="submit"class="btn btn-success">Valider</button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </form>
+
+            </div>
+
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Fin modal msg -->
+    <!-- modal message -->
+    <div class="modal fade" id="msg_error" style="display: none;">
+        <div class="modal-dialog" style="width:200px;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Echec d'enregistrement</p>
+                </div>
+                <div class="">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ok</font></font></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Fin modal msg -->
+
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.0
@@ -457,11 +539,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <!-- js files -->
 <?php $this->load->view('tpl/js_files'); ?>
+<?php $this->load->view('tpl/scripts'); ?>
 <script type="text/javascript">
     let erreur = true;
     $(document).ready(function (e) {
         var imat = $("#imat").val()
-
+        $("#depart").prop('selectedIndex',-1)
         // console.log(imat)
 
         //if( imat=="Choisissze"){
@@ -674,7 +757,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             });
 
+
     })
+
+    $("#depart_date").datepicker({
+        format: "dd/mm/yyyy",
+        language: "fr",
+        autoclose: true
+    });
 
     function valid_form() {
         if (!erreur) {
@@ -685,6 +775,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
 
     }
+
+    $("#depart").on('change',function () {
+        let val = $(this).val()
+        if (val=="add_depart"){
+            $(".depart").modal('show')
+        }
+
+    })
 
 </script>
 </body>

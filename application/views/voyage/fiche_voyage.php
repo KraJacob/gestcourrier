@@ -7,8 +7,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php 
 
 $this->load->view('tpl/css_files');
- $data;
- $data="$destination,$tarif,$num_siege,$date_depart,$heure_depart,$num_depart";
+$data = $this->session->userdata('data_passager');
+$nom = $data['nom'];
+$prenom = $data['prenom'];
+$destination = $data['destination'];
+$num_siege = $data['num_siege'];
+$mobile = $data['mobile'];
+$tarif = $data['tarif'];
  $id_reservation = 0;
 
  if($this->input->get("idreservation")!=null){ $id_reservation = $this->input->get("idreservation");}
@@ -53,7 +58,7 @@ $this->load->view('tpl/css_files');
               <h3 class="box-title"></h3>
 			  <a href="<?php echo $id_reservation ?  base_url().'index.php/dashboard' :  base_url().'index.php/voyage';?>" class="btn btn-default fa fa-mail-reply"> Retour</a>
               <a class="btn btn-primary fa fa-edit" id="btn_update"> Modifier</a>
-              <a href='<?php echo base_url()."index.php/Voyage/pdf?param=$data";  ?>' target="_blank" id="btn_print" class="btn btn-warning fa fa-print"> Imprimer ticket</a>
+              <a href='<?php echo base_url()."index.php/Voyage/pdf";  ?>' target="_blank" id="btn_print" class="btn btn-warning fa fa-print"> Imprimer ticket</a>
       </div>
             <!-- /.box-header -->
             <!-- form start -->

@@ -107,6 +107,9 @@ class Voyage extends CI_Controller
         if ($this->input->post() == null) {
             return redirect('voyage');
         } else {
+            $data = $this->input->post();
+          //  var_dump($data); exit();
+            $id_depart = $this->input->post("depart");
             $user_id = $this->session->userdata("user_id");
             $id_gare = $this->session->userdata("id_gare");
             $type_passager = $this->input->post("type_passager");
@@ -119,7 +122,7 @@ class Voyage extends CI_Controller
             $tarif = $this->input->post("tarif");
             $data_passager = array();
 
-            $id_depart = $this->VoyageModel->get_last_id_depart();
+           // $id_depart = $this->VoyageModel->get_last_id_depart();
             $data_passager["nom"] = $nom;
             $data_passager["id_depart"] = $depart;
             $data_passager["prenom"] = $prenom;
@@ -135,12 +138,24 @@ class Voyage extends CI_Controller
             $data_passager['id_gare'] = $id_gare;
             $date = date('d/m/Y');
 
+
             if($this->VoyageModel->add_passager($data_passager))
             {
-                $data_passager["destination"] = $this->VoyageModel->get_ville_arrive_by_id($destination);
-                $infodepart = $this->VoyageModel->get_depart_by_num_depart($depart,$date);
+                $user_data = array();
+                $depart_en_cours = $this->VoyageModel->get_depart_encours($id_depart);
+                $destinations = $this->VoyageModel->get_ville_arrive_by_id($destination);
+                $user_data["tarif"] = $tarif;
+                $user_data["destination"] = $destinations;
+                $user_data["num_siege"] = $num_siege;
+                $user_data["date_depart"] = $depart_en_cours[0]["date_depart"];
+                $user_data["heure_depart"] = $depart_en_cours[0]["heure_depart"];
+                $user_data["num_depart"] = $depart_en_cours[0]["num_depart"];
+                $user_data["nom"] = $nom;
+                $user_data["prenom"] = $prenom;
+                $user_data["mobile"] = $mobile;
 
-                $this->load->view("voyage/fiche_voyage", $data_passager);
+                $this->session->set_userdata('data_passager',$user_data);
+                $this->load->view("voyage/fiche_voyage");
             }
         }
 
@@ -386,13 +401,17 @@ class Voyage extends CI_Controller
     {
         $data = $this->input->post();
         $id_gare = $this->session->userdata('id_gare');
-
         $data['id_gare'] = $id_gare;
         $data['user_id'] = $this->session->userdata('user_id');
 
         if ($this->VoyageModel->savedepart($data)){
 
-          return redirect('voyage');
+            $depart = $this->VoyageModel->get_last_depart($id_gare);
+
+          echo json_encode(array('depart'=>$depart));
+        }else{
+            $statut = "error";
+            echo json_encode(array("statut"=>$statut));
         }
 
     }
