@@ -651,9 +651,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     $("#siege").on("keyup", function (e) {
         var num_siege = $(this).val()
-        var num_depart = $("input[name=num_depart]").val();
-        var date_depart = $("input[name=date_depart]").val();
-        //  console.log(num_siege)
+        var id_depart = $("#depart").val();
+       // var date_depart = $("input[name=date_depart]").val();
+          console.log(id_depart)
         var url = '<?php echo base_url("index.php/Voyage/check_num_siege/"); ?>'
         $.ajax({
             method: "GET",
@@ -661,7 +661,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             dataType: "json",
             data: {
                 num_siege: num_siege,
-                num_depart: num_depart
+                id_depart: id_depart
             },
             success: function (data) {
 
@@ -699,7 +699,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             dataType: "json",
             data: {
                 num_siege: num_siege,
-                date_depart: date_depart
+                id_depart: id_depart
             },
             success: function (data) {
 
