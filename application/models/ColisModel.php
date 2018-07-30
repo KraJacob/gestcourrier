@@ -156,6 +156,12 @@
 											 ->update("colis",$data);
 											 
 		 }
+		 public function valider_colis_destinataire($id_destinataire,$data_destinataire)
+		 {
+			 return $this->db->where("id_destinataire",$id_destinataire)
+											 ->update("destinataire",$data_destinataire);
+
+		 }
 
 		 public function get_detail_colis($id_colis)
 		 {
