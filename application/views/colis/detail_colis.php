@@ -321,7 +321,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="form-group">
                                     <label>Nature pièce</label>
                                     <div class="option-group">
-                                        <input required class="form-control  form-white" type="text" id="num_piece"
+                                        <input style="" required class="form-control forms  form-white" type="text" id="num_piece"
                                                name="num_piece"/>
                                         <input type="hidden" name="id_colis" value="<?= $detail_colis[0]['id_colis']; ?>" >
                                         <input type="hidden" name="id_destinataire" value="<?= $detail_colis[0]['id_destinataire']; ?>" >
