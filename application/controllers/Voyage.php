@@ -209,10 +209,11 @@ class Voyage extends CI_Controller
 
         $id_gare = $this->session->userdata("id_gare");
         $num_siege = $this->input->get("num_siege");
-        $num_depart = $this->input->get("num_depart");
+        $id_depart = $this->input->get("id_depart");
         $date = date("d/m/Y");
         // echo"siege ".$num_siege." depart ".$num_depart."parcours".$parcours."date".$date;exit();
-        if ($this->VoyageModel->check_num_siege($num_depart, $num_siege, $date, $id_gare)) {
+      // echo json_encode(array("siege"=>$num_siege,"depart"=> $id_depart,"gare"=> $id_gare));
+        if ($this->VoyageModel->check_num_siege($num_siege, $id_depart, $id_gare)) {
             echo json_encode(1);
         } else {
             echo json_encode(0);
