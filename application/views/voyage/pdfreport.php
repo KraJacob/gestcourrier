@@ -17,7 +17,7 @@ $data = $this->session->userdata('data_passager');
 	$parcours = "ODIENE - $destination";
  }
 tcpdf();
-$obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$obj_pdf = new TCPDF('P', 'mm', array(80,80), true, 'UTF-8', false);
 $obj_pdf->SetCreator(PDF_CREATOR);
 $title = "PDF Report"; 
 $obj_pdf->SetTitle($title);
@@ -32,14 +32,11 @@ $obj_pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 $obj_pdf->SetFont('helvetica', '', 9);
 $obj_pdf->setFontSubsetting(false);
 $image1 = base_url()."assets/dist/img/logo.png";
-$obj_pdf->AddPage('P','A7');
+$obj_pdf->AddPage();
 
 // set color for background
 $obj_pdf->SetFillColor(255, 255, 255);
 
-//$img_file = base_url()."assets/dist/imgs_pdf/v1.png";
-//$obj_pdf->Image($img_file, 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-        
 // set cell padding
 $obj_pdf->setCellPaddings(1, 1, 1, 1);
 
@@ -69,7 +66,7 @@ $txt = '
 			&nbsp;&nbsp;&nbsp;'.$num_siege.'   <br><br>
 			&nbsp;&nbsp;HEURE DE DEPART :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$heure_depart.'   <br><br>
 		   </b>	  
-	   <p style="background-color:ccc;">Aucun remboussement après depart du car.</p>    
+	   <p style=""> <b>Aucun remboussement après depart du car.</b>b></p>    
 ';
 
 //$obj_pdf->Image($image1,95,15,20);

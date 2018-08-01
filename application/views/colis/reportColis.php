@@ -22,7 +22,7 @@
  $description="";
  $data = $this->session->userdata('param');
  tcpdf();
-$obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$obj_pdf = new TCPDF('P','mm', array(80,80), true, 'UTF-8', false);
 $obj_pdf->SetCreator(PDF_CREATOR);
 $title = "PDF Report"; 
 $obj_pdf->SetTitle($title);
@@ -55,7 +55,7 @@ $txt1 = '
 			 &nbsp;Odiéné TEL: 45 26 55 45 / 05 23 50 84 <br>  <br />
 						 ODIENNE - ABIDJAN </b> <br /> <br />
 			 <span style="font-size:10px;font-family:Times New Roman;">Date: &nbsp;&nbsp;&nbsp;'.$data["date"].' <br /> N° Courrier: &nbsp;&nbsp;&nbsp;<b style="color:red;">'.$data["ref_colis"].'</b> <br /> Prestation: Envoi de colis <br /><br/></span>
-			 <span style="font-size:10px;font-family:Times New Roman;">Nom Client:  &nbsp;&nbsp;&nbsp;'.$data["nom"]." ".$data["prenom"].' <br /><br /> Destinateur: &nbsp;&nbsp;&nbsp;'.$data["nom_dest"]." ".$data["prenom_dest"].' <br /> Contenu: &nbsp;&nbsp;&nbsp;'.$data["contenu"].' <br /> <br /> N.B:<br /><b style="font-size:10px;">Le service décline toute responsabilité après le délai d\'un mois </b> </span>
+			 <span style="font-size:10px;font-family:Times New Roman;">Nom Client:  &nbsp;&nbsp;&nbsp;'.$data["nom"]." ".$data["prenom"].' <br /><br /> Destinataire: &nbsp;&nbsp;&nbsp;'.$data["nom_dest"]." ".$data["prenom_dest"].' <br /> Contenu: &nbsp;&nbsp;&nbsp;'.$data["contenu"].' <br /> <br /> N.B:<br /><b style="font-size:10px;">Le service décline toute responsabilité après le délai d\'une sémaine. </b> </span>
 ';
 
 // Vertical alignment
