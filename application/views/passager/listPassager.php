@@ -165,10 +165,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>Date d'enregistrement</th>
                                         <th>N° siège</th>
                                         <th>Destination</th>
+                                        <th>Prix</th>
                                         <th>N° depart</th>
                                     </tr>
                                     </thead>
-
+                                     <tbody></tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th colspan="8" style="text-align:right"><h1 >Total: <span style="color: red" id="total"></span></h1></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
                                 </table>
 
                             </div>
@@ -263,12 +270,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     "className": 'select-checkbox',
                     "targets": 0
                 },
-                /*
+
                   {
-                      "targets": [7, 8, 9],
+                      "targets": [9],
                       "visible": false
 
-                  },*/
+                  },
                 /* {
                      "targets": [4],
                      "searchable": false
@@ -302,6 +309,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {"data": "date_create"},
                 {"data": "num_siege"},
                 {"data": "ville_arrive"},
+                {"data": "tarif"},
                 {"data": "num_depart"}
 
             ],
@@ -327,6 +335,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     "sSortAscending": ": activer pour trier la colonne par ordre croissant",
                     "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
                 }
+            },
+
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // Total over all pages
+                total = api
+                    .column( 8 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+
+                // Total over this page
+                pageTotal = api
+                    .column( 8, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+                   //console.log(pageTotal)
+                $("#total").html(pageTotal)
+                // Update footer
+                // $( api.column( 8 ).footer() ).html(
+                //     '$'+pageTotal +' ( $'+ total +' total)'
+                // );
             }
 
 
