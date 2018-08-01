@@ -46,7 +46,7 @@ $obj_pdf->setCellMargins(0,0,0,0);
 $txt = '
       <b style="font-size:30px;font-family:Algerian;">K.F.T</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$obj_pdf->Image($image1,45,0, 20).'<br>
        <span style="font-size:6px;font-family:Tahoma;">Abidjan TEL: 05 27 90 07 / 08 81 27 30 <br>
-       &nbsp;Odiéné TEL: 45 26 55 45 / 05 23 50 84 <br>
+       Odienné TEL: 45 26 55 45 / 05 23 50 84 <br>
 	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;06 29 76 85</span>
@@ -66,15 +66,14 @@ $txt = '
 			&nbsp;&nbsp;&nbsp;'.$num_siege.'   <br><br>
 			&nbsp;&nbsp;HEURE DE DEPART :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$heure_depart.'   <br><br>
 		   </b>	  
-	   <p style=""> <b>Aucun remboussement après depart du car.</b>b></p>    
+	   <p style=""> <b>Aucun remboussement après depart du car.</b></p>    
 ';
 
-//$obj_pdf->Image($image1,95,15,20);
-/* */
-// Vertical alignment
-$obj_pdf->MultiCell(80,60, ''.$txt, 1, 'J', 1, 0, '', '', true, 0, true, true, 40, 'T');
-// move pointer to last page
-//$obj_pdf->lastPage();
+$obj_pdf->MultiCell(75,75, ''.$txt, 0, 'J', 1, 0, '', '', true, 0, true, true, 40, 'T');
+
+$obj_pdf->Ln(10);
+
+$obj_pdf->SetX(40);
 
 // ---------------------------------------------------------
 
