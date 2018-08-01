@@ -89,6 +89,7 @@ class ControllerPassager extends CI_Controller
             array('db' => 'num_siege', 'dt' => 'num_siege'),
             array('db' => 'ville_arrive', 'dt' => 'ville_arrive'),
             array('db' => 'num_depart', 'dt' => 'num_depart'),
+            array('db' => 'passager`.`tarif','field'=>'tarif', 'dt' => 'tarif'),
 
             array(
                 'db' => 'passager`.`id_depart',

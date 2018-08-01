@@ -282,6 +282,8 @@
 
 				 $data['detail_colis'] = $this->ColisModel->get_detail_colis($id_colis);
 
+				// var_dump($data); exit();
+
 				 $this->load->view("colis/detail_colis",$data);
 				 
 				//var_dump($data); 
@@ -299,12 +301,27 @@
 			  }
 			  public function retrait_colis()
 			  {
-				  $id = $this->input->get("idcolis");
-				  $data = array();
-				  $data['etat'] = "retiré";
+			  	$data_destinataire = $this->input->post();
+                  $id = $this->input->post("id_colis");
+                  $id_destinataire = $this->input->post("id_destinataire");
+                  unset($data_destinataire["id_colis"]);
+                  unset($data_destinataire["id_destinataire"]);
+                  $nat_piece = $this->input->post("nat_piece");
+
+			  	if ($nat_piece){
+
+			  		unset($data_destinataire["nat_autre_piece"]);
+				}
+
+                  $data = array();
+			  	  $data['etat'] = "retiré";
+
+
 				  if($this->ColisModel->valider_colis($id,$data))
 				  {
-					 echo json_encode($data);
+					 //echo json_encode($data);
+                      $this->ColisModel->valider_colis_destinataire($id_destinataire,$data_destinataire);
+					  return redirect('colis_recu');
 				  }
 			  }
 

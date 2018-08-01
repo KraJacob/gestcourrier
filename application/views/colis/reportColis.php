@@ -22,7 +22,7 @@
  $description="";
  $data = $this->session->userdata('param');
  tcpdf();
-$obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$obj_pdf = new TCPDF('P','mm', array(80,80), true, 'UTF-8', false);
 $obj_pdf->SetCreator(PDF_CREATOR);
 $title = "PDF Report"; 
 $obj_pdf->SetTitle($title);
@@ -37,7 +37,7 @@ $obj_pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 $obj_pdf->SetFont('helvetica', '', 9);
 $obj_pdf->setFontSubsetting(false);
 $image1 = base_url()."assets/dist/img/logo.png";
-$obj_pdf->AddPage('P','A7');
+$obj_pdf->AddPage();
 
 // set color for background
 $obj_pdf->SetFillColor(255, 255, 255);
@@ -49,22 +49,25 @@ $obj_pdf->setCellPaddings(1, 1, 1, 1);
 $obj_pdf->setCellMargins(0,0,0,0);
 //$obj_pdf->setCellBorder(0,0,0,0);
 //
-$txt1 = '
+$txt1 = ' <div style="padding: 5%;">
       <b style="font-size:40px;font-family:Castellar;color:blue;">K.F.T</b> '.$obj_pdf->Image($image1,45,0, 20).'<br>
        <b style="font-size:8px;font-family:Tahoma;">Abidjan TEL: 05 27 90 07 / 08 81 27 30 <br>
-			 &nbsp;Odiéné TEL: 45 26 55 45 / 05 23 50 84 <br>  <br />
-						 ODIENNE - ABIDJAN </b> <br /> <br />
-			 <span style="font-size:10px;font-family:Times New Roman;">Date: &nbsp;&nbsp;&nbsp;'.$data["date"].' <br /> N° Courrier: &nbsp;&nbsp;&nbsp;<b style="color:red;">'.$data["ref_colis"].'</b> <br /> Prestation: Envoi de colis <br /><br/></span>
-			 <span style="font-size:10px;font-family:Times New Roman;">Nom Client:  &nbsp;&nbsp;&nbsp;'.$data["nom"]." ".$data["prenom"].' <br /><br /> Destinateur: &nbsp;&nbsp;&nbsp;'.$data["nom_dest"]." ".$data["prenom_dest"].' <br /> Contenu: &nbsp;&nbsp;&nbsp;'.$data["contenu"].' <br /> <br /> N.B:<br /><b style="font-size:10px;">Le service décline toute responsabilité après le délai d\'un mois </b> </span>
-';
+			 &nbsp;Odienné TEL: 45 26 55 45 / 05 23 50 84 <br>  <br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ODIENNE - ABIDJAN </b> <br /><br />
+			 <span style="font-size:10px;font-family:Times New Roman;">Date: &nbsp;&nbsp;&nbsp;'.$data["date"].' <br /> N° Courrier: &nbsp;&nbsp;&nbsp;<b style="color:red;">'.$data["ref_colis"].'</b> 
+			 <br /> Prestation: Envoi de colis <br /></span>
+			 <span style="font-size:10px;font-family:Times New Roman;">Nom Client:  &nbsp;&nbsp;&nbsp;'.$data["nom"]." ".$data["prenom"].' <br />
+			  Destinataire: &nbsp;&nbsp;&nbsp;'.$data["nom_dest"]." ".$data["prenom_dest"]
+         .' <br /> Contenu: &nbsp;&nbsp;&nbsp;'.$data["contenu"].' <br /><br />  N.B:<b style="font-size:10px;"> Le service décline toute responsabilité après le délai d\'une sémaine. </b> </span>
+</div>';
 
 // Vertical alignment
 
-$obj_pdf->MultiCell(60, 60, ''.$txt1, 0, 'J', 1, 0, '', '', true, 0, true, true, 40, 'T');
+$obj_pdf->MultiCell(75,75, ''.$txt1, 0, 'J', 1, 0, '', '', true, 0, true, true, 40, 'T');
 
 $obj_pdf->Ln(10);
 
-$obj_pdf->SetX(50);
+$obj_pdf->SetX(40);
 
 //Close and output PDF document
 $obj_pdf->Output('reçu_envoi_colis.pdf', 'I');
