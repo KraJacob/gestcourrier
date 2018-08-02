@@ -38,3 +38,4 @@ $route['bagage'] = 'BagageController/loadBagage';
 $route['add_bagage'] = 'BagageController/saveBagage';
 $route['annuler_ticket'] = 'Voyage/annulerTicket';
 $route['depart'] = 'Voyage/loadDepart';
+$route['bagage_recu'] = 'BagageController/print_recu';

@@ -65,11 +65,10 @@ class VoyageModel extends CI_model
     }
 
 
-    public function check_num_siege($num_depart, $num_siege, $date, $id_gare)
+    public function check_num_siege($num_siege, $id_depart, $id_gare)
     {
-        $query = $this->db->query("SELECT `depart`.`id_depart`,num_depart,`depart`.`date_ajout`, id_passager,num_siege,`passager`.`id_depart` FROM depart,
-        passager WHERE `depart`.`id_gare`='$id_gare' AND `depart`.`id_depart` =`passager`.`id_depart`  AND `depart`.`date_ajout`='$date'
-         AND num_depart ='$num_depart' AND num_siege='$num_siege'");
+        $query = $this->db->query("SELECT `depart`.`id_depart`, id_passager,num_siege,`passager`.`id_depart` FROM depart,
+        passager WHERE `depart`.`id_depart` =`passager`.`id_depart`  AND `depart`.`id_depart` ='$id_depart' AND `depart`.`id_gare`='$id_gare' AND  num_siege='$num_siege'");
 
         $result = $query->row();
 

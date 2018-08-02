@@ -85,4 +85,10 @@
 		  return $query->result_array();
 	  }
 
+	  public function get_passager_by_id($passager_id)
+      {
+          $query = $this->db->get_where('passager',array('id_passager'=>$passager_id));
+          return $query->row_array();
+      }
+
     }

@@ -92,14 +92,25 @@ class BagageController extends CI_Controller
       $data["user_id"] = $this->session->userdata("user_id");
       $data["id_gare"] =  $this->session->userdata("id_gare");
       $data["date"] = date("d/m/Y");
+      $passager_id = $this->input->post('passager_id');
+      $passager = $this->PassagerModel->get_passager_by_id($passager_id);
+
 
       if ($this->BagageModel->save($data)){
-          $this->session->set_flashdata('succes', 'succes');
-         return redirect('bagage');
+         $data["num_siege"] = $passager['num_siege'];
+         $data["nom"] = $passager['nom'];
+         $data["prenom"] = $passager['prenom'];
+         $this->session->set_userdata('bagage',$data);
+         return redirect('bagage_recu');
       }else{
           $this->session->set_flashdata('error', 'error');
           return redirect('bagage');
       }
+    }
+
+    public function print_recu()
+    {
+        $this->load->view('bagage/recu_bagage');
     }
 
     public function updateBagage($id)
