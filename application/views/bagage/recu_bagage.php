@@ -56,8 +56,7 @@ $txt = '
 	  </span>
 	   <br><br> <b>N°SIEGE : '.$num_siege.'</b><br> <br>		
 			<b>
-			DESCRIPTION : '.$description.' <br><br>
-			
+			DESCRIPTION : '.$description.' <br><br>			
 			
 			&nbsp;&nbsp;PRIX : '.$prix.'   <br><br>
 			&nbsp;&nbsp;DATE :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$date.'   <br><br>

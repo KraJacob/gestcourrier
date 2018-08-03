@@ -152,7 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <input type="hidden" id="ville_depart"
                                                                        name="ville_depart" class=""
                                                                        value='<?php echo $this->session->userdata("ville"); ?>'>
-                                                                <select name="id_destination" class="forms" style=""
+                                                                <select name="id_destination" class="forms select2" style=""
                                                                         id="destination">
                                                                     <option selected>Choisissez</option>
                                                                     <?php if ($destination): ?>
