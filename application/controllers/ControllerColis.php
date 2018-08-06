@@ -9,6 +9,8 @@
 					parent::__construct();
 					$this->load->model('ColisModel');
 					$this->load->model('PersonnelModel');
+					$this->load->model('DepenseModel');
+					$this->load->library('pdfgenerator');
 				} 
 		
 				public function _remap($method, $params = array())
@@ -346,6 +348,33 @@
 				$id = $this->input->post("id");
 				$colis = $this->ColisModel->get_colis_by_id($id);
 				echo json_encode($colis);
+			  }
+
+			  public function load_report_depense_jour()
+			  {
+			  	$data = array();
+			  	$dateJour = date('d/m/Y');
+			  	$depensetotal = $this->DepenseModel->get_depense_jour($dateJour);
+			  	$bagage = $this->ColisModel->montantBagageJour();
+			  	$colis = $this->ColisModel->montantColisJour();
+			  	if ($bagage[0]["prix"]){
+                    $data['bagage'] = $bagage;
+				}else{
+                    $data['bagage'] = 0;
+				}
+                  if ($colis[0]['montant']){
+                      $data['colis']  = $colis;
+                  }else{
+                      $data['colis'] = 0;
+                  }
+
+                $data['depenseTotal'] = $depensetotal;
+			  	$data['depenses'] = $this->ColisModel->depenseJour();
+                 //   var_dump($data);exit();
+                  $html = $this->load->view('depense/table_report_depense', $data, true);
+				 // $html = "Hello";
+                  $filename = 'report_'.time();
+                  $this->pdfgenerator->generate($html, $filename, true, 'A4', 'portrait');
 			  }
 
             }

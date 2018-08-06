@@ -188,7 +188,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <label  for="select2-single-input-sm"  class="col-md-5 col-form-label">Passager </label>
                                                         <div class="col-md-7">
                                                             <div class="input-group">
-                                                                <select name="passager_id" class="forms searchabl" style="" id="passager">
+                                                                <select name="passager_id" class="forms searchable recherche" style="" id="passager">
                                                                     <option selected>Choisissez</option>
                                                                     <?php if($passager): ?>
                                                                         <?php foreach($passager as $passagers): ?>
@@ -476,6 +476,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 let v2 = $("input[name='depense_to']").val();
                 .columns(i).search(v1 + "-" + v2).draw();*/
             });
+
+      //  $(".recherche").select2();
 
     })
 

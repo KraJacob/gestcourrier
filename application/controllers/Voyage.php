@@ -42,7 +42,6 @@ class Voyage extends CI_Controller
         $num_depart_en_cour = 0;
         $id_gare = $this->session->userdata("id_gare");
         //echo "parcours ".$parcours." date ". $date;exit();
-
         $depart = $this->VoyageModel->get_num_depart_en_cours($id_gare, $date);
         //var_dump($depart); exit();
         if ($depart) {
@@ -96,7 +95,6 @@ class Voyage extends CI_Controller
     {
         $ville_depart = $this->session->userdata("ville");
         $ville_arrive = $this->input->get("destination");
-        //print($ville_depart);exit();
         $tarif = $this->VoyageModel->get_tarif($ville_depart, $ville_arrive);
         //$tarif = number_format($tarif, 0, ',', ' ');
         echo json_encode($tarif);

@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                 <a href="<?php echo base_url() . "index.php/print_recu"; ?> " target="_blank"
                                    class="btn btn-warning fa fa-print"> REÇU</a>
-                                <a class="btn btn-primary fa fa-edit"> Modifier</a>
+                                <a class="btn btn-primary fa fa-edit hide"> Modifier</a>
                                 <a href="<?php echo base_url() . "index.php/colis"; ?>"
                                    class="btn btn-default fa fa-mail-reply"> RETOUR</a>
                             </div>

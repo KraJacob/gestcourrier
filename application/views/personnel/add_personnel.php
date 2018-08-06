@@ -110,14 +110,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <label class="col-md-4 control-label">Type personnel</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            <select id="type_personnel" name="id_type_personnel" class="form-control">
+                                            <select id="type_personnel" name="id_type_personnel" class=" forms">
                                                 <?php foreach ($type_personnel as $per) : ?>
                                                     <option value="<?php echo $per['id_type_personnel']; ?>">  <?php echo $per['lib_personnel']; ?> </option>
                                                 <?php endforeach ?>
                                             </select>
-                                            <span class="input-group-addon">
-                            <i class="fa fa-envelope"></i>
-                            </span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -127,11 +125,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <label class="col-md-4 control-label">Nom</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            <input type="text" id="nom" name="nom" class="form-control" value=''>
+                                            <input type="text" id="nom" name="nom" class="forms" value=''>
                                             <input type="hidden" id="id_personnel" name="update_personnel"
-                                                   class="form-control" value=''> <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-user"></i>
-                            </span>
+                                                   class="form-control" value=''>
                                         </div>
                                     </div>
                                 </div>
@@ -141,10 +137,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <label class="col-md-4 control-label">Prénom</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            <input type="text" id="prenom" name="prenom" class="form-control" value=''>
-                                            <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-user"></i>
-                            </span>
+                                            <input type="text" id="prenom" name="prenom" class="forms" value=''>
+
                                         </div>
                                     </div>
                                 </div>
@@ -154,11 +148,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <label class="col-md-4 control-label">Mobile</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            <input type="number" id="mobile" name="mobile" class="form-control"
+                                            <input type="number" id="mobile" name="mobile" class="forms"
                                                    value=''>
-                                            <span class="input-group-addon">
-                            <i class="fa fa-telephone"></i>
-                            </span>
+
                                         </div>
                                     </div>
                                 </div>

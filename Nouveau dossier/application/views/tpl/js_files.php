@@ -9,8 +9,12 @@
 <script src ="<?php echo base_url();?>assets/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js"></script>
 
 <script>
-   function majuscule(champ){
-    champ.value=champ.value.toUpperCase();
-   }
-   $('.searchable').select2();
+    $(document).ready(function () {
+        $(".select2").select2();
+        function majuscule(champ){
+            champ.value=champ.value.toUpperCase();
+        }
+    })
+
+
 </script>

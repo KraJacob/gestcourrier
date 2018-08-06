@@ -201,6 +201,39 @@
 												
 			}
 
+			public function montantColisJour()
+            {
+                $date = date("d/m/Y");
+               $query = $this->db->select_sum('montant')
+                     ->get_where('colis',array('date_create'=>$date));
+                if ($query){
+                    return $query->result_array();
+                }else{
+
+                    return 0;
+                }
+            }
+
+        public function montantBagageJour()
+        {
+            $date = date("d/m/Y");
+           $query = $this->db->select_sum('prix')
+                ->get_where('bagage',array('date'=>$date));
+           if ($query){
+               return $query->result_array();
+           }else{
+
+               return 0;
+           }
+
+        }
+
+        public function depenseJour()
+        {
+            $date = date("d/m/Y");
+           $query = $this->db->get_where('depense',array('date'=>$date));
+           return $query->result_array();
+        }
 	
 
     }

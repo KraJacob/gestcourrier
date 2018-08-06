@@ -138,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					    	}
 					    }
 				    ],
-					"order": [ 0, 'desc' ],
+					//"order": [ 0, 'desc' ],
 				 
 				    "select": {
 				        "style":    'multi'

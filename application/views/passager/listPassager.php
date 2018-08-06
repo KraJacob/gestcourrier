@@ -108,10 +108,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            name="num_depart">
                                 </td>
                                 <td rowspan="1" colspan="1">
-                                    <!-- <div class="margin-bottom-5">
-                                        <button class="btn btn-sm btn-success filter-submit margin-bottom">
-                                            <i class="fa fa-search"></i> Recherche.</button>
-                                    </div> -->
+                                     <div class="margin-bottom-5">
+                                        <button class="btn btn-sm btn-success passager margin-bottom">
+                                            <i class="fa fa-search"></i> Passagers du jour.</button>
+                                    </div>
                                     <button class="btn btn-sm btn-default filter-cancel refresh">
                                         <i class="fa fa-times"></i> Rafraîchir.
                                     </button>
@@ -167,12 +167,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>Destination</th>
                                         <th>Prix</th>
                                         <th>N° depart</th>
+                                        <th>&nbsp;&nbsp;</th>
                                     </tr>
                                     </thead>
                                      <tbody></tbody>
                                     <tfoot>
                                     <tr>
-                                        <th colspan="8" style="text-align:right"><h1 >Total: <span style="color: red" id="total"></span></h1></th>
+                                        <th colspan="8" style="text-align:right"> </th>
                                         <th></th>
                                     </tr>
                                     </tfoot>
@@ -234,6 +235,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 text: "imprimer",
                 className: "btn  btn-change mt-ladda-btn ladda-button btn-secondary ",
                 title: "Liste des passager",
+                footer: true,
                 exportOptions: {
                     columns: ':visible'
                 }
@@ -241,6 +243,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 extend: "pdf",
                 className: "btn btn-good mt-ladda-btn ladda-button btn-danger ",
                 title: "Liste des passager",
+                footer: true,
                 exportOptions: {
                     columns: ':visible'
                 }
@@ -248,6 +251,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 extend: "excel",
                 className: "btn btn-snap mt-ladda-btn ladda-button btn-success ",
                 title: "Liste des passager",
+                footer: true,
                 exportOptions: {
                     columns: ':visible'
                 }
@@ -272,7 +276,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 },
 
                   {
-                      "targets": [9],
+                      "targets": [9,10],
                       "visible": false
 
                   },
@@ -289,7 +293,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     }
                 }
             ],
-            "order": [7, 'desc'],
+            "order": [10, 'desc'],
 
             "select": {
                 "style": 'multi'
@@ -310,7 +314,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {"data": "num_siege"},
                 {"data": "ville_arrive"},
                 {"data": "tarif"},
-                {"data": "num_depart"}
+                {"data": "num_depart"},
+                {"data": "id_passager"}
 
             ],
             "lengthMenu": [[10, 15, 20, -1], [10, 15, 20, "All"]],
@@ -364,11 +369,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         return intVal(a) + intVal(b);
                     }, 0 );
                    //console.log(pageTotal)
-                $("#total").html(pageTotal)
-                // Update footer
-                // $( api.column( 8 ).footer() ).html(
-                //     '$'+pageTotal +' ( $'+ total +' total)'
-                // );
+               // $("#total").html(pageTotal)
+               //  Update footer
+                 $( api.column( 8 ).footer() ).html(
+                    '<h1 style="color: red"> Recette : '+pageTotal +' </h1>'
+                 );
             }
 
 
@@ -443,6 +448,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 });
         });
 
+        /**
+         * Charger les passagers du jour par defaut
+         * @type {}
+         */
+         $(".passager").on('click',function () {
+             var d = new Date();
+             let date = d.toLocaleDateString()
+             listPassager.columns(5).search(date).draw();
+
+         })
 
 
         let test = false;

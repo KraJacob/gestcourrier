@@ -55,6 +55,7 @@ class ControllerPassager extends CI_Controller
 
     public function list_type_passager()
     {
+        $date = date('d/m/Y');
         $table = 'passager`, `depart`,`destination';
 
         $primaryKey = 'passager`.`id_passager';
@@ -68,6 +69,10 @@ class ControllerPassager extends CI_Controller
                     return 'row_' . $d;
                 }
             ),
+            array(
+                'db' => 'passager`.`id_passager',
+                'field' => 'id_passager',
+                'dt' => 'id_passager' ),
             array(
                 'db' => 'passager`.`id_passager',
                 'field' => 'id_passager',
@@ -103,7 +108,8 @@ class ControllerPassager extends CI_Controller
             )
 
         );
-        $whereClause = "`passager`.`id_depart` = `depart`.`id_depart` AND `passager`.`id_destination` = `destination`.`id_destination` AND passager.statut = 'Actif'";
+        $whereClause = "`passager`.`id_depart` = `depart`.`id_depart` 
+        AND `passager`.`id_destination` = `destination`.`id_destination` AND passager.statut = 'Actif'";
         require('ssp.php');
 
         echo json_encode(

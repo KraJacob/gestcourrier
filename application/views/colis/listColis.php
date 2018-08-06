@@ -103,6 +103,7 @@
                      <!-- Begin: Table articles -->
                      <div class="portlet portlet light portlet-fit portlet-datatable bordered">
                         <div class="portlet-title">
+                            <?php if ($this->session->userdata("droit") == "caissier"): ?>
                            <div class="actions" style="float:right;margin-top:15px;margin-right:2%;">
                               <a href="#" id="nouveau_passager" style="" class="btn btn btn-primary" data-toggle="modal" data-target="#modal_user">
                               <i class="fa fa-plus"></i>
@@ -122,6 +123,7 @@
                               </a>
                            </div>
                         </div>
+                         <?php endif; ?>
                         <div class="portlet-body">
                            <div class="table-container">
                               <table class="display responsive no-wrap table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="tableColis" width="100%">

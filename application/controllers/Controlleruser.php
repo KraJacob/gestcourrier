@@ -342,17 +342,20 @@
 			public function SupUser(){
 		
 				 $user = $this->input->post('selected');
-				  if($user!="")
+				 //echo json_encode($user);
+				 if($user!=""){
+                      if($this->UserModel->delete($user)){
+                          $data["error"] = "";
+                          echo json_encode($data);
+
+                      }else{
+                          $data["error"] = "An error occured";
+                          echo json_encode($data);
+
+                      }
+                  }
 		
-				if($this->UserModel->delete($user)){
-				  $data["error"] = "";
-				  echo json_encode($data);
-		
-				}else{
-				  $data["error"] = "An error occured";
-				  echo json_encode($data);
-		
-				}
+
 			}
 		
 			//Chargement de la page de modificatio de mot de passe

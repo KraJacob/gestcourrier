@@ -209,7 +209,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <input type="hidden" id="ville_depart"
                                                                        name="ville_depart" class=""
                                                                        value='<?php echo $this->session->userdata("ville"); ?>'>
-                                                                <select name="ville_arrive" class="forms" style=""
+                                                                <select name="ville_arrive" class="forms select2" style=""
                                                                         id="destination">
                                                                     <?php if (isset($reservation_destination)): ?>
                                                                         <option value="<?= $id_destination; ?>"><?= $reservation_destination; ?></option>
@@ -274,7 +274,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           action="<?php echo base_url() . 'index.php/Voyage/add_depart' ?>" method="post" role="form">
                         <fieldset>
                             <legend>
-                                Informations sur le départ
+                                Informations sur le véhicule
                                 <div class="" style="float:right;margin-right:5%;">
                                     <button type="submit" class="btn btn-success" id="valid_depart" style="">Valider
                                     </button>
@@ -319,31 +319,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <!--                                </div>-->
                                     <!--                              </div>-->
                                     <!--                          </div>-->
-                                    <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                   <!-- <div class="col-md-12 frm" style="margin-bottom:1%;">
                                         <div class="form-group">
                                             <label class="col-md-3 col-form-label">Heure</label>
                                             <div class="col-md-9">
                                                 <div class="input-group">
                                                     <input id="heure_depart" class="forms" required name="heure_depart"
                                                            size="21" type="time"
-                                                           value="<?php if (isset($chauffeur_depart) && $chauffeur_depart) {
+                                                           value="<?php /*if (isset($chauffeur_depart) && $chauffeur_depart) {
                                                                echo $chauffeur_depart[0]["heure_depart"];
-                                                           } ?>">
+                                                           } */?>">
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                     <div class="col-md-12 frm" style="margin-bottom:1%;">
                                         <div class="form-group">
                                             <label class="col-md-3 col-form-label">Véhicule</label>
                                             <div class="col-md-9">
                                                 <div class="input-group col-md-10">
-                                                    <select name="immatriculation" class="forms" style="" id="imat">
+                                                    <select name="immatriculation" class="forms" style="" id="imat" required>
                                                         <?php if (isset($chauffeur_depart) && $chauffeur_depart): ?>
                                                             <option value="<?php echo $chauffeur_depart[0]["immatriculation"]; ?>"><?php echo $chauffeur_depart[0]["immatriculation"]; ?></option>
                                                         <?php else: ?>
-                                                            <option selected>Choisissez</option>
+                                                            <option selected value="">Choisissez</option>
                                                             <?php if ($vehicule): ?>
                                                                 <?php foreach ($vehicule as $veh): ?>
 
@@ -366,12 +366,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <div class="col-md-9">
                                                 <div class="input-group col-md-10">
                                                     <select name="chauffeur" class="forms" style=""
-                                                            id="select_vehicule">
+                                                            id="select_vehicule" required>
 
                                                         <?php if (isset($chauffeur_depart) && $chauffeur_depart): ?>
                                                             <option value="<?php echo $chauffeur_depart[0]["id_personnel"]; ?>"><?php echo $chauffeur_depart[0]["nom"] . " " . $chauffeur_depart[0]["prenom"]; ?></option>
                                                         <?php else: ?>
-                                                            <option selected>Choisissez</option>
+                                                            <option selected value="">Choisissez</option>
                                                             <?php if ($vehicule): ?>
                                                                 <?php foreach ($chauffeur as $chauf): ?>
                                                                     <option value="<?php echo $chauf["id_personnel"]; ?>"><?php echo $chauf["nom"] . " " . $chauf["prenom"]; ?></option>
@@ -384,28 +384,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 frm" style="margin-bottom:1%;">
+                                    <!--<div class="col-md-12 frm" style="margin-bottom:1%;">
                                         <div class="form-group">
                                             <label class="col-md-3 col-form-label">Convoyeur</label>
                                             <div class="col-md-9">
                                                 <div class="input-group col-md-10">
                                                     <select name="convoyeur" class="forms" style="form"
                                                             id="inlineFormCustomSelect">
-                                                        <?php if (isset($convoyeur_depart) && $convoyeur_depart): ?>
-                                                            <option value="<?php echo $convoyeur_depart[0]["id_personnel"]; ?>"><?php echo $convoyeur_depart[0]["nom"] . " " . $convoyeur_depart[0]["prenom"]; ?></option>
-                                                        <?php else: ?>
+                                                        <?php /*if (isset($convoyeur_depart) && $convoyeur_depart): */?>
+                                                            <option value="<?php /*echo $convoyeur_depart[0]["id_personnel"]; */?>"><?php /*echo $convoyeur_depart[0]["nom"] . " " . $convoyeur_depart[0]["prenom"]; */?></option>
+                                                        <?php /*else: */?>
                                                             <option selected>Choisissez</option>
-                                                            <?php if ($convoyeur): ?>
-                                                                <?php foreach ($convoyeur as $conv): ?>
-                                                                    <option value="<?php echo $conv["id_personnel"]; ?>"><?php echo $conv["nom"] . " " . $conv["prenom"]; ?></option>
-                                                                <?php endforeach ?>
-                                                            <?php endif ?>
-                                                        <?php endif ?>
+                                                            <?php /*if ($convoyeur): */?>
+                                                                <?php /*foreach ($convoyeur as $conv): */?>
+                                                                    <option value="<?php /*echo $conv["id_personnel"]; */?>"><?php /*echo $conv["nom"] . " " . $conv["prenom"]; */?></option>
+                                                                <?php /*endforeach */?>
+                                                            <?php /*endif */?>
+                                                        <?php /*endif */?>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </fieldset>
@@ -543,6 +543,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript">
     let erreur = true;
     $(document).ready(function (e) {
+
         var imat = $("#imat").val()
         $("#depart").prop('selectedIndex',-1)
         // console.log(imat)
@@ -731,6 +732,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         let value = $("#num_depart").val();
         let date = $("#date_depart").val();
         let parcours = $("#parcours").val();
+        let vehicule = $("#imat").val();
+        let chauffeur = $("#select_vehicule").val();
+        if(vehicule === null || chauffeur === null){
+            alert("Veuillez choisir le véhicule et le chauffeur")
+            return false;
+        }
         //console.log("parcours: "+parcours+" date"+date)
         //if(confirme("Voulez-vous ?")){
         $.ajax({

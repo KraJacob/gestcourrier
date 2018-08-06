@@ -45,12 +45,8 @@
 
        public function delete($ids)    
             {
-             /*   $user_in_historique = $this->get_users_in_historique($ids);
-                if(count($user_in_historique) > 0){
-                    return false;
-                }else{
 
-                $user_in_historique = $this->get_users_in_historique($ids);
+               /* $user_in_historique = $this->get_users_in_historique($ids);
                 if(count($user_in_historique) > 0){
                     return false;
                 }else{
@@ -76,15 +72,15 @@
                         'desc_activite' => $desc_activite
                     );
     
-                    $this->db->insert('activites', $data_activite);
+                    $this->db->insert('activites', $data_activite); */
     
                     $this->db->set('statut', 'supprimé');
                     $this->db->or_where_in('user_id', $ids);
                     return $this->db->update('user');
                 }
                 
-            } */
-        }
+         //   }
+       // }
        
           //Ajout d'un utilisateur
           public function addUser($data)

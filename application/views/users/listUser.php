@@ -23,10 +23,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
 		<div style="float:right;margin-bottom:5px;">
+            <a href="javascript:;" style="display:none;" id="list-delete-user" class="btn btn btn-danger" data-toggle="confirmation" data-original-title="Etes vous sûre ?" title="">
+                <i class="fa fa-trash"></i>
+                <span class="hidden-xs"> Supprimer </span>
+            </a>
 			
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_user">
                Nouveau
-      </button>
+          </button>
 		</div>
 		
     </section>
@@ -155,6 +159,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
 	<!--  Fin du modal -->
+<!-- modal message suppression-->
+<div class="modal fade" id="msg_delete" style="display: none;">
+    <div class="modal-dialog" style="width:200px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Voulez-vous supprimer ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Non</font></font></button>
+                <button id="valider_delete" type="button" class="btn btn-success fa fa-check"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Oui</font></font></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin modal message suppression -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
@@ -255,7 +274,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				"dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
-		 }); 
+		 });
+				userlist.on( 'select', function ( e, dt, type, indexes ) {
+                    $("#list-delete-user").fadeIn(200);
+                } ).on( 'deselect', function ( e, dt, type, indexes ) {
+                    numberRows = userlist.rows({selected: true}).count();
+                    if(numberRows == 0) {
+                        $("#list-delete-user").fadeOut(200);
+                    }
+                } );
+        //affichage du message de suppression
+        $("#list-delete-user").on("click",function(){
+            $("#msg_delete").modal("show")
+        })
+
+        // function de suppression
+        $('#valider_delete').on("click", function(){
+            // return
+            let i = 0;
+            let selectedIds = [];
+            userlist.rows({selected : true}).data().each(function(row){
+                selectedIds[i] = row[0];
+                i++;
+            });
+
+            console.log(selectedIds)
+            //return
+            userlist.rows({selected : true}).deselect();
+
+            $.ajax({
+                dataType: "json",
+                url: "delete_user",
+                type: 'POST',
+                data: {
+                    selected : selectedIds
+                }
+            })
+                .done(function(data){
+                    $("#msg_delete").modal("hide")
+                    console.log(data)
+                    location.reload(true);
+                })
+                .fail(function( jqXHR, textStatus, errorThrown){
+                }); //ajax deleting colis
+
+
+
+        }); //delete colis
 </script>
 </body>
 </html>

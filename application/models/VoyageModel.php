@@ -59,7 +59,7 @@ class VoyageModel extends CI_model
     public function get_destination()
     {
         $ville_depart = $this->session->userdata("ville");
-        $query = $this->db->query("SELECT id_destination,ville_arrive FROM destination WHERE ville_arrive <> '$ville_depart'");
+        $query = $this->db->query("SELECT id_destination,ville_arrive FROM destination WHERE ville_depart = '$ville_depart'");
 
         return $query->result_array();
     }

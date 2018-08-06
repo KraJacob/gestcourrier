@@ -11,10 +11,13 @@ class BagageModel extends CI_Model
 
     public function listBagage()
     {
+        $id_gare = $this->session->userdata('id_gare');
+
           $query =  $this->db->select('*')
                  ->from('bagage')
                  ->join('passager', 'bagage.passager_id = passager.id_passager')
                  ->join('gare', 'bagage.id_gare = gare.id_gare')
+                 ->where('bagage.id_gare',$id_gare)
                  ->get();
 
         return $query->result();

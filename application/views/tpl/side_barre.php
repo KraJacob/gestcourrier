@@ -72,7 +72,7 @@
                 </a>
             </li>
         <?php endif ?>
-        <?php if ($this->session->userdata("droit") == "caissier"): ?>
+
             <li>
                 <a href="<?php echo base_url() . "index.php/colis"; ?>">
                     <i class="fa fa-envelope"></i> <span>Colis</span>
@@ -81,7 +81,7 @@
             </span>
                 </a>
             </li>
-        <?php endif ?>
+
         <?php if ($this->session->userdata("droit") == "superviseur"): ?>
             <li>
                 <a href="<?php echo base_url() . "index.php/users"; ?>">
@@ -150,8 +150,7 @@
                 </a>
             </li>
         <?php endif ?>
-        <?php if ($this->session->userdata("droit") == "caissier"): ?>
-            <li>
+               <li>
                 <a href="<?php echo base_url() . "index.php/passager"; ?>">
                     <i class="fa fa-group"></i> <span>Passager</span>
                     <span class="pull-right-container">
@@ -159,8 +158,7 @@
             </span>
                 </a>
             </li>
-        <?php endif ?>
-        <?php if ($this->session->userdata("droit") == "caissier"): ?>
+         <?php if ($this->session->userdata("droit") == "caissier"): ?>
             <li>
                 <a href="<?php echo base_url() . "index.php/depenses"; ?>">
                     <i class="fa fa-money"></i> <span>Depense</span>
